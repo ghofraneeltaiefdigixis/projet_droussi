@@ -8,8 +8,9 @@
 const AppUtils = {
   // Validation d'email
   validateEmail(email) {
+    if (!email || typeof email !== 'string') return false;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+    return emailRegex.test(email.trim());
   },
 
   // Toggle affichage/masquage du mot de passe
@@ -43,23 +44,27 @@ const AppUtils = {
     emailInput.addEventListener('input', checkForm);
     passwordInput.addEventListener('input', checkForm);
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      if (redirectUrl) {
-        window.location.href = redirectUrl;
-      } else {
-        console.log('Formulaire soumis:', { 
-          email: emailInput.value.trim(), 
-          password: passwordInput.value.trim() 
-        });
-      }
-    });
+    // Ne pas ajouter de listener submit si redirectUrl est null (pour permettre la gestion externe)
+    if (redirectUrl !== null) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (redirectUrl) {
+          window.location.href = redirectUrl;
+        } else {
+          console.log('Formulaire soumis:', { 
+            email: emailInput.value.trim(), 
+            password: passwordInput.value.trim() 
+          });
+        }
+      });
+    }
   },
 
   // Normaliser les clés (gérer les espaces, tirets, caractères spéciaux)
   normalizeKey(str) {
-    if (!str) return '';
+    if (!str || typeof str !== 'string') return '';
     return str.toLowerCase()
+      .trim()
       .replace(/\s+/g, '-')
       .replace(/[àáâãäå]/g, 'a')
       .replace(/[èéêë]/g, 'e')
@@ -73,8 +78,13 @@ const AppUtils = {
 
   // Filtrer les options d'un dropdown
   filterOptions(input, dropdown, options) {
-    const searchTerm = input.value.toLowerCase();
-    const filtered = options.filter(opt => opt.toLowerCase().includes(searchTerm));
+    if (!input || !dropdown || !Array.isArray(options)) return;
+    
+    const searchTerm = (input.value || '').toLowerCase().trim();
+    const filtered = options.filter(opt => {
+      if (!opt || typeof opt !== 'string') return false;
+      return opt.toLowerCase().includes(searchTerm);
+    });
     
     dropdown.innerHTML = '';
     if (filtered.length === 0) {
@@ -88,6 +98,13 @@ const AppUtils = {
         dropdown.appendChild(div);
       });
     }
+  },
+  
+  // Gestion d'erreur générique
+  handleError(error, context) {
+    console.error(`Erreur dans ${context}:`, error);
+    // Ici, vous pourriez envoyer l'erreur à un service de logging
+    return null;
   }
 };
 
@@ -96,7 +113,7 @@ const AppUtils = {
 // ============================================
 if (document.querySelector('.welcome-container')) {
   setTimeout(function() {
-    window.location.href = 'choisir_compte.html';
+    window.location.href = 'Choix_role.html';
   }, 3000);
 }
 
@@ -110,16 +127,54 @@ if (document.querySelector('[data-account="parent"]')) {
     
     if (parentBtn) {
       parentBtn.addEventListener('click', function() {
-        window.location.href = 'creer_compte_parent.html';
+        // Enregistrer le rôle dans localStorage
+        try {
+          localStorage.setItem('userRole', 'parent');
+          // Rediriger vers la page de connexion
+          window.location.href = 'Connexion.html';
+        } catch (error) {
+          console.error('Erreur lors de l\'enregistrement du rôle:', error);
+          // Rediriger quand même vers la connexion
+          window.location.href = 'Connexion.html';
+        }
       });
     }
     
     if (teacherBtn) {
       teacherBtn.addEventListener('click', function() {
-        window.location.href = 'creer_compte_enseignant.html';
+        // Enregistrer le rôle dans localStorage
+        try {
+          localStorage.setItem('userRole', 'teacher');
+          // Rediriger vers la page de connexion
+          window.location.href = 'Connexion.html';
+        } catch (error) {
+          console.error('Erreur lors de l\'enregistrement du rôle:', error);
+          // Rediriger quand même vers la connexion
+          window.location.href = 'Connexion.html';
+        }
       });
     }
   });
+}
+
+// ============================================
+// Fonction utilitaire pour rediriger selon le rôle
+// ============================================
+function redirectBasedOnRole() {
+  try {
+    const userRole = localStorage.getItem('userRole');
+    if (userRole === 'parent') {
+      window.location.href = 'Parent.html';
+    } else if (userRole === 'teacher') {
+      window.location.href = 'Teacher.html';
+    } else {
+      // Si aucun rôle n'est défini, rediriger vers la page de choix de rôle
+      window.location.href = 'Choix_role.html';
+    }
+  } catch (error) {
+    console.error('Erreur lors de la lecture du rôle:', error);
+    window.location.href = 'Choix_role.html';
+  }
 }
 
 // ============================================
@@ -139,15 +194,18 @@ if (document.getElementById('loginForm') || document.getElementById('emailForm')
       AppUtils.initPasswordToggle(passwordInput, togglePasswordBtn);
     }
 
-    // Initialiser la validation du formulaire
-    AppUtils.initEmailPasswordForm(emailInput, passwordInput, continueBtn, form, 'gouvernorat.html');
-
-    // Bouton Google
-    if (googleBtn) {
-      googleBtn.addEventListener('click', function() {
-        console.log('Connexion avec Google');
-      });
-    }
+    // Initialiser la validation du formulaire avec redirection selon le rôle après connexion
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (continueBtn && !continueBtn.disabled) {
+        // Ici, vous pouvez ajouter la logique d'authentification
+        // Pour l'instant, on redirige directement selon le rôle
+        redirectBasedOnRole();
+      }
+    });
+    
+    // Initialiser la validation du formulaire (sans redirection automatique)
+    AppUtils.initEmailPasswordForm(emailInput, passwordInput, continueBtn, form, null);
   }
 }
 
@@ -289,9 +347,9 @@ if (document.getElementById('googleBtn') || document.getElementById('facebookBtn
         e.preventDefault();
         // Fermer la modale
         closeAccountSelectModal();
-        // Rediriger vers choisir_telephone.html
+        // Rediriger selon le rôle après sélection du compte
         setTimeout(function() {
-          window.location.href = 'choisir_telephone.html';
+          redirectBasedOnRole();
         }, 300);
       });
       
@@ -323,8 +381,8 @@ if (document.getElementById('googleBtn') || document.getElementById('facebookBtn
   if (googleBtn) {
     googleBtn.addEventListener('click', function(e) {
       e.preventDefault();
-      // Rediriger vers accueil_parent.html
-      window.location.href = 'accueil_parent.html';
+      // Ouvrir le modal de sélection de compte Google
+      openAccountSelectModal('google');
     });
   }
 
@@ -332,8 +390,8 @@ if (document.getElementById('googleBtn') || document.getElementById('facebookBtn
   if (facebookBtn) {
     facebookBtn.addEventListener('click', function(e) {
       e.preventDefault();
-      // Rediriger vers accueil_parent.html
-      window.location.href = 'accueil_parent.html';
+      // Ouvrir le modal de sélection de compte Facebook
+      openAccountSelectModal('facebook');
     });
   }
 
@@ -673,20 +731,7 @@ if (document.getElementById('governoratForm')) {
   let selectedDelegation = '';
   let selectedEcole = '';
 
-  // Fonction pour normaliser les clés (gérer les espaces, tirets, caractères spéciaux)
-  function normalizeKey(str) {
-    if (!str) return '';
-    return str.toLowerCase()
-      .replace(/\s+/g, '-')
-      .replace(/[àáâãäå]/g, 'a')
-      .replace(/[èéêë]/g, 'e')
-      .replace(/[ìíîï]/g, 'i')
-      .replace(/[òóôõö]/g, 'o')
-      .replace(/[ùúûü]/g, 'u')
-      .replace(/[ç]/g, 'c')
-      .replace(/[ñ]/g, 'n')
-      .replace(/[^a-z0-9-]/g, '');
-  }
+  // Utiliser la fonction normalizeKey de AppUtils au lieu de la redéfinir
 
   // Fonction pour mettre à jour les états visuels
   function updateVisualStates() {
@@ -815,7 +860,7 @@ if (document.getElementById('governoratForm')) {
         const value = e.target.textContent;
         governoratInput.value = value;
         // Utiliser data-value si disponible, sinon normaliser le texte
-        selectedGovernorat = e.target.getAttribute('data-value') || normalizeKey(value);
+        selectedGovernorat = e.target.getAttribute('data-value') || AppUtils.normalizeKey(value);
         governoratDropdown.style.display = 'none';
         if (governoratWrapper) governoratWrapper.classList.remove('active');
         
@@ -841,7 +886,7 @@ if (document.getElementById('governoratForm')) {
               const div = document.createElement('div');
               div.className = 'select-option';
               div.textContent = del;
-              div.setAttribute('data-value', normalizeKey(del));
+              div.setAttribute('data-value', AppUtils.normalizeKey(del));
               delegationDropdown.appendChild(div);
             });
           }
@@ -959,7 +1004,7 @@ if (document.getElementById('governoratForm')) {
               const div = document.createElement('div');
               div.className = 'select-option';
               div.textContent = ec;
-              div.setAttribute('data-value', normalizeKey(ec));
+              div.setAttribute('data-value', AppUtils.normalizeKey(ec));
               ecoleDropdown.appendChild(div);
             });
           }
@@ -1316,7 +1361,17 @@ if (document.getElementById('phoneNumber')) {
   // Fonction pour charger les pays depuis l'API
   async function loadCountries() {
     try {
-      const response = await fetch('https://restcountries.com/v3.1/all?fields=name,cca2,flag,idd');
+      const response = await fetch('https://restcountries.com/v3.1/all?fields=name,cca2,flag,idd', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Erreur HTTP: ${response.status}`);
+      }
+      
       const data = await response.json();
       
       // Transformer les données de l'API en format attendu
