@@ -1,0 +1,4211 @@
+/* ============================================
+   Variables CSS - Design System
+   ============================================ */
+:root {
+  /* Couleurs principales */
+  --color-primary: #002FBD;
+  --color-primary-hover: #0024a0;
+  --color-primary-active: #001d7a;
+  --color-primary-light: rgba(0, 47, 189, 0.1);
+  --color-primary-shadow: rgba(0, 47, 189, 0.15);
+  --color-primary-shadow-active: rgba(0, 47, 189, 0.2);
+  
+  /* Couleurs de texte */
+  --color-text-primary: #202124;
+  --color-text-secondary: #5f6368;
+  --color-text-tertiary: #80868b;
+  --color-text-disabled: #999999;
+  --color-text-white: #ffffff;
+  
+  /* Couleurs de fond */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8f9fa;
+  --color-bg-tertiary: #f0f0f0;
+  --color-bg-hover: rgba(0, 0, 0, 0.02);
+  --color-bg-active: rgba(0, 0, 0, 0.05);
+  --color-bg-disabled: #dadce0;
+  
+  /* Couleurs de bordure */
+  --color-border-default: #dadce0;
+  --color-border-hover: #bdc1c6;
+  --color-border-focus: var(--color-primary);
+  --color-border-light: #e8eaed;
+  
+  /* Espacements */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+  --spacing-xxl: 32px;
+  
+  /* Rayons de bordure */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 24px;
+  --radius-full: 50%;
+  
+  /* Ombres */
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.15);
+  --shadow-primary: 0 4px 12px var(--color-primary-shadow);
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.3s ease;
+  
+  /* Typographie */
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-size-xs: 12px;
+  --font-size-sm: 13px;
+  --font-size-base: 15px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+}
+
+/* Reset et styles de base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* Container principal */
+.welcome-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Logo */
+.logo-welcome {
+  max-width: 40%;
+  height: auto;
+  width: auto;
+  max-height: 35vh;
+  object-fit: contain;
+  display: block;
+}
+
+/* Responsive pour petits écrans (mobile) */
+@media screen and (max-width: 480px) {
+  .welcome-container {
+    padding: 15px;
+  }
+  
+  .logo-welcome {
+    max-width: 45%;
+    max-height: 30vh;
+  }
+}
+
+/* Responsive pour écrans moyens (tablettes) */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .welcome-container {
+    padding: 30px;
+  }
+  
+  .logo-welcome {
+    max-width: 35%;
+    max-height: 35vh;
+  }
+}
+
+/* Responsive pour écrans larges (desktop) */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .logo-welcome {
+    max-width: 30%;
+    max-height: 35vh;
+  }
+}
+
+/* Responsive pour très grands écrans */
+@media screen and (min-width: 1025px) {
+  .logo-welcome {
+    max-width: 25%;
+    max-height: 35vh;
+  }
+}
+
+/* Orientation paysage pour mobile */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+  .logo-welcome {
+    max-width: 30%;
+    max-height: 35vh;
+  }
+}
+
+/* Support pour les très petits écrans */
+@media screen and (max-width: 320px) {
+  .welcome-container {
+    padding: 10px;
+  }
+  
+  .logo-welcome {
+    max-width: 50%;
+    max-height: 28vh;
+  }
+}
+
+/* Support pour les très grands écrans (4K et plus) */
+@media screen and (min-width: 1920px) {
+  .logo-welcome {
+    max-width: 20%;
+    max-height: 35vh;
+  }
+}
+
+/* ============================================
+   Page Choisir Compte - Style ClassDojo
+   ============================================ */
+
+/* Page choisir compte - Fond blanc */
+body.choose-account-page {
+  background-color: #ffffff;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.page-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Header avec bouton Se connecter */
+.page-header {
+  padding: 15px 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  min-height: 50px;
+}
+
+/* Header avec bouton Se connecter à droite (page choisir_compte uniquement) */
+.choose-account-page .page-header {
+  justify-content: flex-end;
+}
+
+/* Header avec bouton retour - toujours à gauche */
+.email-signup-page .page-header,
+.login-page .page-header,
+.governorat-page .page-header {
+  justify-content: flex-start;
+}
+
+.btn-login {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  transition: background-color var(--transition-base);
+}
+
+.btn-login:hover {
+  background-color: var(--color-bg-tertiary);
+}
+
+.btn-login:active {
+  background-color: var(--color-bg-active);
+}
+
+/* Contenu principal */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  padding-top: 40px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Container logo */
+.logo-container {
+  margin-bottom: 70px;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-shrink: 0;
+  padding: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.logo-droussi {
+  max-width: 200px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Texte de bienvenue */
+.welcome-text {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  text-align: center;
+  margin: 0 auto 60px auto;
+  line-height: 1.3;
+  width: 100%;
+  max-width: 500px;
+  padding: 0 var(--spacing-xl);
+  box-sizing: border-box;
+  word-wrap: break-word;
+}
+
+/* Container des boutons de compte */
+.account-buttons {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 20px;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+/* Boutons de compte */
+.account-btn {
+  width: 100%;
+  padding: 18px 20px;
+  border-radius: 16px;
+  border: 2px solid #e0e0e0;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  font-size: 16px;
+  text-align: left;
+  box-sizing: border-box;
+  min-height: 60px;
+}
+
+.account-btn:hover {
+  border-color: var(--color-primary);
+  background-color: #f5f7ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 51, 204, 0.15);
+}
+
+.account-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 51, 204, 0.1);
+}
+
+.account-btn-primary {
+  border-color: #e0e0e0;
+  background-color: #ffffff;
+}
+
+.account-icon {
+  font-size: 28px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+img.account-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  display: block;
+  font-size: 0;
+}
+
+.account-text {
+  color: var(--color-text-primary);
+  font-weight: 500;
+  flex: 1;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Responsive pour petits écrans (mobile) */
+@media screen and (max-width: 480px) {
+  .page-header {
+    padding: 12px 15px;
+    flex-shrink: 0;
+    display: flex !important;
+    visibility: visible !important;
+    min-height: 48px;
+  }
+
+  .btn-login {
+    font-size: 14px;
+    padding: 6px 14px;
+    white-space: nowrap;
+  }
+
+  .main-content {
+    padding: 15px;
+    padding-top: 30px;
+    justify-content: flex-start;
+    min-height: calc(100vh - 60px);
+  }
+
+  .logo-container {
+    margin-bottom: 55px;
+    margin-top: 25px;
+    width: 100%;
+  }
+
+  .logo-droussi {
+    max-width: 150px;
+    width: auto;
+    margin: 0 auto;
+  }
+
+  .welcome-text {
+    font-size: 20px;
+    margin: 0 auto 45px auto;
+    padding: 0 15px;
+    max-width: 100%;
+  }
+
+  .account-buttons {
+    max-width: 100%;
+    gap: 12px;
+    padding: 0 15px;
+    margin: 0 auto;
+  }
+
+  .account-btn {
+    padding: 16px 18px;
+    border-radius: 14px;
+    gap: 14px;
+    min-height: 56px;
+  }
+
+  .account-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+
+  .account-text {
+    font-size: 15px;
+  }
+}
+
+/* Responsive pour écrans moyens (tablettes) */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .page-header {
+    padding: 15px 25px;
+  }
+
+  .main-content {
+    padding: 25px;
+    padding-top: 35px;
+  }
+
+  .logo-container {
+    margin-bottom: 65px;
+    margin-top: 30px;
+    width: 100%;
+  }
+
+  .logo-droussi {
+    max-width: 180px;
+    width: auto;
+    margin: 0 auto;
+  }
+
+  .welcome-text {
+    font-size: 22px;
+    margin: 0 auto 50px auto;
+    padding: 0 20px;
+    max-width: 500px;
+  }
+
+  .account-buttons {
+    max-width: 450px;
+    gap: 18px;
+    padding: 0 20px;
+    margin: 0 auto;
+  }
+
+  .account-btn {
+    padding: 18px 22px;
+    min-height: 64px;
+  }
+
+  .account-icon {
+    font-size: 26px;
+  }
+}
+
+/* Responsive pour écrans larges (desktop) */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .page-header {
+    padding: 20px 30px;
+  }
+
+  .main-content {
+    padding: 30px;
+    padding-top: 40px;
+  }
+
+  .logo-container {
+    margin-bottom: 75px;
+    margin-top: 35px;
+    width: 100%;
+  }
+
+  .logo-droussi {
+    max-width: 220px;
+    width: auto;
+    margin: 0 auto;
+  }
+
+  .welcome-text {
+    font-size: 26px;
+    margin: 0 auto 55px auto;
+    padding: 0 20px;
+    max-width: 550px;
+  }
+
+  .account-buttons {
+    max-width: 500px;
+    gap: 20px;
+    padding: 0 20px;
+    margin: 0 auto;
+  }
+
+  .account-btn {
+    padding: 20px 24px;
+    font-size: 17px;
+    min-height: 70px;
+  }
+
+  .account-icon {
+    font-size: 32px;
+  }
+}
+
+/* Responsive pour très grands écrans (desktop large) */
+@media screen and (min-width: 1025px) {
+  .page-header {
+    padding: 25px 40px;
+  }
+
+  .main-content {
+    padding: 40px;
+    padding-top: 50px;
+  }
+
+  .logo-container {
+    margin-bottom: 80px;
+    margin-top: 40px;
+    width: 100%;
+  }
+
+  .logo-droussi {
+    max-width: 250px;
+    width: auto;
+    margin: 0 auto;
+  }
+
+  .welcome-text {
+    font-size: 28px;
+    margin: 0 auto 65px auto;
+    padding: 0 20px;
+    max-width: 600px;
+  }
+
+  .account-buttons {
+    max-width: 550px;
+    gap: 22px;
+    padding: 0 20px;
+    margin: 0 auto;
+  }
+
+  .account-btn {
+    padding: 22px 28px;
+    font-size: 18px;
+    min-height: 75px;
+  }
+
+  .account-icon {
+    font-size: 36px;
+  }
+}
+
+/* Orientation paysage pour mobile */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+  .main-content {
+    padding-top: 20px;
+    padding-bottom: 10px;
+    justify-content: center;
+  }
+
+  .logo-container {
+    margin-bottom: 35px;
+    margin-top: 15px;
+    width: 100%;
+  }
+
+  .logo-droussi {
+    max-width: 120px;
+    width: auto;
+    margin: 0 auto;
+  }
+
+  .welcome-text {
+    font-size: 18px;
+    margin: 0 auto 25px auto;
+    padding: 0 15px;
+    max-width: 100%;
+  }
+
+  .account-buttons {
+    gap: 10px;
+    max-width: 400px;
+    padding: 0 15px;
+    margin: 0 auto;
+  }
+
+  .account-btn {
+    padding: 12px 16px;
+    min-height: 50px;
+  }
+
+  .account-icon {
+    font-size: 22px;
+  }
+
+  .account-text {
+    font-size: 14px;
+  }
+}
+
+/* Support pour les très petits écrans */
+@media screen and (max-width: 320px) {
+  .page-header {
+    padding: 10px 12px;
+  }
+
+  .btn-login {
+    font-size: 13px;
+    padding: 5px 12px;
+  }
+
+  .main-content {
+    padding: 12px;
+    padding-top: 25px;
+  }
+
+  .logo-container {
+    margin-bottom: 50px;
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  .logo-droussi {
+    max-width: 130px;
+    width: auto;
+    margin: 0 auto;
+  }
+
+  .welcome-text {
+    font-size: 18px;
+    margin: 0 auto 35px auto;
+    padding: 0 10px;
+    max-width: 100%;
+  }
+
+  .account-buttons {
+    padding: 0 10px;
+    gap: 10px;
+    margin: 0 auto;
+  }
+
+  .account-btn {
+    padding: 14px 16px;
+    gap: 12px;
+    min-height: 52px;
+    border-radius: 12px;
+  }
+
+  .account-icon {
+    font-size: 22px;
+  }
+
+  .account-text {
+    font-size: 14px;
+  }
+}
+
+/* Support pour les très grands écrans (4K et plus) */
+@media screen and (min-width: 1920px) {
+  .page-header {
+    padding: 30px 60px;
+  }
+
+  .main-content {
+    padding: 60px;
+    padding-top: 60px;
+  }
+
+  .logo-container {
+    margin-bottom: 90px;
+    margin-top: 50px;
+    width: 100%;
+  }
+
+  .logo-droussi {
+    max-width: 300px;
+    width: auto;
+    margin: 0 auto;
+  }
+
+  .welcome-text {
+    font-size: 32px;
+    margin: 0 auto 75px auto;
+    padding: 0 20px;
+    max-width: 700px;
+  }
+
+  .account-buttons {
+    max-width: 600px;
+    gap: 25px;
+    padding: 0 20px;
+    margin: 0 auto;
+  }
+
+  .account-btn {
+    padding: 25px 32px;
+    font-size: 20px;
+    min-height: 85px;
+    border-radius: 18px;
+  }
+
+  .account-icon {
+    font-size: 40px;
+  }
+}
+
+/* ============================================
+   Page Saisir Email - Styles (Inspiré de l'image)
+   ============================================ */
+
+/* Page email signup - Fond blanc */
+body.email-signup-page {
+  background-color: #ffffff;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.email-content {
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+
+/* Bouton retour */
+.btn-back {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: 400;
+  padding: 8px 0;
+  display: inline-flex !important;
+  align-items: center;
+  transition: opacity 0.2s ease;
+  visibility: visible !important;
+  opacity: 1 !important;
+  min-width: 32px;
+  min-height: 32px;
+}
+
+.btn-back:hover {
+  opacity: 0.7;
+}
+
+.btn-back ion-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  color: var(--color-primary);
+}
+
+.email-signup-page .page-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* Container icône */
+.icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+
+.signup-icon {
+  width: 140px;
+  height: auto;
+  max-width: 170px;
+  object-fit: contain;
+}
+
+/* Titre de la page */
+.email-signup-page .page-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-align: center;
+  margin: 0 auto 20px auto;
+  line-height: 1.3;
+  width: 100%;
+  max-width: 500px;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* Lien connexion */
+.login-prompt {
+  text-align: center;
+  font-size: 14px;
+  color: var(--color-text-primary);
+  margin-bottom: 30px;
+  padding: 0 20px;
+}
+
+.link-login {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.link-login:hover {
+  text-decoration: underline;
+}
+
+/* Formulaire email */
+.email-form {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.email-form .form-group {
+  margin-bottom: 20px;
+}
+
+.email-input {
+  width: 100%;
+  padding: 16px 18px;
+  border: 2px solid var(--color-primary);
+  border-radius: 12px;
+  font-size: 16px;
+  font-family: inherit;
+  background-color: #ffffff;
+  color: var(--color-text-primary);
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.email-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.email-input::placeholder {
+  color: #999999;
+}
+
+/* Bouton Continuer */
+.btn-continue {
+  width: 100%;
+  padding: 16px 24px;
+  background-color: #E0E0E0;
+  color: #9E9E9E;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: not-allowed;
+  transition: all 0.2s ease;
+}
+
+.btn-continue.active {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.btn-continue.active:hover {
+  background-color: var(--color-primary);
+  transform: translateY(-1px);
+}
+
+.btn-continue.active:active {
+  transform: translateY(0);
+  background-color: var(--color-primary);
+}
+
+/* Séparateur */
+.separator {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  margin: 30px auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.separator-line {
+  flex: 1;
+  height: 1px;
+  background-color: #E0E0E0;
+}
+
+.separator-text {
+  padding: 0 15px;
+  font-size: 14px;
+  color: #666666;
+}
+
+/* Texte conditions */
+.terms-text {
+  text-align: center;
+  font-size: 12px;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  margin: 0 auto 20px auto;
+  max-width: 400px;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.link-terms {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.link-terms:hover {
+  text-decoration: underline;
+}
+
+/* Container bouton Google */
+.google-button-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* Bouton Google */
+.btn-google {
+  width: 100%;
+  padding: 16px 24px;
+  background-color: #ffffff;
+  color: var(--color-text-primary);
+  border: 2px solid #E0E0E0;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+.btn-google:hover {
+  border-color: #BDBDBD;
+  background-color: #FAFAFA;
+}
+
+.btn-google:active {
+  background-color: #F5F5F5;
+}
+
+.google-icon {
+  flex-shrink: 0;
+}
+
+/* Responsive pour petits écrans (mobile) */
+@media screen and (max-width: 480px) {
+  .email-signup-page .page-title {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+
+  .signup-icon {
+    width: 120px;
+    height: auto;
+    max-width: 150px;
+  }
+
+  .email-form {
+    padding: 0 15px;
+  }
+
+  .google-button-container {
+    padding: 0 15px;
+  }
+
+  .email-input {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .btn-continue,
+  .btn-google {
+    padding: 14px 20px;
+    font-size: 15px;
+  }
+
+  .separator {
+    margin: 25px auto;
+    padding: 0 15px;
+  }
+
+  .terms-text {
+    font-size: 11px;
+    padding: 0 15px;
+  }
+}
+
+/* Responsive pour écrans moyens (tablettes) */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .email-signup-page .page-title {
+    font-size: 26px;
+  }
+
+  .email-form {
+    max-width: 450px;
+  }
+
+  .google-button-container {
+    max-width: 450px;
+  }
+}
+
+/* Responsive pour écrans larges (desktop) */
+@media screen and (min-width: 769px) {
+  .email-signup-page .page-title {
+    font-size: 32px;
+  }
+
+  .email-form {
+    max-width: 500px;
+  }
+
+  .google-button-container {
+    max-width: 500px;
+  }
+}
+
+/* ============================================
+   Page Connexion - Styles
+   ============================================ */
+
+/* Page login - Fond blanc */
+body.login-page {
+  background-color: #ffffff;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.login-content {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+/* Logo connexion */
+.logo-container-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 45px;
+  margin-top: 10px;
+}
+
+.logo-droussi-login {
+  max-width: 170px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* Header connexion */
+.login-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 15px 20px;
+}
+
+.btn-student {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: opacity 0.2s ease;
+}
+
+.btn-student:hover {
+  opacity: 0.7;
+}
+
+/* Titre connexion */
+.login-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  text-align: center;
+  margin: 0 auto 40px auto;
+  line-height: 1.3;
+  width: 100%;
+  max-width: 500px;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* Responsive pour petits écrans (mobile) */
+@media screen and (max-width: 480px) {
+  .logo-container-login {
+    margin-bottom: 40px;
+    margin-top: 5px;
+  }
+
+  .logo-droussi-login {
+    max-width: 140px;
+  }
+
+  .login-title {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+
+  .login-header {
+    padding: 12px 15px;
+  }
+
+  .btn-student {
+    font-size: 13px;
+  }
+}
+
+/* Responsive pour écrans moyens (tablettes) */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .logo-container-login {
+    margin-bottom: 50px;
+    margin-top: 15px;
+  }
+
+  .logo-droussi-login {
+    max-width: 170px;
+  }
+
+  .login-title {
+    font-size: 26px;
+  }
+}
+
+/* Responsive pour écrans larges (desktop) */
+@media screen and (min-width: 769px) {
+  .logo-container-login {
+    margin-bottom: 55px;
+    margin-top: 20px;
+  }
+
+  .logo-droussi-login {
+    max-width: 180px;
+  }
+
+  .login-title {
+    font-size: 32px;
+  }
+}
+
+/* Champ mot de passe avec icône */
+.password-group {
+  position: relative;
+}
+
+.password-input {
+  width: 100%;
+  padding: 16px 50px 16px 18px;
+  border: 2px solid var(--color-primary);
+  border-radius: 12px;
+  font-size: 16px;
+  font-family: inherit;
+  background-color: #ffffff;
+  color: var(--color-text-primary);
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.password-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.password-input::placeholder {
+  color: #999999;
+}
+
+.btn-toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666666;
+  transition: color 0.2s ease;
+}
+
+.btn-toggle-password:hover {
+  color: var(--color-text-primary);
+}
+
+.btn-toggle-password ion-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+/* Champ email en lecture seule */
+.email-input[readonly] {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+/* Lien mot de passe oublié */
+.link-forgot-password {
+  display: block;
+  text-align: center;
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 20px auto 30px auto;
+  transition: opacity 0.2s ease;
+}
+
+.link-forgot-password:hover {
+  opacity: 0.7;
+  text-decoration: underline;
+}
+
+/* Bouton connexion sans mot de passe */
+.btn-no-password {
+  width: 100%;
+  padding: 16px 24px;
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-sizing: border-box;
+}
+
+.btn-no-password:hover {
+  background-color: var(--color-primary);
+  transform: translateY(-1px);
+}
+
+.btn-no-password:active {
+  transform: translateY(0);
+  background-color: var(--color-primary);
+}
+
+/* Responsive pour petits écrans (mobile) */
+@media screen and (max-width: 480px) {
+  .password-input {
+    padding: 14px 45px 14px 16px;
+    font-size: 15px;
+  }
+
+  .btn-toggle-password {
+    right: 10px;
+    padding: 6px;
+  }
+
+  .btn-toggle-password ion-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  .link-forgot-password {
+    font-size: 13px;
+    margin: 15px auto 25px auto;
+  }
+
+  .btn-no-password {
+    padding: 14px 20px;
+    font-size: 15px;
+  }
+}
+
+/* ============================================
+   Page Gouvernorat - Styles
+   ============================================ */
+
+/* Page gouvernorat - Fond blanc */
+body.governorat-page {
+  background-color: #ffffff;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.governorat-content {
+  padding-top: 20px;
+  padding-bottom: 40px;
+  overflow: visible;
+  position: relative;
+}
+
+/* Logo gouvernorat */
+.logo-container-governorat {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 30px;
+  margin-top: 10px;
+}
+
+.logo-droussi-governorat {
+  max-width: 170px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* Titre de la page */
+.governorat-page .page-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  text-align: center;
+  margin: 0 auto 15px auto;
+  line-height: 1.3;
+  width: 100%;
+  max-width: 500px;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* Sous-titre */
+.page-subtitle {
+  font-size: 16px;
+  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: var(--color-text-primary);
+  text-align: center;
+  margin: 0 auto 35px auto;
+  line-height: 1.6;
+  width: 100%;
+  max-width: 500px;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* Formulaire gouvernorat */
+.governorat-form {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: visible;
+}
+
+.governorat-form .form-group {
+  margin-bottom: 30px;
+  position: relative;
+  z-index: 1;
+}
+
+.governorat-form .form-group.select-group.active {
+  z-index: 1001;
+}
+
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 10px;
+}
+
+/* Select wrapper */
+.select-wrapper {
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+.select-wrapper.active {
+  z-index: 1001;
+}
+
+.select-wrapper.active .select-dropdown {
+  display: block;
+}
+
+.select-wrapper.active .select-icon {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.select-input {
+  width: 100%;
+  padding: 16px 50px 16px 18px;
+  border: 2px solid var(--color-primary);
+  border-radius: 12px;
+  font-size: 16px;
+  font-family: inherit;
+  background-color: #ffffff;
+  color: var(--color-text-primary);
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.select-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.select-input:disabled {
+  background-color: #f5f5f5;
+  border-color: #E0E0E0;
+  color: #999999;
+  cursor: not-allowed;
+}
+
+.select-input:disabled + .select-icon {
+  color: #CCCCCC;
+}
+
+.select-input::placeholder {
+  color: #999999;
+}
+
+.select-icon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: #666666;
+  pointer-events: none;
+  transition: transform 0.2s ease;
+}
+
+.select-wrapper.active .select-icon {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* Dropdown */
+.select-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  border: 2px solid var(--color-primary);
+  border-radius: 12px;
+  max-height: 250px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 1002;
+  margin-top: 0;
+  box-shadow: 0 8px 24px rgba(0, 47, 189, 0.2);
+  animation: slideDown 0.2s ease-out;
+}
+
+.select-wrapper.active .select-dropdown {
+  display: block;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.select-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.select-dropdown::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.select-dropdown::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.select-dropdown::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.select-option {
+  padding: 14px 18px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 16px;
+  color: var(--color-text-primary);
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.select-option:last-child {
+  border-bottom: none;
+  border-radius: 0 0 10px 10px;
+}
+
+.select-option:first-child {
+  border-radius: 10px 10px 0 0;
+}
+
+.select-option:hover {
+  background-color: #f8f9ff;
+  color: var(--color-primary);
+}
+
+.select-option:active {
+  background-color: #e8ebff;
+}
+
+.select-option.no-results {
+  color: #999999;
+  font-style: italic;
+  cursor: default;
+}
+
+.select-option.no-results:hover {
+  background-color: transparent;
+}
+
+/* Indicateur de progression */
+.governorat-form .form-group.select-group {
+  position: relative;
+  padding-left: 0;
+}
+
+.governorat-form .form-group.select-group::before {
+  content: '';
+  position: absolute;
+  left: -15px;
+  top: 35px;
+  width: 4px;
+  height: calc(100% - 20px);
+  background-color: #E0E0E0;
+  border-radius: 2px;
+  transition: background-color 0.3s ease;
+  display: none; /* Masqué par défaut sur mobile */
+}
+
+@media (min-width: 768px) {
+  .governorat-form .form-group.select-group::before {
+    display: block;
+  }
+}
+
+.governorat-form .form-group.select-group.completed::before {
+  background-color: var(--color-primary);
+}
+
+.governorat-form .form-group.select-group.active::before {
+  background-color: var(--color-primary);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Amélioration visuelle des labels */
+.governorat-form .form-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.governorat-form .form-label::before {
+  content: attr(data-step);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: #E0E0E0;
+  color: #666666;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.governorat-form .form-group.select-group.completed .form-label::before {
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.governorat-form .form-group.select-group.active .form-label::before {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(0, 47, 189, 0.15);
+}
+
+/* Responsive pour petits écrans (mobile) */
+@media screen and (max-width: 480px) {
+  .logo-container-governorat {
+    margin-bottom: 25px;
+    margin-top: 5px;
+  }
+
+  .logo-droussi-governorat {
+    max-width: 140px;
+  }
+
+  .governorat-page .page-title {
+    font-size: 20px;
+    margin-bottom: 30px;
+  }
+
+  .governorat-form {
+    padding: 0 15px;
+  }
+
+  .governorat-form .form-group {
+    margin-bottom: 25px;
+  }
+
+  .select-input {
+    padding: 14px 45px 14px 16px;
+    font-size: 15px;
+  }
+
+  .select-icon {
+    font-size: 18px;
+    right: 14px;
+  }
+
+  .select-dropdown {
+    max-height: 220px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 47, 189, 0.2);
+  }
+
+  .select-option {
+    padding: 12px 16px;
+    font-size: 15px;
+  }
+}
+
+/* Responsive pour écrans moyens (tablettes) */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .logo-container-governorat {
+    margin-bottom: 35px;
+    margin-top: 15px;
+  }
+
+  .logo-droussi-governorat {
+    max-width: 170px;
+  }
+
+  .governorat-page .page-title {
+    font-size: 22px;
+  }
+
+  .governorat-form {
+    max-width: 550px;
+  }
+}
+
+/* Responsive pour écrans larges (desktop) */
+@media screen and (min-width: 769px) {
+  .logo-container-governorat {
+    margin-bottom: 40px;
+    margin-top: 20px;
+  }
+
+  .logo-droussi-governorat {
+    max-width: 180px;
+  }
+
+  .governorat-page .page-title {
+    font-size: 28px;
+  }
+
+  .governorat-form {
+    max-width: 600px;
+  }
+}
+
+/* ============================================
+   Styles pour la modale de sélection de compte
+   ============================================ */
+.account-select-modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 12000;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.account-select-modal.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.account-select-backdrop {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 12001;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+.account-select-dialog {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 12002;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  transform: translateY(100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.account-select-modal.show .account-select-dialog {
+  transform: translateY(0);
+}
+
+.account-select-content {
+  width: 100%;
+  max-width: 100%;
+  max-height: 75vh;
+  overflow: hidden;
+  border: 0;
+  border-radius: 24px 24px 0 0;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.28);
+  position: relative;
+}
+
+/* Indicateur de drag en haut de la modale */
+.account-select-content::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+  z-index: 1;
+}
+
+.account-select-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 16px 24px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+  background: #fff;
+  position: relative;
+  z-index: 2;
+}
+
+.account-select-logo {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.provider-logo {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.provider-logo svg {
+  width: 100%;
+  height: 100%;
+}
+
+.account-select-title {
+  flex: 1;
+  text-align: center;
+  margin: 0;
+  font-size: 17px;
+  font-weight: 500;
+  color: #202124;
+  padding: 0 16px;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.account-select-close {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  color: #5f6368;
+  border-radius: 50%;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.account-select-close:hover,
+.account-select-close:focus {
+  background: rgba(60, 64, 67, 0.08);
+  color: #202124;
+}
+
+.account-select-close:active {
+  background: rgba(60, 64, 67, 0.12);
+  transform: scale(0.95);
+}
+
+.account-select-close ion-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.account-select-body {
+  padding: 8px 0;
+  margin: 0;
+  overflow-y: auto;
+  flex: 1;
+  background: #fff;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Style de la scrollbar */
+.account-select-body::-webkit-scrollbar {
+  width: 4px;
+}
+
+.account-select-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.account-select-body::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+}
+
+.account-select-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.account-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.account-item {
+  padding: 16px 24px;
+  min-height: 80px;
+  border: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+  background: #fff;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.account-item:last-child {
+  border-bottom: 0;
+}
+
+.account-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: rgba(66, 133, 244, 0.08);
+  transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.account-item:hover::before,
+.account-item:focus::before {
+  width: 3px;
+}
+
+.account-item:hover,
+.account-item:focus {
+  background: rgba(66, 133, 244, 0.04) !important;
+}
+
+.account-item:active {
+  background: rgba(66, 133, 244, 0.08) !important;
+  transform: scale(0.998);
+}
+
+.account-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: #f1f3f4;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.account-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.account-avatar svg {
+  width: 28px;
+  height: 28px;
+}
+
+.account-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  min-width: 0;
+  gap: 2px;
+}
+
+.account-name {
+  font-weight: 400;
+  color: #202124;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  word-break: break-word;
+}
+
+.account-email {
+  font-size: 14px;
+  color: #5f6368;
+  line-height: 1.43;
+  word-break: break-word;
+}
+
+.account-connect-text {
+  font-size: 13px;
+  color: #1a73e8;
+  font-weight: 400;
+  margin-top: 4px;
+  line-height: 1.38;
+  letter-spacing: 0.01em;
+}
+
+.account-item[data-provider="facebook"] .account-connect-text {
+  color: #1877F2;
+}
+
+.account-item[data-provider="google"]:hover .account-connect-text,
+.account-item[data-provider="google"]:focus .account-connect-text {
+  color: #1557b0;
+}
+
+.account-item[data-provider="facebook"]:hover .account-connect-text,
+.account-item[data-provider="facebook"]:focus .account-connect-text {
+  color: #1565c0;
+}
+
+/* Responsive pour petits écrans */
+@media screen and (max-width: 480px) {
+  .account-select-content {
+    max-height: 85vh;
+    border-radius: 20px 20px 0 0;
+  }
+  
+  .account-select-content::before {
+    top: 6px;
+    width: 36px;
+    height: 3px;
+  }
+  
+  .account-select-header {
+    padding: 18px 20px 14px 20px;
+  }
+  
+  .account-select-logo {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .account-select-title {
+    font-size: 16px;
+    padding: 0 12px;
+  }
+  
+  .account-select-close {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .account-select-close ion-icon {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+  }
+  
+  .account-item {
+    padding: 14px 20px;
+    min-height: 76px;
+  }
+  
+  .account-avatar {
+    width: 44px;
+    height: 44px;
+    margin-right: 14px;
+  }
+  
+  .account-avatar svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .account-name {
+    font-size: 15px;
+  }
+  
+  .account-email {
+    font-size: 13px;
+  }
+  
+  .account-connect-text {
+    font-size: 12px;
+    margin-top: 3px;
+  }
+}
+
+/* Animation d'apparition pour les items */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.account-item {
+  animation: slideInUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+}
+
+.account-item:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.account-item:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.account-item:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.account-item:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+.account-item:nth-child(5) {
+  animation-delay: 0.25s;
+}
+
+/* ============================================
+   Styles pour la page de saisie de téléphone
+   ============================================ */
+.phone-page {
+  background: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.phone-page .page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 0;
+}
+
+.phone-content {
+  flex: 1;
+  padding: 32px 24px 40px 24px;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  align-items: center;
+}
+
+.phone-logo-container {
+  margin-bottom: 32px;
+  margin-top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.phone-logo-container .signup-icon {
+  max-width: 170px;
+  width: auto;
+  height: auto;
+}
+
+.phone-page .page-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #202124;
+  margin: 0 0 40px 0;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  text-align: center;
+  width: 100%;
+}
+
+.phone-input-container {
+  margin-bottom: 32px;
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+}
+
+.phone-input-group-wrapper {
+  position: relative;
+}
+
+.phone-input-group {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  padding: 0;
+  background: #fff;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  position: relative;
+  z-index: 10;
+}
+
+.phone-input-group:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 47, 189, 0.1);
+}
+
+.country-selector.active {
+  background: rgba(0, 47, 189, 0.05);
+}
+
+.country-selector.active .country-arrow {
+  transform: rotate(180deg);
+}
+
+.country-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 12px;
+  background: transparent;
+  border: 0;
+  border-right: 1px solid #dadce0;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  flex-shrink: 0;
+  min-width: 80px;
+}
+
+.country-selector:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.country-selector:active {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.country-flag {
+  font-size: 24px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.country-arrow {
+  font-size: 18px;
+  color: #5f6368;
+  transition: transform 0.2s ease;
+}
+
+.country-selector:active .country-arrow {
+  transform: rotate(180deg);
+}
+
+.phone-input-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.phone-input {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  padding: 16px 16px 16px 0;
+  font-size: 16px;
+  color: #202124;
+  outline: none;
+  font-family: inherit;
+}
+
+.phone-input::placeholder {
+  color: #80868b;
+  font-weight: 400;
+}
+
+.phone-terms {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #5f6368;
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  text-align: center;
+}
+
+/* Bouton Continuer pour la page téléphone */
+.phone-continue-container {
+  width: 100%;
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-continue-phone {
+  width: 100%;
+  max-width: 400px;
+  padding: 16px 24px;
+  background: #002FBD;
+  color: #fff;
+  border: 0;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
+}
+
+.btn-continue-phone:disabled {
+  background: #dadce0;
+  color: #80868b;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-continue-phone:not(:disabled):hover {
+  background: #0024a0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 47, 189, 0.3);
+}
+
+.btn-continue-phone:not(:disabled):active {
+  background: #001d7a;
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 47, 189, 0.2);
+}
+
+/* Liste déroulante de sélection de pays */
+.country-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  max-height: 300px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.country-dropdown.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.country-search-container {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e8eaed;
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.country-search-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #202124;
+  background: #f8f9fa;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.country-search-input:focus {
+  background: #fff;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 47, 189, 0.1);
+}
+
+.country-search-input::placeholder {
+  color: #80868b;
+}
+
+.country-dropdown-list {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 4px 0;
+}
+
+.country-loading {
+  padding: 20px 16px;
+  text-align: center;
+  color: #5f6368;
+  font-size: 14px;
+}
+
+.country-no-results {
+  padding: 20px 16px;
+  text-align: center;
+  color: #5f6368;
+  font-size: 14px;
+}
+
+/* ============================================
+   Page Classe - Sélection de classe
+   ============================================ */
+.classe-page {
+  position: relative;
+  background: #ffffff;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.classe-page::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("assets/img/bg_school_tools_1.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.1;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.classe-page .page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.classe-page .page-header {
+  justify-content: flex-start;
+  padding: 15px 20px;
+  position: relative;
+  z-index: 10;
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100%;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  min-height: 50px;
+}
+
+.classe-content {
+  flex: 1;
+  padding: 32px 24px 40px 24px;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.classe-logo-container {
+  margin-bottom: 28px;
+  margin-top: 0;
+}
+
+.classe-logo-container .signup-icon {
+  max-width: 170px;
+  width: 100%;
+  height: auto;
+}
+
+.classe-title {
+  color: var(--color-primary);
+  margin-bottom: 32px;
+  font-size: 24px;
+  font-weight: var(--font-weight-semibold);
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+  padding: 0 20px;
+  box-sizing: border-box;
+  line-height: 1.4;
+}
+
+.classe-container {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.classe-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  border: 2px solid #e3f2fd;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 1);
+  transition: all var(--transition-base);
+  cursor: default;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 64px;
+}
+
+.classe-row:hover {
+  border-color: #90caf9;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 2px 8px rgba(0, 47, 189, 0.1);
+}
+
+.classe-row.active {
+  border-color: var(--color-primary);
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 2px 8px rgba(0, 47, 189, 0.15);
+}
+
+.classe-lettres {
+  display: flex;
+  gap: 10px;
+  flex-wrap: nowrap;
+  flex: 1;
+  justify-content: flex-end;
+  min-width: 0;
+  align-items: center;
+}
+
+.classe-letter-btn {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border: 2px solid #e3f2fd;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-size: 18px;
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  font-family: var(--font-family);
+  box-sizing: border-box;
+  flex-shrink: 0;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.classe-letter-btn:hover {
+  border-color: #90caf9;
+  background: #e3f2fd;
+  transform: scale(1.05);
+}
+
+.classe-letter-btn.active {
+  background: var(--color-primary);
+  color: var(--color-text-white);
+  border-color: var(--color-primary);
+  box-shadow: 0 2px 6px rgba(0, 47, 189, 0.3);
+}
+
+.classe-number {
+  background: var(--color-primary);
+  color: var(--color-text-white);
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-weight-semibold);
+  font-size: 16px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+  margin-right: 14px;
+  box-sizing: border-box;
+}
+
+.classe-continue-container {
+  width: 100%;
+  max-width: 500px;
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.btn-subscribe {
+  width: 100%;
+  max-width: 100%;
+  padding: 14px 24px;
+  background: #34c759;
+  color: var(--color-text-white);
+  border: 0;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-align: center;
+  box-sizing: border-box;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  min-height: 48px;
+}
+
+.btn-subscribe:disabled {
+  background: var(--color-bg-disabled);
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-subscribe:not(:disabled):hover {
+  background: #2db54a;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(52, 199, 89, 0.3);
+}
+
+.btn-subscribe:not(:disabled):active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(52, 199, 89, 0.2);
+}
+
+/* Responsive pour la page classe */
+
+/* ============================================
+   Breakpoints optimisés pour smartphones réels
+   Basés sur les résolutions réelles des appareils
+   ============================================ */
+
+/* Très petits téléphones (≤380px) */
+@media screen and (max-width: 380px) {
+  .classe-page .page-header {
+    padding: 10px 14px;
+    display: flex !important;
+    visibility: visible !important;
+    min-height: 46px;
+  }
+
+  .classe-content {
+    padding: 18px 14px 24px 14px;
+  }
+
+  .classe-logo-container {
+    margin-bottom: 18px;
+  }
+
+  .classe-logo-container .signup-icon {
+    max-width: 120px;
+    width: 100%;
+    height: auto;
+  }
+
+  .classe-title {
+    font-size: 18px;
+    margin-bottom: 20px;
+    padding: 0 10px;
+    line-height: 1.3;
+  }
+
+  .classe-container {
+    margin-bottom: 14px;
+    width: 100%;
+    padding: 0;
+  }
+
+  .classe-row {
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    min-height: 52px;
+  }
+
+  .classe-letter-btn {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    min-height: 38px;
+    font-size: 15px;
+    border-width: 1.5px;
+  }
+
+  .classe-number {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    min-height: 38px;
+    font-size: 14px;
+    margin-right: 10px;
+  }
+
+  .classe-lettres {
+    gap: 7px;
+    flex-wrap: nowrap;
+  }
+
+  .classe-continue-container {
+    margin-top: 10px;
+    width: 100%;
+    padding: 0;
+  }
+
+  .btn-subscribe {
+    padding: 12px 18px;
+    font-size: 14px;
+    width: 100%;
+    max-width: 100%;
+    min-height: 44px;
+  }
+
+  .btn-back {
+    font-size: 22px;
+    min-width: 30px;
+    min-height: 30px;
+  }
+
+  .btn-back ion-icon {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* Très petits téléphones (iPhone SE 2020 - 750x1334) - max-width: 375px */
+@media screen and (max-width: 375px) {
+  .classe-page .page-header {
+    padding: 10px 12px;
+    display: flex !important;
+    visibility: visible !important;
+    min-height: 44px;
+  }
+
+  .classe-content {
+    padding: 16px 12px 22px 12px;
+  }
+
+  .classe-logo-container {
+    margin-bottom: 16px;
+  }
+
+  .classe-logo-container .signup-icon {
+    max-width: 110px;
+    width: 100%;
+    height: auto;
+  }
+
+  .classe-title {
+    font-size: 17px;
+    margin-bottom: 18px;
+    padding: 0 8px;
+    line-height: 1.3;
+  }
+
+  .classe-container {
+    margin-bottom: 12px;
+    width: 100%;
+    padding: 0;
+  }
+
+  .classe-row {
+    padding: 9px 10px;
+    margin-bottom: 9px;
+    border-radius: 8px;
+    min-height: 50px;
+  }
+
+  .classe-letter-btn {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+    font-size: 14px;
+    border-width: 1.5px;
+  }
+
+  .classe-number {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+    font-size: 13px;
+    margin-right: 9px;
+  }
+
+  .classe-lettres {
+    gap: 6px;
+    flex-wrap: nowrap;
+  }
+
+  .classe-continue-container {
+    margin-top: 8px;
+    width: 100%;
+    padding: 0;
+  }
+
+  .btn-subscribe {
+    padding: 11px 16px;
+    font-size: 14px;
+    width: 100%;
+    max-width: 100%;
+    min-height: 42px;
+  }
+
+  .btn-back {
+    font-size: 20px;
+    min-width: 28px;
+    min-height: 28px;
+  }
+
+  .btn-back ion-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Petits téléphones (iPhone 11/12/13, Pixel 7) - 376px à 480px */
+@media screen and (min-width: 376px) and (max-width: 480px) {
+  .classe-page .page-header {
+    padding: 12px 16px;
+    display: flex !important;
+    visibility: visible !important;
+    min-height: 48px;
+  }
+
+  .classe-content {
+    padding: 24px 20px 32px 20px;
+  }
+
+  .classe-logo-container {
+    margin-bottom: 24px;
+  }
+
+  .classe-logo-container .signup-icon {
+    max-width: 150px;
+    width: 100%;
+    height: auto;
+  }
+
+  .classe-title {
+    font-size: 22px;
+    margin-bottom: 28px;
+    padding: 0 16px;
+    line-height: 1.4;
+  }
+
+  .classe-container {
+    margin-bottom: 18px;
+    width: 100%;
+    padding: 0;
+  }
+
+  .classe-row {
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    min-height: 60px;
+  }
+
+  .classe-letter-btn {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    font-size: 17px;
+  }
+
+  .classe-number {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    font-size: 15px;
+    margin-right: 12px;
+  }
+
+  .classe-lettres {
+    gap: 9px;
+    flex-wrap: nowrap;
+  }
+
+  .classe-continue-container {
+    margin-top: 14px;
+    width: 100%;
+    padding: 0;
+  }
+
+  .btn-subscribe {
+    padding: 14px 22px;
+    font-size: 15px;
+    width: 100%;
+    max-width: 100%;
+    min-height: 46px;
+  }
+}
+
+
+/* Tous les petits téléphones (max-width: 480px) - Fallback général */
+@media screen and (max-width: 480px) {
+  .classe-page .page-header {
+    padding: 12px 16px;
+    display: flex !important;
+    visibility: visible !important;
+    min-height: 48px;
+  }
+
+  .classe-content {
+    padding: 24px 20px 32px 20px;
+  }
+
+  .classe-logo-container .signup-icon {
+    max-width: 150px;
+    width: 100%;
+    height: auto;
+  }
+
+  .classe-title {
+    font-size: 22px;
+    margin-bottom: 28px;
+    padding: 0 16px;
+    line-height: 1.4;
+  }
+
+  .classe-container {
+    margin-bottom: 18px;
+    width: 100%;
+    padding: 0;
+  }
+
+  .classe-row {
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    min-height: 60px;
+  }
+
+  .classe-letter-btn {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    font-size: 17px;
+  }
+
+  .classe-number {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    font-size: 15px;
+    margin-right: 12px;
+  }
+
+  .classe-lettres {
+    gap: 9px;
+    flex-wrap: nowrap;
+  }
+
+  .classe-continue-container {
+    margin-top: 14px;
+    width: 100%;
+    padding: 0;
+  }
+
+  .btn-subscribe {
+    padding: 14px 22px;
+    font-size: 15px;
+    width: 100%;
+    max-width: 100%;
+    min-height: 46px;
+  }
+}
+
+/* Moyens téléphones (iPhone 12/13 Pro - 1170x2532, Samsung S10 - 1440x3040) - 481px à 768px */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .classe-page .page-header {
+    padding: 14px 20px;
+    display: flex !important;
+    visibility: visible !important;
+    min-height: 50px;
+  }
+
+  .classe-content {
+    padding: 30px 22px 38px 22px;
+  }
+
+  .classe-logo-container {
+    margin-bottom: 26px;
+  }
+
+  .classe-logo-container .signup-icon {
+    max-width: 160px;
+    width: 100%;
+    height: auto;
+  }
+
+  .classe-title {
+    font-size: 24px;
+    margin-bottom: 30px;
+    line-height: 1.4;
+  }
+
+  .classe-container {
+    max-width: 520px;
+    margin-bottom: 20px;
+    width: 100%;
+    padding: 0;
+  }
+
+  .classe-row {
+    padding: 15px 18px;
+    margin-bottom: 13px;
+    min-height: 64px;
+  }
+
+  .classe-letter-btn {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 18px;
+  }
+
+  .classe-number {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 16px;
+    margin-right: 14px;
+  }
+
+  .classe-lettres {
+    gap: 10px;
+    flex-wrap: nowrap;
+  }
+
+  .classe-continue-container {
+    max-width: 520px;
+    margin-top: 16px;
+    width: 100%;
+    padding: 0;
+  }
+
+  .btn-subscribe {
+    padding: 15px 24px;
+    font-size: 16px;
+    width: 100%;
+    min-height: 48px;
+  }
+}
+
+/* Grands téléphones / Phablets paysage (iPhone 14 Pro Max - 1290x2796, Samsung S20+ - 1440x3200) - 769px à 1024px paysage */
+@media screen and (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
+  .classe-content {
+    padding: 22px 26px 30px 26px;
+  }
+
+  .classe-logo-container {
+    margin-bottom: 18px;
+  }
+
+  .classe-logo-container .signup-icon {
+    max-width: 150px;
+    width: 100%;
+    height: auto;
+  }
+
+  .classe-title {
+    font-size: 22px;
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+
+  .classe-container {
+    max-width: 580px;
+    margin-bottom: 18px;
+    width: 100%;
+    padding: 0;
+  }
+
+  .classe-row {
+    padding: 14px 18px;
+    margin-bottom: 11px;
+    min-height: 62px;
+  }
+
+  .classe-letter-btn {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 18px;
+  }
+
+  .classe-number {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 16px;
+    margin-right: 14px;
+  }
+
+  .classe-lettres {
+    gap: 10px;
+    flex-wrap: nowrap;
+  }
+
+  .classe-continue-container {
+    margin-top: 14px;
+    width: 100%;
+    padding: 0;
+    max-width: 580px;
+  }
+
+  .btn-subscribe {
+    padding: 14px 24px;
+    font-size: 16px;
+    width: 100%;
+    min-height: 48px;
+  }
+}
+
+/* Grands téléphones / Phablets portrait (iPhone 14 Pro Max - 1290x2796, Samsung S20+ - 1440x3200) - 769px à 1024px portrait */
+@media screen and (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
+  .classe-content {
+    padding: 34px 26px 42px 26px;
+  }
+
+  .classe-logo-container {
+    margin-bottom: 28px;
+  }
+
+  .classe-logo-container .signup-icon {
+    max-width: 170px;
+    width: 100%;
+    height: auto;
+  }
+
+  .classe-title {
+    font-size: 26px;
+    margin-bottom: 32px;
+    line-height: 1.4;
+  }
+
+  .classe-container {
+    max-width: 560px;
+    margin-bottom: 24px;
+    width: 100%;
+    padding: 0;
+  }
+
+  .classe-row {
+    padding: 16px 20px;
+    margin-bottom: 14px;
+    min-height: 66px;
+  }
+
+  .classe-letter-btn {
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+    min-height: 46px;
+    font-size: 19px;
+  }
+
+  .classe-number {
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+    min-height: 46px;
+    font-size: 17px;
+    margin-right: 15px;
+  }
+
+  .classe-lettres {
+    gap: 11px;
+    flex-wrap: nowrap;
+  }
+
+  .classe-continue-container {
+    max-width: 560px;
+    margin-top: 18px;
+    width: 100%;
+    padding: 0;
+  }
+
+  .btn-subscribe {
+    padding: 16px 26px;
+    font-size: 17px;
+    width: 100%;
+    min-height: 50px;
+  }
+}
+
+/* Très grands écrans (1025px+) */
+@media screen and (min-width: 1025px) {
+  .classe-content {
+    padding: 44px 36px 52px 36px;
+  }
+
+  .classe-logo-container {
+    margin-bottom: 32px;
+  }
+
+  .classe-logo-container .signup-icon {
+    max-width: 180px;
+    width: 100%;
+    height: auto;
+  }
+
+  .classe-title {
+    font-size: 28px;
+    margin-bottom: 40px;
+    line-height: 1.4;
+  }
+
+  .classe-container {
+    max-width: 580px;
+    margin-bottom: 24px;
+    width: 100%;
+    padding: 0;
+  }
+
+  .classe-row {
+    padding: 18px 22px;
+    margin-bottom: 15px;
+    min-height: 70px;
+  }
+
+  .classe-letter-btn {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    font-size: 20px;
+  }
+
+  .classe-number {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    font-size: 18px;
+    margin-right: 16px;
+  }
+
+  .classe-lettres {
+    gap: 12px;
+    flex-wrap: nowrap;
+  }
+
+  .classe-continue-container {
+    max-width: 580px;
+    margin-top: 18px;
+    width: 100%;
+    padding: 0;
+  }
+
+  .btn-subscribe {
+    padding: 17px 28px;
+    font-size: 18px;
+    width: 100%;
+    min-height: 52px;
+  }
+}
+
+/* Orientation paysage pour mobile (max-width: 768px) */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+  .classe-page .page-header {
+    padding: 10px 18px;
+    display: flex !important;
+    visibility: visible !important;
+    min-height: 46px;
+  }
+
+  .classe-content {
+    padding: 18px 22px 26px 22px;
+  }
+
+  .classe-logo-container {
+    margin-bottom: 14px;
+  }
+
+  .classe-logo-container .signup-icon {
+    max-width: 130px;
+    width: 100%;
+    height: auto;
+  }
+
+  .classe-title {
+    font-size: 20px;
+    margin-bottom: 18px;
+    line-height: 1.4;
+  }
+
+  .classe-container {
+    margin-bottom: 14px;
+    width: 100%;
+    padding: 0;
+  }
+
+  .classe-row {
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    min-height: 56px;
+  }
+
+  .classe-letter-btn {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    font-size: 16px;
+  }
+
+  .classe-number {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    font-size: 15px;
+    margin-right: 12px;
+  }
+
+  .classe-lettres {
+    gap: 8px;
+    flex-wrap: nowrap;
+  }
+
+  .classe-continue-container {
+    margin-top: 12px;
+    width: 100%;
+    padding: 0;
+  }
+
+  .btn-subscribe {
+    padding: 13px 20px;
+    font-size: 15px;
+    width: 100%;
+    max-width: 100%;
+    min-height: 46px;
+  }
+}
+
+/* Support pour les très grands écrans (4K et plus) */
+@media screen and (min-width: 1920px) {
+  .classe-content {
+    padding: 48px 40px 56px 40px;
+  }
+
+  .classe-logo-container .signup-icon {
+    max-width: 200px;
+    width: 100%;
+    height: auto;
+  }
+
+  .classe-title {
+    font-size: 30px;
+    margin-bottom: 44px;
+    line-height: 1.4;
+  }
+
+  .classe-container {
+    max-width: 600px;
+    width: 100%;
+    padding: 0;
+    margin-bottom: 24px;
+  }
+
+  .classe-row {
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    min-height: 74px;
+  }
+
+  .classe-letter-btn {
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+    min-height: 50px;
+    font-size: 22px;
+  }
+
+  .classe-number {
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+    min-height: 50px;
+    font-size: 20px;
+    margin-right: 18px;
+  }
+
+  .classe-lettres {
+    gap: 14px;
+    flex-wrap: nowrap;
+  }
+
+  .classe-continue-container {
+    max-width: 600px;
+    width: 100%;
+    padding: 0;
+    margin-top: 20px;
+  }
+
+  .btn-subscribe {
+    padding: 18px 30px;
+    font-size: 19px;
+    width: 100%;
+    min-height: 56px;
+  }
+}
+
+/* ============================================
+   Optimisations spécifiques par résolution réelle
+   ============================================ */
+
+/* iPhone SE (2020) - 750x1334 - Ratio 16:9 */
+@media screen and (max-width: 375px) and (max-height: 667px) {
+  .classe-content {
+    padding: 16px 12px 22px 12px;
+  }
+
+  .classe-logo-container .signup-icon {
+    max-width: 110px;
+  }
+
+  .classe-title {
+    font-size: 17px;
+    margin-bottom: 18px;
+  }
+
+  .classe-row {
+    padding: 9px 10px;
+    margin-bottom: 9px;
+    min-height: 50px;
+  }
+
+  .classe-letter-btn {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+    font-size: 14px;
+  }
+
+  .classe-number {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+    font-size: 13px;
+    margin-right: 9px;
+  }
+
+  .classe-lettres {
+    gap: 6px;
+  }
+}
+
+/* iPhone 11/12/13 - 828x1792 - Ratio 19.5:9 */
+@media screen and (min-width: 414px) and (max-width: 480px) and (min-height: 896px) {
+  .classe-content {
+    padding: 24px 20px 32px 20px;
+  }
+
+  .classe-logo-container .signup-icon {
+    max-width: 150px;
+  }
+
+  .classe-title {
+    font-size: 22px;
+    margin-bottom: 28px;
+  }
+
+  .classe-row {
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    min-height: 60px;
+  }
+
+  .classe-letter-btn {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    font-size: 17px;
+  }
+
+  .classe-number {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    font-size: 15px;
+    margin-right: 12px;
+  }
+
+  .classe-lettres {
+    gap: 9px;
+  }
+}
+
+/* iPhone 12/13 Pro - 1170x2532 - Ratio 19.5:9 */
+@media screen and (min-width: 390px) and (max-width: 480px) and (min-height: 844px) {
+  .classe-content {
+    padding: 24px 20px 32px 20px;
+  }
+
+  .classe-logo-container .signup-icon {
+    max-width: 150px;
+  }
+
+  .classe-title {
+    font-size: 22px;
+    margin-bottom: 28px;
+  }
+
+  .classe-row {
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    min-height: 60px;
+  }
+
+  .classe-letter-btn {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    font-size: 17px;
+  }
+
+  .classe-number {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    font-size: 15px;
+    margin-right: 12px;
+  }
+
+  .classe-lettres {
+    gap: 9px;
+  }
+}
+
+/* Samsung S10 - 1440x3040 - Ratio 19:9 (Quad HD) */
+@media screen and (min-width: 360px) and (max-width: 480px) and (min-height: 760px) {
+  .classe-content {
+    padding: 24px 20px 32px 20px;
+  }
+
+  .classe-logo-container .signup-icon {
+    max-width: 150px;
+  }
+
+  .classe-title {
+    font-size: 22px;
+    margin-bottom: 28px;
+  }
+
+  .classe-row {
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    min-height: 60px;
+  }
+
+  .classe-letter-btn {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    font-size: 17px;
+  }
+
+  .classe-number {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    font-size: 15px;
+    margin-right: 12px;
+  }
+
+  .classe-lettres {
+    gap: 9px;
+  }
+}
+
+/* Google Pixel 7 - 1080x2400 - Ratio 20:9 (Full HD+) */
+@media screen and (min-width: 412px) and (max-width: 480px) and (min-height: 915px) {
+  .classe-content {
+    padding: 24px 20px 32px 20px;
+  }
+
+  .classe-logo-container .signup-icon {
+    max-width: 150px;
+  }
+
+  .classe-title {
+    font-size: 22px;
+    margin-bottom: 28px;
+  }
+
+  .classe-row {
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    min-height: 60px;
+  }
+
+  .classe-letter-btn {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    font-size: 17px;
+  }
+
+  .classe-number {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    font-size: 15px;
+    margin-right: 12px;
+  }
+
+  .classe-lettres {
+    gap: 9px;
+  }
+}
+
+/* Optimisations pour les écrans haute densité (Retina, etc.) */
+@media screen and (-webkit-min-device-pixel-ratio: 2),
+       screen and (min-resolution: 192dpi) {
+  .classe-letter-btn,
+  .classe-number {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Prévention des débordements horizontaux */
+@media screen and (max-width: 480px) {
+  .classe-row {
+    overflow: hidden;
+  }
+
+  .classe-lettres {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .classe-lettres::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Amélioration de l'accessibilité tactile */
+@media (hover: none) and (pointer: coarse) {
+  .classe-letter-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .classe-number {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+.country-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  gap: 12px;
+}
+
+.country-item:hover,
+.country-item:focus {
+  background: rgba(0, 47, 189, 0.05);
+}
+
+.country-item:active {
+  background: rgba(0, 47, 189, 0.1);
+}
+
+.country-item-flag {
+  font-size: 28px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 28px;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+.country-item-name {
+  flex: 1;
+  font-size: 15px;
+  color: #202124;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: left;
+  min-width: 0;
+}
+
+.country-item-dial {
+  font-size: 14px;
+  color: #5f6368;
+  line-height: 1.5;
+  flex-shrink: 0;
+  font-weight: 400;
+}
+
+/* Style de la scrollbar pour le dropdown */
+.country-dropdown-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.country-dropdown-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.country-dropdown-list::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.country-dropdown-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive pour petits écrans */
+@media screen and (max-width: 480px) {
+  .phone-content {
+    padding: 24px 20px 40px 20px;
+  }
+
+  .phone-continue-container {
+    margin-top: 24px;
+  }
+
+  .btn-continue-phone {
+    padding: 14px 20px;
+    font-size: 15px;
+  }
+
+  .phone-logo-container {
+    margin-bottom: 24px;
+  }
+
+  .phone-logo-container .signup-icon {
+    max-width: 140px;
+  }
+
+  .phone-page .page-title {
+    font-size: 24px;
+    margin-bottom: 32px;
+  }
+
+  .phone-input-group {
+    gap: 8px;
+  }
+
+  .country-dropdown {
+    max-height: 250px;
+  }
+
+  .country-dropdown-list {
+    max-height: 250px;
+  }
+
+  .country-item {
+    padding: 10px 14px;
+  }
+
+  .country-item-flag {
+    font-size: 24px;
+    width: 32px;
+    height: 24px;
+  }
+
+  .country-item-name {
+    font-size: 14px;
+  }
+
+  .country-item-dial {
+    font-size: 12px;
+  }
+
+  .country-selector {
+    padding: 14px 10px;
+    min-width: 70px;
+  }
+
+  .country-flag {
+    font-size: 20px;
+  }
+
+  .phone-input {
+    padding: 14px 12px 14px 0;
+    font-size: 15px;
+  }
+
+  .phone-terms {
+    font-size: 12px;
+  }
+
+}
+
+/* ============================================
+   Styles WhatsApp - Page Accueil Parent (Light Mode)
+   ============================================ */
+
+/* Page principale */
+.whatsapp-style-page {
+  background-color: #f0f2f5;
+  color: #41525d;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 60px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Header WhatsApp */
+.whatsapp-header {
+  background-color: #ffffff;
+  padding: 12px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid #e4e6eb;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.whatsapp-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 100%;
+  height: 40px;
+}
+
+.whatsapp-logo-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.whatsapp-logo {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+}
+
+.whatsapp-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #41525d;
+  margin: 0;
+  flex: 1;
+  line-height: 1.2;
+}
+
+.whatsapp-header-actions {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.whatsapp-icon-btn {
+  background: none;
+  border: none;
+  color: #54656f;
+  font-size: 22px;
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+}
+
+.whatsapp-icon-btn:hover {
+  background-color: #f0f2f5;
+}
+
+.whatsapp-icon-btn:active {
+  background-color: #e4e6eb;
+}
+
+/* Barre de recherche */
+.whatsapp-search-container {
+  background-color: #ffffff;
+  padding: 8px 16px;
+  border-bottom: 1px solid #e4e6eb;
+}
+
+.whatsapp-search-bar {
+  background-color: #f0f2f5;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  gap: 12px;
+}
+
+.search-icon {
+  color: #54656f;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.whatsapp-search-input {
+  background: none;
+  border: none;
+  color: #41525d;
+  font-size: 15px;
+  flex: 1;
+  outline: none;
+  padding: 0;
+}
+
+.whatsapp-search-input::placeholder {
+  color: #8b9ba8;
+}
+
+/* Contenu principal */
+.whatsapp-main-content {
+  flex: 1;
+  overflow-y: auto;
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.whatsapp-content-area {
+  padding: 16px;
+}
+
+.welcome-message {
+  color: #8b9ba8;
+  text-align: center;
+  margin-top: 32px;
+  font-size: 16px;
+}
+
+/* Liste de chats WhatsApp style */
+.whatsapp-chat-list {
+  background-color: #ffffff;
+}
+
+.whatsapp-chat-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  gap: 12px;
+  border-bottom: 1px solid #f0f2f5;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.whatsapp-chat-item:hover {
+  background-color: #f5f6f6;
+}
+
+.whatsapp-chat-item:active {
+  background-color: #e9edef;
+}
+
+.chat-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #002FBD 0%, #0040e6 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 600;
+  border-radius: 50%;
+}
+
+.chat-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.chat-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: #111b21;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-time {
+  font-size: 13px;
+  color: #667781;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.chat-preview {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chat-message {
+  font-size: 14px;
+  color: #667781;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+/* Navigation Footer */
+.whatsapp-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 8px 0;
+  border-top: 1px solid #e4e6eb;
+  z-index: 100;
+  box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.whatsapp-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: #8b9ba8;
+  text-decoration: none;
+  padding: 8px 16px;
+  flex: 1;
+  transition: color 0.2s;
+  font-size: 12px;
+}
+
+.whatsapp-nav-item ion-icon {
+  font-size: 24px;
+}
+
+.whatsapp-nav-item.active {
+  color: #002FBD;
+}
+
+.whatsapp-nav-item:active {
+  opacity: 0.7;
+}
+
+/* Floating Action Button */
+.whatsapp-fab {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #002FBD;
+  border: none;
+  color: white;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 47, 189, 0.4);
+  z-index: 99;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.whatsapp-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 47, 189, 0.5);
+}
+
+.whatsapp-fab:active {
+  transform: scale(0.95);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .whatsapp-logo {
+    height: 28px;
+  }
+
+  .whatsapp-title {
+    font-size: 18px;
+  }
+
+  .whatsapp-nav-item {
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+
+  .whatsapp-nav-item ion-icon {
+    font-size: 22px;
+  }
+
+  .whatsapp-fab {
+    width: 52px;
+    height: 52px;
+    font-size: 26px;
+    bottom: 75px;
+    right: 16px;
+  }
+
+  .chat-avatar {
+    width: 44px;
+    height: 44px;
+  }
+
+  .avatar-placeholder {
+    font-size: 18px;
+  }
+
+  .chat-name {
+    font-size: 15px;
+  }
+
+  .chat-message {
+    font-size: 13px;
+  }
+}
