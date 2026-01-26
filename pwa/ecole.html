@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#002FBD" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>Sélection de l'école | Droussi</title>
+  <meta name="description" content="Sélectionnez votre école sur Droussi" />
+  <meta name="keywords" content="éducation, Tunisie, école, Droussi" />
+  <link rel="icon" type="image/png" href="assets/img/droussi icons/android/android-launchericon-72-72.png"
+    sizes="32x32" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/droussi icons/android/android-launchericon-192-192.png" />
+  <link rel="stylesheet" href="assets/css/style_app.css" />
+  <link rel="manifest" href="__manifest.json" />
+</head>
+
+<body class="governorat-page">
+  <div class="page-container">
+    <!-- Header avec bouton retour -->
+    <header class="page-header">
+      <a href="delegation.html" class="btn-back">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </a>
+    </header>
+
+    <!-- Contenu principal -->
+    <main class="main-content governorat-content">
+      <!-- Logo -->
+      <div class="logo-container-governorat">
+        <img src="assets/img/logo_ar_droussi_blue_w170.png" alt="Droussi" class="logo-droussi-governorat" />
+      </div>
+      
+      <!-- Sous-titre -->
+      <p class="page-subtitle">Choisissez votre école</p>
+
+      <!-- Formulaire -->
+      <form class="governorat-form" id="ecoleForm">
+        <!-- Champ de recherche -->
+        <div class="form-group">
+          <div class="search-wrapper">
+            <input type="text" id="ecoleSearch" class="search-input" placeholder="Rechercher une école..." autocomplete="off" />
+            <ion-icon name="search-outline" class="search-icon"></ion-icon>
+          </div>
+        </div>
+
+        <!-- Liste des écoles -->
+        <div class="governorat-list-container">
+          <ul class="governorat-list" id="ecoleList">
+            <!-- Les options seront chargées dynamiquement selon la délégation sélectionnée -->
+          </ul>
+        </div>
+
+        <button type="submit" class="btn-continue" id="continueBtn" disabled>Continuer</button>
+      </form>
+    </main>
+  </div>
+  <script src="assets/js/app.js"></script>
+  <!-- Ionicons -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
+</body>
+
+</html>
