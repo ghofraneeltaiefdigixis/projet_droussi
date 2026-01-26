@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<<<<<<< Updated upstream
+=======
+  <meta charset="UTF-8" />
+>>>>>>> Stashed changes
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#002FBD" />
+<<<<<<< Updated upstream
+  <title>Choisir une classe | Droussi</title>
+  <meta name="description" content="Choisir une classe Droussi" />
+  <meta name="keywords" content="bootstrap 5, mobile template, cordova, phonegap, mobile, html" />
+  <link rel="icon" type="image/png" href="assets/img/droussi icons/android/android-launchericon-72-72.png"
+    sizes="32x32" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/droussi icons/android/android-launchericon-72-72.png" />
+=======
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>Choisir une classe | Droussi</title>
+  <meta name="description" content="Choisissez les classes pour votre abonnement Droussi" />
+  <meta name="keywords" content="éducation, Tunisie, classes, abonnement, Droussi" />
+  <link rel="icon" type="image/png" href="assets/img/droussi icons/android/android-launchericon-72-72.png"
+    sizes="32x32" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/droussi icons/android/android-launchericon-192-192.png" />
+>>>>>>> Stashed changes
+  <link rel="stylesheet" href="assets/css/style_app.css" />
+  <link rel="manifest" href="__manifest.json" />
+</head>
+
+<body class="classe-page">
+  <div class="page-container">
+    <!-- Header avec bouton retour -->
+    <header class="page-header">
+<<<<<<< Updated upstream
+      <a href="gouvernorat.html" class="btn-back">
+=======
+      <a href="ecole.html" class="btn-back">
+>>>>>>> Stashed changes
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </a>
+    </header>
+
+    <!-- Contenu principal -->
+    <main class="main-content classe-content">
+      <!-- Logo -->
+      <div class="icon-container classe-logo-container">
+        <img src="assets/img/logo_ar_droussi_blue_w170.png" alt="Droussi" class="signup-icon" />
+      </div>
+
+      <!-- Titre -->
+      <h1 class="page-title classe-title">Choisir une classe</h1>
+
+      <!-- Container des classes -->
+      <div class="classe-container" id="classesContainer">
+        <!-- Les classes seront générées dynamiquement -->
+      </div>
+
+      <!-- Bouton Je m'abonne -->
+      <div class="classe-continue-container">
+        <button class="btn-subscribe" id="continueBtn" disabled>
+          Je m'abonne
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal de confirmation d'abonnement -->
+  <div id="subscriptionModal" class="subscription-modal">
+    <div class="subscription-modal-backdrop" id="modalBackdrop"></div>
+    <div class="subscription-modal-content">
+      <!-- Header du modal -->
+      <div class="subscription-modal-header">
+        <h2 class="subscription-modal-title">Confirmation</h2>
+        <button class="subscription-modal-close" id="modalCloseBtn" aria-label="Fermer">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+
+      <!-- Détails de l'abonnement -->
+      <div class="subscription-details">
+        <div class="subscription-main-info">
+          <div class="subscription-name-section">
+            <h3 class="subscription-name" id="modalClassName">Classes sélectionnées</h3>
+            <p class="subscription-validity" id="modalValidity">Abonnement mensuel</p>
+          </div>
+          <div class="subscription-amount-section">
+            <span class="subscription-amount" id="modalAmount">1 Classe</span>
+          </div>
+        </div>
+
+        <!-- Détails des classes sélectionnées -->
+        <div class="subscription-classes-details" id="classesDetails">
+          <!-- Les détails seront ajoutés dynamiquement -->
+        </div>
+
+        <!-- Prix -->
+        <div class="subscription-pricing">
+          <span class="subscription-price" id="modalPrice">1 DT</span>
+        </div>
+      </div>
+
+      <!-- Boutons d'action -->
+      <div class="subscription-actions">
+        <button class="subscription-btn-primary" id="buyWithCardBtn">
+          Acheter par carte bancaire
+        </button>
+        <button class="subscription-btn-secondary" id="buyWithBalanceBtn">
+          Avec solde
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/app.js"></script>
+  <!-- Ionicons -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
+</body>
+
+</html>

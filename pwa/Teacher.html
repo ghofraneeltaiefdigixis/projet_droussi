@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+  <meta charset="UTF-8" />
+>>>>>>> Stashed changes
+=======
+  <meta charset="UTF-8" />
+>>>>>>> Stashed changes
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#002FBD" />
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+  <title>Droussi - Accueil Enseignant</title>
+  <meta name="description" content="Droussi HTML" />
+  <meta name="keywords" content="bootstrap 5, mobile template, cordova, phonegap, mobile, html" />
+  <link rel="icon" type="image/png" href="assets/img/droussi icons/android/android-launchericon-72-72.png"
+    sizes="32x32" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/droussi icons/android/android-launchericon-72-72.png" />
+=======
+=======
+>>>>>>> Stashed changes
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>Droussi - Accueil Enseignant</title>
+  <meta name="description" content="Accueil enseignant sur Droussi - Gérez vos classes et communiquez avec les parents" />
+  <meta name="keywords" content="éducation, Tunisie, enseignants, classes, communication, Droussi" />
+  <link rel="icon" type="image/png" href="assets/img/droussi icons/android/android-launchericon-72-72.png"
+    sizes="32x32" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/droussi icons/android/android-launchericon-192-192.png" />
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+  <link rel="stylesheet" href="assets/css/style_app.css" />
+  <link rel="manifest" href="__manifest.json" />
+</head>
+
+<<<<<<< Updated upstream
+<body class="whatsapp-style-page">
+  <!-- Header WhatsApp Style -->
+  <header class="whatsapp-header">
+    <div class="whatsapp-header-content">
+      <div class="whatsapp-logo-container">
+        <img src="assets/img/logo_ar_droussi_blue_w170.png" alt="Droussi" class="whatsapp-logo" />
+      </div>
+      <div class="whatsapp-header-actions">
+        <button class="whatsapp-icon-btn" aria-label="Caméra">
+          <ion-icon name="camera-outline"></ion-icon>
+        </button>
+        <button class="whatsapp-icon-btn" aria-label="Menu">
+          <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+        </button>
+      </div>
+    </div>
+    <!-- Barre de recherche dans le header -->
+    <div class="whatsapp-search-container">
+      <div class="whatsapp-search-bar">
+        <ion-icon name="search-outline" class="search-icon"></ion-icon>
+        <input type="text" class="whatsapp-search-input" placeholder="Rechercher" />
+=======
+<body class="app-style-page">
+  <!-- Header Application Style -->
+  <header class="app-header">
+    <div class="app-header-content">
+      <div class="app-logo-container">
+        <img src="assets/img/logo_ar_droussi_blue_w170.png" alt="Droussi" class="app-logo" />
+      </div>
+      <div class="app-header-actions">
+        <button class="app-icon-btn" id="headerMenuBtn" aria-label="Menu">
+          <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+        </button>
+        <!-- Menu déroulant -->
+        <div class="header-dropdown-menu" id="headerDropdownMenu">
+          <button class="header-menu-item" id="logoutBtn">
+            <ion-icon name="log-out-outline"></ion-icon>
+            <span>Déconnexion</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Barre de recherche dans le header -->
+    <div class="app-search-container">
+      <div class="app-search-bar">
+        
+        <input type="text" class="app-search-input" placeholder="Rechercher" />
+>>>>>>> Stashed changes
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenu principal -->
+<<<<<<< Updated upstream
+  <main class="whatsapp-main-content">
+    <!-- Liste de chats/contenu WhatsApp style -->
+    <div class="whatsapp-chat-list">
+      <!-- Exemple de chat item -->
+      <div class="whatsapp-chat-item">
+        <div class="chat-avatar">
+          <div class="avatar-placeholder">D</div>
+        </div>
+        <div class="chat-content">
+          <div class="chat-header">
+            <span class="chat-name">Bienvenue</span>
+            <span class="chat-time">Aujourd'hui</span>
+          </div>
+          <div class="chat-preview">
+            <span class="chat-message">Bienvenue sur Droussi</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Navigation Footer WhatsApp Style -->
+  <nav class="whatsapp-bottom-nav">
+    <a href="#" class="whatsapp-nav-item active">
+      <ion-icon name="chatbubbles-outline"></ion-icon>
+      <span>Discussions</span>
+    </a>
+    <a href="#" class="whatsapp-nav-item">
+      <ion-icon name="newspaper-outline"></ion-icon>
+      <span>Actus</span>
+    </a>
+    <a href="#" class="whatsapp-nav-item">
+      <ion-icon name="people-outline"></ion-icon>
+      <span>Communautés</span>
+    </a>
+    <a href="#" class="whatsapp-nav-item">
+=======
+  <main class="app-main-content">
+    <!-- Section des classes (affichée uniquement si abonné) -->
+    <div class="teacher-section-header" id="classesSection" style="display: none;">
+      <h3 class="section-title">Mes Classes</h3>
+    </div>
+
+    <!-- Liste de chats/contenu Application style -->
+    <div class="app-chat-list" id="classesList" style="display: none;">
+      <!-- Les classes seront générées dynamiquement après l'abonnement -->
+    </div>
+  </main>
+
+  <!-- Navigation Footer Application Style -->
+  <nav class="app-bottom-nav">
+    <a href="#" class="app-nav-item active">
+      <ion-icon name="chatbubbles-outline"></ion-icon>
+      <span>Discussions</span>
+    </a>
+    <a href="#" class="app-nav-item">
+      <ion-icon name="newspaper-outline"></ion-icon>
+      <span>Actus</span>
+    </a>
+    <a href="#" class="app-nav-item">
+      <ion-icon name="people-outline"></ion-icon>
+      <span>Communautés</span>
+    </a>
+    <a href="#" class="app-nav-item">
+>>>>>>> Stashed changes
+      <ion-icon name="call-outline"></ion-icon>
+      <span>Appels</span>
+    </a>
+  </nav>
+
+  <!-- Floating Action Button -->
+<<<<<<< Updated upstream
+  <button class="whatsapp-fab" aria-label="Nouveau message">
+    <ion-icon name="add-outline"></ion-icon>
+  </button>
+
+=======
+  <button class="app-fab" aria-label="Nouveau message">
+    <ion-icon name="add-outline"></ion-icon>
+  </button>
+
+  <!-- Modal de bienvenue pour l'abonnement aux classes -->
+  <div class="welcome-modal" id="welcomeModal">
+    <div class="welcome-modal-backdrop"></div>
+    <div class="welcome-modal-dialog">
+      <div class="welcome-modal-content">
+        <div class="welcome-modal-handle"></div>
+        <div class="welcome-modal-body">
+          <h2 class="welcome-modal-title">Bienvenue sur Droussi</h2>
+          <p class="welcome-modal-text">
+            Bienvenue sur Droussi ! Pour commencer à utiliser toutes les fonctionnalités, veuillez vous abonner à une ou plusieurs classes.
+          </p>
+          <button class="welcome-modal-btn" id="subscribeBtn">
+            S'abonner aux classes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+>>>>>>> Stashed changes
+  <script src="assets/js/app.js"></script>
+  <!-- Ionicons -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
+</body>
+
+</html>

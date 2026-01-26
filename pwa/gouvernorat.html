@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<<<<<<< Updated upstream
+=======
+  <meta charset="UTF-8" />
+>>>>>>> Stashed changes
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#002FBD" />
+<<<<<<< Updated upstream
+  <title>Sélection de l'école | Droussi</title>
+  <meta name="description" content="Sélection du gouvernorat, délégation et école" />
+  <meta name="keywords" content="bootstrap 5, mobile template, cordova, phonegap, mobile, html" />
+  <link rel="icon" type="image/png" href="assets/img/droussi icons/android/android-launchericon-72-72.png"
+    sizes="32x32" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/droussi icons/android/android-launchericon-72-72.png" />
+  <link rel="stylesheet" href="assets/css/style_app.css" />
+  <link rel="manifest" href="__manifest.json" />
+
+=======
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>Sélection de l'école | Droussi</title>
+  <meta name="description" content="Sélectionnez votre gouvernorat, délégation et école sur Droussi" />
+  <meta name="keywords" content="éducation, Tunisie, école, gouvernorat, délégation, Droussi" />
+  <link rel="icon" type="image/png" href="assets/img/droussi icons/android/android-launchericon-72-72.png"
+    sizes="32x32" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/droussi icons/android/android-launchericon-192-192.png" />
+  <link rel="stylesheet" href="assets/css/style_app.css" />
+  <link rel="manifest" href="__manifest.json" />
+>>>>>>> Stashed changes
+</head>
+
+<body class="governorat-page">
+  <div class="page-container">
+    <!-- Header avec bouton retour -->
+    <header class="page-header">
+      <a href="connexion.html" class="btn-back">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </a>
+    </header>
+
+    <!-- Contenu principal -->
+    <main class="main-content governorat-content">
+      <!-- Logo -->
+      <div class="logo-container-governorat">
+        <img src="assets/img/logo_ar_droussi_blue_w170.png" alt="Droussi" class="logo-droussi-governorat" />
+      </div>
+      
+      <!-- Sous-titre -->
+<<<<<<< Updated upstream
+      <p class="page-subtitle">Choisissez votre gouvernorat, puis votre délégation et enfin votre école</p>
+
+      <!-- Formulaire -->
+      <form class="governorat-form" id="governoratForm">
+        <!-- Gouvernorat -->
+        <div class="form-group select-group active">
+          <label for="governorat" class="form-label" data-step="1">Gouvernorat</label>
+          <div class="select-wrapper">
+            <input type="text" id="governorat" class="select-input" placeholder="Rechercher un gouvernorat..." autocomplete="off" />
+            <ion-icon name="chevron-down-outline" class="select-icon"></ion-icon>
+            <div class="select-dropdown" id="governoratDropdown">
+              <div class="select-option" data-value="tunis">Tunis</div>
+              <div class="select-option" data-value="ariana">Ariana</div>
+              <div class="select-option" data-value="ben-arous">Ben Arous</div>
+              <div class="select-option" data-value="manouba">Manouba</div>
+              <div class="select-option" data-value="nabeul">Nabeul</div>
+              <div class="select-option" data-value="zaghouan">Zaghouan</div>
+              <div class="select-option" data-value="bizerte">Bizerte</div>
+              <div class="select-option" data-value="beja">Béja</div>
+              <div class="select-option" data-value="jendouba">Jendouba</div>
+              <div class="select-option" data-value="kef">Le Kef</div>
+              <div class="select-option" data-value="siliana">Siliana</div>
+              <div class="select-option" data-value="kairouan">Kairouan</div>
+              <div class="select-option" data-value="kasserine">Kasserine</div>
+              <div class="select-option" data-value="sidi-bouzid">Sidi Bouzid</div>
+              <div class="select-option" data-value="sfax">Sfax</div>
+              <div class="select-option" data-value="mahdia">Mahdia</div>
+              <div class="select-option" data-value="monastir">Monastir</div>
+              <div class="select-option" data-value="sousse">Sousse</div>
+              <div class="select-option" data-value="kebili">Kébili</div>
+              <div class="select-option" data-value="gabes">Gabès</div>
+              <div class="select-option" data-value="medenine">Médenine</div>
+              <div class="select-option" data-value="tataouine">Tataouine</div>
+              <div class="select-option" data-value="gafsa">Gafsa</div>
+              <div class="select-option" data-value="tozeur">Tozeur</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Délégation -->
+        <div class="form-group select-group">
+          <label for="delegation" class="form-label" data-step="2">Délégation</label>
+          <div class="select-wrapper">
+            <input type="text" id="delegation" class="select-input" placeholder="Rechercher une délégation..." autocomplete="off" disabled />
+            <ion-icon name="chevron-down-outline" class="select-icon"></ion-icon>
+            <div class="select-dropdown" id="delegationDropdown">
+              <!-- Les options seront chargées dynamiquement selon le gouvernorat sélectionné -->
+            </div>
+          </div>
+        </div>
+
+        <!-- École -->
+        <div class="form-group select-group">
+          <label for="ecole" class="form-label" data-step="3">École</label>
+          <div class="select-wrapper">
+            <input type="text" id="ecole" class="select-input" placeholder="Rechercher une école..." autocomplete="off" disabled />
+            <ion-icon name="chevron-down-outline" class="select-icon"></ion-icon>
+            <div class="select-dropdown" id="ecoleDropdown">
+              <!-- Les options seront chargées dynamiquement selon la délégation sélectionnée -->
+            </div>
+          </div>
+=======
+      <p class="page-subtitle">Choisissez votre gouvernorat</p>
+
+      <!-- Formulaire -->
+      <form class="governorat-form" id="governoratForm">
+        <!-- Champ de recherche -->
+        <div class="form-group">
+          <div class="search-wrapper">
+            <input type="text" id="governoratSearch" class="search-input" placeholder="Rechercher un gouvernorat..." autocomplete="off" />
+            <ion-icon name="search-outline" class="search-icon"></ion-icon>
+          </div>
+        </div>
+
+        <!-- Liste des gouvernorats -->
+        <div class="governorat-list-container">
+          <ul class="governorat-list" id="governoratList">
+            <li class="governorat-item" data-value="tunis">Tunis</li>
+            <li class="governorat-item" data-value="ariana">Ariana</li>
+            <li class="governorat-item" data-value="ben-arous">Ben Arous</li>
+            <li class="governorat-item" data-value="manouba">Manouba</li>
+            <li class="governorat-item" data-value="nabeul">Nabeul</li>
+            <li class="governorat-item" data-value="zaghouan">Zaghouan</li>
+            <li class="governorat-item" data-value="bizerte">Bizerte</li>
+            <li class="governorat-item" data-value="beja">Béja</li>
+            <li class="governorat-item" data-value="jendouba">Jendouba</li>
+            <li class="governorat-item" data-value="kef">Le Kef</li>
+            <li class="governorat-item" data-value="siliana">Siliana</li>
+            <li class="governorat-item" data-value="kairouan">Kairouan</li>
+            <li class="governorat-item" data-value="kasserine">Kasserine</li>
+            <li class="governorat-item" data-value="sidi-bouzid">Sidi Bouzid</li>
+            <li class="governorat-item" data-value="sfax">Sfax</li>
+            <li class="governorat-item" data-value="mahdia">Mahdia</li>
+            <li class="governorat-item" data-value="monastir">Monastir</li>
+            <li class="governorat-item" data-value="sousse">Sousse</li>
+            <li class="governorat-item" data-value="kebili">Kébili</li>
+            <li class="governorat-item" data-value="gabes">Gabès</li>
+            <li class="governorat-item" data-value="medenine">Médenine</li>
+            <li class="governorat-item" data-value="tataouine">Tataouine</li>
+            <li class="governorat-item" data-value="gafsa">Gafsa</li>
+            <li class="governorat-item" data-value="tozeur">Tozeur</li>
+          </ul>
+>>>>>>> Stashed changes
+        </div>
+
+        <button type="submit" class="btn-continue" id="continueBtn" disabled>Continuer</button>
+      </form>
+    </main>
+  </div>
+  <script src="assets/js/app.js"></script>
+  <!-- Ionicons -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
+</body>
+
+</html>
