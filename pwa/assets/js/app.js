@@ -1743,6 +1743,17 @@ if (document.getElementById('welcomeModal') && document.body.classList.contains(
     });
   }
   
+  // Gestion du bouton FAB pour ajouter un abonnement (uniquement sur Parent.html)
+  if (parentPostsContainer) {
+    const parentFabBtn = document.querySelector('.app-fab');
+    if (parentFabBtn) {
+      parentFabBtn.addEventListener('click', () => {
+        // Rediriger vers gouvernorat.html pour ajouter un nouvel abonnement
+        window.location.href = ROUTES.GOUVERNORAT;
+      });
+    }
+  }
+
   // Fonction utilitaire pour générer une date aléatoire
   function getRandomDate() {
     const now = new Date();
@@ -2585,6 +2596,596 @@ if (document.getElementById('subscriptionListContainer')) {
   if (addSubscriptionBtn) {
     addSubscriptionBtn.addEventListener('click', () => {
       window.location.href = ROUTES.GOUVERNORAT;
+    });
+  }
+}
+
+// ============================================
+// Page Assistant IA - Chat ChatGPT
+// ============================================
+if (document.getElementById('aiChatMessages')) {
+  const aiChatMessages = document.getElementById('aiChatMessages');
+  const aiChatForm = document.getElementById('aiChatForm');
+  const aiChatInput = document.getElementById('aiChatInput');
+  const aiChatSendBtn = document.getElementById('aiChatSendBtn');
+  const aiWelcomeMessage = document.querySelector('.ai-welcome-message');
+  const aiChatFileInput = document.getElementById('aiChatFileInput');
+  const aiChatFilesPreview = document.getElementById('aiChatFilesPreview');
+  
+  // Tableau pour stocker les fichiers sélectionnés
+  let selectedFiles = [];
+  
+  // Réponses prédéfinies de l'IA (simulation)
+  const aiResponses = [
+    "Je comprends votre question. Voici une réponse détaillée...",
+    "C'est une excellente question ! Laissez-moi vous expliquer...",
+    "Je peux vous aider avec cela. Voici ce que je recommande...",
+    "Merci pour votre question. Voici quelques informations utiles...",
+    "Je suis là pour vous aider. Voici ce que vous devez savoir..."
+  ];
+  
+  // Fonction pour générer une réponse IA simulée
+  function generateAIResponse(userMessage) {
+    // Simulation d'une réponse basée sur des mots-clés
+    const lowerMessage = userMessage.toLowerCase();
+    
+    if (lowerMessage.includes('devoir') || lowerMessage.includes('devoirs')) {
+      return "Pour les devoirs, je recommande de créer un planning régulier et de réviser quotidiennement. N'hésitez pas à demander de l'aide à votre enseignant si nécessaire.";
+    }
+    
+    if (lowerMessage.includes('classe') || lowerMessage.includes('classes')) {
+      return "Les classes sont organisées par niveau et section. Vous pouvez consulter vos classes abonnées dans la section 'Mes classes' de votre profil.";
+    }
+    
+    if (lowerMessage.includes('abonnement') || lowerMessage.includes('abonner')) {
+      return "Pour vous abonner à une classe, allez dans la section 'Abonnement' et suivez les étapes : choisissez votre gouvernorat, délégation, école et classe.";
+    }
+    
+    if (lowerMessage.includes('bonjour') || lowerMessage.includes('salut') || lowerMessage.includes('hello')) {
+      return "Bonjour ! Je suis ravi de vous aider. Comment puis-je vous assister aujourd'hui ?";
+    }
+    
+    // Réponse par défaut
+    return aiResponses[Math.floor(Math.random() * aiResponses.length)];
+  }
+  
+  // Fonction pour ajouter un message utilisateur
+  function addUserMessage(text) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'ai-message user';
+    
+    const avatar = document.createElement('div');
+    avatar.className = 'ai-message-avatar';
+    avatar.textContent = 'Vous';
+    
+    const content = document.createElement('div');
+    content.className = 'ai-message-content';
+    
+    const bubble = document.createElement('div');
+    bubble.className = 'ai-message-bubble';
+    
+    const messageText = document.createElement('p');
+    messageText.className = 'ai-message-text';
+    messageText.textContent = text;
+    
+    const time = document.createElement('div');
+    time.className = 'ai-message-time';
+    time.textContent = new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+    
+    bubble.appendChild(messageText);
+    bubble.appendChild(time);
+    content.appendChild(bubble);
+    messageDiv.appendChild(avatar);
+    messageDiv.appendChild(content);
+    
+    aiChatMessages.appendChild(messageDiv);
+    
+    // Masquer le message de bienvenue après le premier message
+    if (aiWelcomeMessage) {
+      aiWelcomeMessage.style.display = 'none';
+    }
+    
+    scrollToBottom();
+  }
+  
+  // Fonction pour ajouter un message de l'IA
+  function addAIMessage(text) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'ai-message assistant';
+    
+    const avatar = document.createElement('div');
+    avatar.className = 'ai-message-avatar';
+    const icon = document.createElement('ion-icon');
+    icon.setAttribute('name', 'sparkles-outline');
+    avatar.appendChild(icon);
+    
+    const content = document.createElement('div');
+    content.className = 'ai-message-content';
+    
+    const bubble = document.createElement('div');
+    bubble.className = 'ai-message-bubble';
+    
+    const messageText = document.createElement('p');
+    messageText.className = 'ai-message-text';
+    messageText.textContent = text;
+    
+    const time = document.createElement('div');
+    time.className = 'ai-message-time';
+    time.textContent = new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+    
+    bubble.appendChild(messageText);
+    bubble.appendChild(time);
+    content.appendChild(bubble);
+    messageDiv.appendChild(avatar);
+    messageDiv.appendChild(content);
+    
+    aiChatMessages.appendChild(messageDiv);
+    
+    scrollToBottom();
+  }
+  
+  // Fonction pour afficher l'indicateur de frappe
+  function showTypingIndicator() {
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'ai-message assistant';
+    typingDiv.id = 'typingIndicator';
+    
+    const avatar = document.createElement('div');
+    avatar.className = 'ai-message-avatar';
+    const icon = document.createElement('ion-icon');
+    icon.setAttribute('name', 'sparkles-outline');
+    avatar.appendChild(icon);
+    
+    const content = document.createElement('div');
+    content.className = 'ai-message-content';
+    
+    const bubble = document.createElement('div');
+    bubble.className = 'ai-message-bubble';
+    
+    const typingIndicator = document.createElement('div');
+    typingIndicator.className = 'ai-typing-indicator';
+    for (let i = 0; i < 3; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'ai-typing-dot';
+      typingIndicator.appendChild(dot);
+    }
+    
+    bubble.appendChild(typingIndicator);
+    content.appendChild(bubble);
+    typingDiv.appendChild(avatar);
+    typingDiv.appendChild(content);
+    
+    aiChatMessages.appendChild(typingDiv);
+    scrollToBottom();
+  }
+  
+  // Fonction pour supprimer l'indicateur de frappe
+  function removeTypingIndicator() {
+    const typingIndicator = document.getElementById('typingIndicator');
+    if (typingIndicator) {
+      typingIndicator.remove();
+    }
+  }
+  
+  // Fonction pour faire défiler vers le bas
+  function scrollToBottom() {
+    setTimeout(() => {
+      aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+    }, 100);
+  }
+  
+  // Fonction pour ajuster la hauteur du textarea
+  function adjustTextareaHeight() {
+    if (aiChatInput) {
+      aiChatInput.style.height = 'auto';
+      aiChatInput.style.height = Math.min(aiChatInput.scrollHeight, 120) + 'px';
+    }
+  }
+  
+  // Fonction pour formater la taille du fichier
+  function formatFileSize(bytes) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+  }
+  
+  // Fonction pour afficher les fichiers sélectionnés
+  function displaySelectedFiles() {
+    if (!aiChatFilesPreview) return;
+    
+    if (selectedFiles.length === 0) {
+      aiChatFilesPreview.style.display = 'none';
+      return;
+    }
+    
+    aiChatFilesPreview.style.display = 'flex';
+    aiChatFilesPreview.innerHTML = '';
+    
+    selectedFiles.forEach((file, index) => {
+      const fileItem = document.createElement('div');
+      fileItem.className = 'ai-chat-file-item';
+      
+      if (file.type.startsWith('image/')) {
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(file);
+        img.alt = file.name;
+        fileItem.appendChild(img);
+      } else {
+        const icon = document.createElement('ion-icon');
+        icon.setAttribute('name', 'document-outline');
+        icon.style.fontSize = '20px';
+        icon.style.color = '#002FBD';
+        fileItem.appendChild(icon);
+      }
+      
+      const fileInfo = document.createElement('div');
+      fileInfo.className = 'ai-chat-file-item-info';
+      
+      const fileName = document.createElement('div');
+      fileName.className = 'ai-chat-file-item-name';
+      fileName.textContent = file.name;
+      
+      const fileSize = document.createElement('div');
+      fileSize.className = 'ai-chat-file-item-size';
+      fileSize.textContent = formatFileSize(file.size);
+      
+      fileInfo.appendChild(fileName);
+      fileInfo.appendChild(fileSize);
+      fileItem.appendChild(fileInfo);
+      
+      const removeBtn = document.createElement('button');
+      removeBtn.className = 'ai-chat-file-item-remove';
+      removeBtn.type = 'button';
+      removeBtn.setAttribute('aria-label', 'Supprimer le fichier');
+      const removeIcon = document.createElement('ion-icon');
+      removeIcon.setAttribute('name', 'close-outline');
+      removeBtn.appendChild(removeIcon);
+      
+      removeBtn.addEventListener('click', () => {
+        selectedFiles.splice(index, 1);
+        displaySelectedFiles();
+        if (aiChatFileInput) {
+          aiChatFileInput.value = '';
+        }
+      });
+      
+      fileItem.appendChild(removeBtn);
+      aiChatFilesPreview.appendChild(fileItem);
+    });
+  }
+  
+  // Gestion de la sélection de fichiers
+  if (aiChatFileInput) {
+    aiChatFileInput.addEventListener('change', (e) => {
+      const files = Array.from(e.target.files);
+      
+      // Ajouter les nouveaux fichiers à la liste
+      files.forEach(file => {
+        // Vérifier la taille (max 10MB)
+        if (file.size > 10 * 1024 * 1024) {
+          alert(`Le fichier "${file.name}" est trop volumineux. Taille maximale : 10MB`);
+          return;
+        }
+        
+        // Vérifier si le fichier n'est pas déjà dans la liste
+        if (!selectedFiles.find(f => f.name === file.name && f.size === file.size)) {
+          selectedFiles.push(file);
+        }
+      });
+      
+      displaySelectedFiles();
+      
+      // Réinitialiser l'input pour permettre de sélectionner le même fichier à nouveau
+      e.target.value = '';
+    });
+  }
+  
+  // Gestion de la soumission du formulaire
+  if (aiChatForm) {
+    aiChatForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const message = aiChatInput.value.trim();
+      
+      // Vérifier qu'il y a au moins un message ou un fichier
+      if (!message && selectedFiles.length === 0) return;
+      
+      // Construire le message avec les fichiers
+      let fullMessage = message;
+      if (selectedFiles.length > 0) {
+        const fileNames = selectedFiles.map(f => f.name).join(', ');
+        fullMessage = message 
+          ? `${message}\n\n📎 Fichiers joints: ${fileNames}`
+          : `📎 Fichiers joints: ${fileNames}`;
+      }
+      
+      // Ajouter le message de l'utilisateur
+      addUserMessage(fullMessage);
+      
+      // Vider le champ de saisie et les fichiers
+      aiChatInput.value = '';
+      selectedFiles = [];
+      displaySelectedFiles();
+      adjustTextareaHeight();
+      
+      // Désactiver le bouton d'envoi
+      if (aiChatSendBtn) {
+        aiChatSendBtn.disabled = true;
+      }
+      
+      // Afficher l'indicateur de frappe
+      showTypingIndicator();
+      
+      // Simuler une réponse de l'IA après un délai
+      setTimeout(() => {
+        removeTypingIndicator();
+        const aiResponse = generateAIResponse(message || 'fichier');
+        addAIMessage(aiResponse);
+        
+        // Réactiver le bouton d'envoi
+        if (aiChatSendBtn) {
+          aiChatSendBtn.disabled = false;
+        }
+      }, 1500 + Math.random() * 1000); // Délai aléatoire entre 1.5s et 2.5s
+    });
+  }
+  
+  // Ajuster la hauteur du textarea lors de la saisie
+  if (aiChatInput) {
+    aiChatInput.addEventListener('input', adjustTextareaHeight);
+    
+    // Gérer l'ajustement de la hauteur au chargement
+    adjustTextareaHeight();
+  }
+  
+  // Gestion du menu header pour l'assistant IA
+  const aiHeaderMenuBtn = document.getElementById('aiHeaderMenuBtn');
+  const aiHeaderDropdownMenu = document.getElementById('aiHeaderDropdownMenu');
+  const aiLogoutBtn = document.getElementById('aiLogoutBtn');
+  
+  if (aiHeaderMenuBtn && aiHeaderDropdownMenu) {
+    aiHeaderMenuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = aiHeaderDropdownMenu.classList.contains('show');
+      
+      // Fermer tous les autres menus
+      document.querySelectorAll('.header-dropdown-menu').forEach(menu => {
+        menu.classList.remove('show');
+      });
+      
+      if (!isOpen) {
+        aiHeaderDropdownMenu.classList.add('show');
+      }
+    });
+  }
+  
+  // Fermer le menu en cliquant ailleurs
+  document.addEventListener('click', (e) => {
+    if (aiHeaderDropdownMenu && !aiHeaderDropdownMenu.contains(e.target) && 
+        aiHeaderMenuBtn && !aiHeaderMenuBtn.contains(e.target)) {
+      aiHeaderDropdownMenu.classList.remove('show');
+    }
+  });
+  
+  // Gestion de la déconnexion
+  if (aiLogoutBtn) {
+    aiLogoutBtn.addEventListener('click', () => {
+      // Nettoyer le localStorage
+      Object.keys(localStorage).forEach(key => {
+        localStorage.removeItem(key);
+      });
+      
+      // Rediriger vers la page de choix de rôle
+      window.location.href = ROUTES.CHOOSE_ROLE;
+    });
+  }
+}
+
+// ============================================
+// Page Notifications - Interface Facebook
+// ============================================
+if (document.getElementById('notificationListContainer')) {
+  const notificationListContainer = document.getElementById('notificationListContainer');
+  const notificationEmptyState = document.getElementById('notificationEmptyState');
+  
+  // Données de notifications (simulation)
+  const notifications = [
+    {
+      id: 1,
+      type: 'message',
+      title: 'Nouveau message',
+      text: 'Vous avez reçu un nouveau message de la classe 6ème Année A',
+      time: 'Il y a 5 minutes',
+      unread: true,
+      icon: 'chatbubble-outline',
+      avatar: null
+    },
+    {
+      id: 2,
+      type: 'assignment',
+      title: 'Nouveau devoir',
+      text: 'Un nouveau devoir a été publié pour la classe 4ème Année ب',
+      time: 'Il y a 1 heure',
+      unread: true,
+      icon: 'document-text-outline',
+      avatar: null
+    },
+    {
+      id: 3,
+      type: 'event',
+      title: 'Événement à venir',
+      text: 'Réunion parents-professeurs prévue le 15 mars à 15h',
+      time: 'Hier',
+      unread: false,
+      icon: 'calendar-outline',
+      avatar: null
+    },
+    {
+      id: 4,
+      type: 'announcement',
+      title: 'Annonce importante',
+      text: 'Sortie scolaire prévue le 20 mars - Autorisation requise',
+      time: 'Il y a 2 jours',
+      unread: false,
+      icon: 'megaphone-outline',
+      avatar: null
+    },
+    {
+      id: 5,
+      type: 'grade',
+      title: 'Nouvelle note',
+      text: 'Une nouvelle note a été ajoutée pour le contrôle de mathématiques',
+      time: 'Il y a 3 jours',
+      unread: false,
+      icon: 'school-outline',
+      avatar: null
+    }
+  ];
+  
+  // Fonction pour formater le temps relatif
+  function formatRelativeTime(timeString) {
+    return timeString;
+  }
+  
+  // Fonction pour obtenir l'icône selon le type
+  function getNotificationIcon(type) {
+    const icons = {
+      'message': 'chatbubble-outline',
+      'assignment': 'document-text-outline',
+      'event': 'calendar-outline',
+      'announcement': 'megaphone-outline',
+      'grade': 'school-outline',
+      'default': 'notifications-outline'
+    };
+    return icons[type] || icons.default;
+  }
+  
+  // Fonction pour obtenir la couleur de l'icône
+  function getNotificationIconColor(type) {
+    const colors = {
+      'message': '#1877f2',
+      'assignment': '#42b883',
+      'event': '#f39c12',
+      'announcement': '#e74c3c',
+      'grade': '#9b59b6',
+      'default': '#65676b'
+    };
+    return colors[type] || colors.default;
+  }
+  
+  // Fonction pour rendre les notifications
+  function renderNotifications(notificationsList) {
+    if (!notificationListContainer) return;
+    
+    notificationListContainer.innerHTML = '';
+    
+    if (!notificationsList || notificationsList.length === 0) {
+      if (notificationEmptyState) {
+        notificationEmptyState.style.display = 'flex';
+      }
+      return;
+    }
+    
+    if (notificationEmptyState) {
+      notificationEmptyState.style.display = 'none';
+    }
+    
+    notificationsList.forEach((notification, index) => {
+      const notificationCard = document.createElement('div');
+      notificationCard.className = `notification-card ${notification.unread ? 'unread' : ''}`;
+      notificationCard.style.animationDelay = `${index * 0.05}s`;
+      
+      const iconName = getNotificationIcon(notification.type);
+      const iconColor = getNotificationIconColor(notification.type);
+      
+      notificationCard.innerHTML = `
+        <div class="notification-content">
+          <div class="notification-icon-wrapper" style="background-color: ${iconColor}20;">
+            <ion-icon name="${iconName}" style="color: ${iconColor};"></ion-icon>
+          </div>
+          <div class="notification-info">
+            <p class="notification-text">
+              <strong>${notification.title}</strong><br>
+              ${notification.text}
+            </p>
+            <div class="notification-time">
+              <ion-icon name="time-outline"></ion-icon>
+              <span>${formatRelativeTime(notification.time)}</span>
+            </div>
+            ${notification.unread ? '<div class="notification-actions"><button class="notification-action-btn primary" type="button"><ion-icon name="checkmark-outline"></ion-icon><span>Marquer comme lu</span></button></div>' : ''}
+          </div>
+          ${notification.unread ? '<div class="notification-badge"></div>' : ''}
+        </div>
+      `;
+      
+      // Gérer le clic sur la carte
+      const content = notificationCard.querySelector('.notification-content');
+      content.addEventListener('click', () => {
+        // Marquer comme lu
+        if (notification.unread) {
+          notification.unread = false;
+          renderNotifications(notificationsList);
+        }
+      });
+      
+      // Gérer le bouton "Marquer comme lu"
+      const markReadBtn = notificationCard.querySelector('.notification-action-btn');
+      if (markReadBtn) {
+        markReadBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          notification.unread = false;
+          renderNotifications(notificationsList);
+        });
+      }
+      
+      notificationListContainer.appendChild(notificationCard);
+    });
+  }
+  
+  // Afficher les notifications au chargement
+  renderNotifications(notifications);
+  
+  // Gestion du menu header pour les notifications
+  const notificationHeaderMenuBtn = document.getElementById('notificationHeaderMenuBtn');
+  const notificationHeaderDropdownMenu = document.getElementById('notificationHeaderDropdownMenu');
+  const notificationLogoutBtn = document.getElementById('notificationLogoutBtn');
+  
+  if (notificationHeaderMenuBtn && notificationHeaderDropdownMenu) {
+    notificationHeaderMenuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = notificationHeaderDropdownMenu.classList.contains('show');
+      
+      // Fermer tous les autres menus
+      document.querySelectorAll('.header-dropdown-menu').forEach(menu => {
+        menu.classList.remove('show');
+      });
+      
+      if (!isOpen) {
+        notificationHeaderDropdownMenu.classList.add('show');
+      }
+    });
+  }
+  
+  // Fermer le menu en cliquant ailleurs
+  document.addEventListener('click', (e) => {
+    if (notificationHeaderDropdownMenu && !notificationHeaderDropdownMenu.contains(e.target) && 
+        notificationHeaderMenuBtn && !notificationHeaderMenuBtn.contains(e.target)) {
+      notificationHeaderDropdownMenu.classList.remove('show');
+    }
+  });
+  
+  // Gestion de la déconnexion
+  if (notificationLogoutBtn) {
+    notificationLogoutBtn.addEventListener('click', () => {
+      // Nettoyer le localStorage
+      Object.keys(localStorage).forEach(key => {
+        localStorage.removeItem(key);
+      });
+      
+      // Rediriger vers la page de choix de rôle
+      window.location.href = ROUTES.CHOOSE_ROLE;
     });
   }
 }

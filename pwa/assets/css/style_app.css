@@ -751,6 +751,13 @@ body.email-signup-page {
   color: var(--color-primary);
   text-decoration: none;
   font-size: 24px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 400;
   padding: 8px 0;
   display: inline-flex !important;
