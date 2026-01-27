@@ -10,9 +10,9 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="theme-color" content="#002FBD" />
   <meta name="mobile-web-app-capable" content="yes" />
-  <title>Mes Abonnements | Droussi</title>
-  <meta name="description" content="Gérez vos abonnements sur Droussi" />
-  <meta name="keywords" content="éducation, Tunisie, abonnements, classes, Droussi" />
+  <title>Notifications | Droussi</title>
+  <meta name="description" content="Vos notifications sur Droussi" />
+  <meta name="keywords" content="éducation, Tunisie, notifications, Droussi" />
   <link rel="icon" type="image/png" href="assets/img/droussi icons/android/android-launchericon-72-72.png"
     sizes="32x32" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/img/droussi icons/android/android-launchericon-192-192.png" />
@@ -20,23 +20,23 @@
   <link rel="manifest" href="__manifest.json" />
 </head>
 
-<body class="app-style-page">
+<body class="app-style-page notification-page">
   <!-- Header Application Style -->
   <header class="app-header parent-header">
     <div class="app-header-content">
       <div class="app-logo-container">
-        <button type="button" class="subscription-back-btn" onclick="window.history.back()">
+        <button type="button" class="notification-back-btn" onclick="window.history.back()">
           <ion-icon name="arrow-back-outline"></ion-icon>
         </button>
-        <img src="assets/img/logo_ar_droussi_blue_w170.png" alt="Droussi" class="app-logo" />
+        <h1 class="notification-page-title">Notifications</h1>
       </div>
       <div class="app-header-actions">
-        <button class="app-icon-btn" id="headerMenuBtn" aria-label="Menu">
+        <button class="app-icon-btn" id="notificationHeaderMenuBtn" aria-label="Menu">
           <ion-icon name="ellipsis-vertical-outline"></ion-icon>
         </button>
         <!-- Menu déroulant -->
-        <div class="header-dropdown-menu" id="headerDropdownMenu">
-          <button class="header-menu-item" id="logoutBtn">
+        <div class="header-dropdown-menu" id="notificationHeaderDropdownMenu">
+          <button class="header-menu-item" id="notificationLogoutBtn">
             <ion-icon name="log-out-outline"></ion-icon>
             <span>Déconnexion</span>
           </button>
@@ -46,21 +46,18 @@
   </header>
 
   <!-- Contenu principal -->
-  <main class="app-main-content">
-    <!-- Container pour la liste des abonnements -->
-    <div class="subscription-list-container" id="subscriptionListContainer">
-      <!-- Message si aucun abonnement -->
-      <div class="subscription-empty-state" id="subscriptionEmptyState" style="display: none;">
-        <div class="empty-state-icon">
-          <ion-icon name="card-outline"></ion-icon>
+  <main class="app-main-content notification-main-content">
+    <!-- Container pour les notifications -->
+    <div class="notification-list-container" id="notificationListContainer">
+      <!-- Message si aucune notification -->
+      <div class="notification-empty-state" id="notificationEmptyState" style="display: none;">
+        <div class="notification-empty-icon">
+          <ion-icon name="notifications-outline"></ion-icon>
         </div>
-        <h3 class="empty-state-title">Aucun abonnement</h3>
-        <p class="empty-state-text">Vous n'avez pas encore d'abonnement actif.</p>
-        <a href="gouvernorat.html" class="empty-state-btn">
-          S'abonner maintenant
-        </a>
+        <h3 class="notification-empty-title">Aucune notification</h3>
+        <p class="notification-empty-text">Vous n'avez pas encore de notifications.</p>
       </div>
-      <!-- Les abonnements seront générés dynamiquement -->
+      <!-- Les notifications seront générées dynamiquement -->
     </div>
   </main>
 
@@ -70,7 +67,7 @@
       <ion-icon name="home"></ion-icon>
       <span>Accueil</span>
     </a>
-    <a href="abonnement.html" class="app-nav-item active">
+    <a href="abonnement.html" class="app-nav-item">
       <ion-icon name="card-outline"></ion-icon>
       <span>Abonnement</span>
     </a>
@@ -83,11 +80,6 @@
       <span>Menu</span>
     </a>
   </nav>
-
-  <!-- Floating Action Button -->
-  <button class="app-fab" id="addSubscriptionBtn" aria-label="Ajouter un abonnement">
-    <ion-icon name="add-outline"></ion-icon>
-  </button>
 
   <script src="assets/js/app.js"></script>
   <!-- Ionicons -->
