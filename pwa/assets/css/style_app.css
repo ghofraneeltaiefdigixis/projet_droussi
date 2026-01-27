@@ -751,6 +751,13 @@ body.email-signup-page {
   color: var(--color-primary);
   text-decoration: none;
   font-size: 24px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 400;
   padding: 8px 0;
   display: inline-flex !important;
@@ -4208,4 +4215,2298 @@ body.governorat-page {
   .chat-message {
     font-size: 13px;
   }
+<<<<<<< Updated upstream
+=======
+
+  .teacher-welcome-section {
+    padding: 16px 12px;
+  }
+
+  .teacher-welcome-card {
+    padding: 20px;
+  }
+
+  .teacher-welcome-icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .teacher-welcome-icon ion-icon {
+    font-size: 28px;
+  }
+
+  .teacher-welcome-title {
+    font-size: 20px;
+  }
+
+  .teacher-welcome-text {
+    font-size: 14px;
+  }
+
+  .parent-posts-container {
+    padding: 8px 4px;
+    gap: 8px;
+  }
+
+  .parent-post {
+    padding: 10px 12px;
+    margin-bottom: 0;
+    border-radius: 0;
+  }
+
+  .parent-post:first-child {
+    border-radius: 8px 8px 0 0;
+  }
+
+  .parent-post:last-child {
+    border-radius: 0 0 8px 8px;
+    margin-bottom: 0;
+  }
+
+  .parent-post-avatar {
+    width: 36px;
+    height: 36px;
+    margin-right: 10px;
+  }
+
+  .parent-avatar-placeholder {
+    font-size: 14px;
+  }
+
+  .parent-post-author {
+    font-size: 14px;
+  }
+
+  .parent-post-meta {
+    font-size: 12px;
+  }
+
+  .parent-post-text {
+    font-size: 14px;
+  }
+
+  .parent-post-action-btn {
+    font-size: 13px;
+    padding: 6px 2px;
+    gap: 4px;
+  }
+
+  .parent-post-action-btn ion-icon {
+    font-size: 16px;
+  }
+
+  .teacher-stats-section {
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .teacher-stat-card {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .teacher-stat-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .teacher-stat-icon ion-icon {
+    font-size: 20px;
+  }
+
+  .teacher-stat-value {
+    font-size: 18px;
+  }
+
+  .teacher-stat-label {
+    font-size: 11px;
+  }
+
+  .section-title {
+    font-size: 16px;
+  }
+
+  .section-link {
+    font-size: 13px;
+  }
+}
+
+/* ============================================
+   Modal de bienvenue
+   ============================================ */
+.welcome-modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 12000;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity var(--transition-slow);
+  pointer-events: none;
+}
+
+.welcome-modal.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.welcome-modal-backdrop {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 12001;
+}
+
+.welcome-modal-dialog {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 12002;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  transform: translateY(100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.welcome-modal.show .welcome-modal-dialog {
+  transform: translateY(0);
+}
+
+.welcome-modal-content {
+  width: 100%;
+  max-width: 100%;
+  max-height: 70vh;
+  min-height: 350px;
+  border: 0;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background: var(--color-bg-primary);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.28);
+  position: relative;
+  padding-top: var(--spacing-md);
+}
+
+.welcome-modal-handle {
+  width: 40px;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+  margin: 0 auto 20px;
+  flex-shrink: 0;
+}
+
+.welcome-modal-body {
+  padding: 0 var(--spacing-xl) var(--spacing-xxl) var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xxl);
+  align-items: center;
+  text-align: center;
+  flex: 1;
+  justify-content: center;
+}
+
+.welcome-modal-title {
+  font-size: var(--spacing-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-lg) 0;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.welcome-modal-text {
+  font-size: var(--font-size-md);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-xl) 0;
+  line-height: 1.6;
+  text-align: center;
+  max-width: 90%;
+}
+
+.welcome-modal-btn {
+  width: 100%;
+  padding: 14px var(--spacing-xl);
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: background-color var(--transition-base), transform var(--transition-fast);
+  margin-top: var(--spacing-lg);
+}
+
+.welcome-modal-btn:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.welcome-modal-btn:active {
+  transform: scale(0.98);
+  background-color: var(--color-primary-active);
+}
+
+/* Responsive pour mobile */
+@media screen and (max-width: 480px) {
+  .welcome-modal-content {
+    border-radius: 20px 20px 0 0;
+    padding-top: 10px;
+    max-height: 65vh;
+    min-height: 300px;
+  }
+
+  .welcome-modal-handle {
+    width: 36px;
+    height: 3px;
+    margin-bottom: 18px;
+  }
+
+  .welcome-modal-body {
+    padding: 0 20px 28px 20px;
+    gap: 24px;
+    text-align: center;
+    align-items: center;
+  }
+
+  .welcome-modal-title {
+    font-size: 22px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .welcome-modal-text {
+    font-size: 15px;
+    text-align: center;
+    max-width: 90%;
+    margin-bottom: 20px;
+  }
+
+  .welcome-modal-btn {
+    padding: 12px 20px;
+    font-size: 15px;
+    margin-top: 16px;
+  }
+}
+
+/* ============================================
+   Classes utilitaires communes pour modals
+   ============================================ */
+.modal-base {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 12000;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity var(--transition-slow);
+  pointer-events: none;
+}
+
+.modal-base.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-backdrop-base {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 12001;
+}
+
+/* ============================================
+   Modal de confirmation d'abonnement
+   ============================================ */
+.subscription-modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 12000;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity var(--transition-slow);
+  pointer-events: none;
+}
+
+.subscription-modal.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.subscription-modal-backdrop {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 12001;
+}
+
+.subscription-modal-content {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 12002;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-primary);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.28);
+  max-height: 80vh;
+  overflow-y: auto;
+  transform: translateY(100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.subscription-modal.show .subscription-modal-content {
+  transform: translateY(0);
+}
+
+.subscription-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-lg) var(--spacing-xl);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+  background: var(--color-bg-primary);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.subscription-modal-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin: 0;
+  flex: 1;
+}
+
+.subscription-modal-close {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  transition: background-color var(--transition-base);
+  flex-shrink: 0;
+}
+
+.subscription-modal-close:hover {
+  background-color: var(--color-bg-hover);
+}
+
+.subscription-modal-close ion-icon {
+  font-size: var(--font-size-xl);
+}
+
+.subscription-details {
+  padding: var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.subscription-main-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.subscription-name-section {
+  flex: 1;
+}
+
+.subscription-name {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-xs) 0;
+}
+
+.subscription-validity {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.subscription-amount-section {
+  flex-shrink: 0;
+}
+
+.subscription-amount {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+}
+
+.subscription-classes-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.subscription-pricing {
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.subscription-price {
+  font-size: var(--spacing-xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.subscription-actions {
+  padding: var(--spacing-lg) var(--spacing-xl) var(--spacing-xl) var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  flex-shrink: 0;
+}
+
+.subscription-btn-primary,
+.subscription-btn-secondary {
+  width: 100%;
+  padding: 14px var(--spacing-xl);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.subscription-btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
+}
+
+.subscription-btn-primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.subscription-btn-primary:active {
+  background-color: var(--color-primary-active);
+  transform: scale(0.98);
+}
+
+.subscription-btn-secondary {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+}
+
+.subscription-btn-secondary:hover {
+  background-color: var(--color-bg-tertiary);
+}
+
+.subscription-btn-secondary:active {
+  background-color: var(--color-bg-active);
+  transform: scale(0.98);
+}
+
+/* Responsive pour mobile */
+@media screen and (max-width: 480px) {
+  .subscription-modal-content {
+    border-radius: 20px 20px 0 0;
+    max-height: 85vh;
+  }
+
+  .subscription-modal-header {
+    padding: 18px 20px;
+  }
+
+  .subscription-modal-title {
+    font-size: 18px;
+  }
+
+  .subscription-modal-close {
+    width: 36px;
+    height: 36px;
+  }
+
+  .subscription-modal-close ion-icon {
+    font-size: 22px;
+  }
+
+  .subscription-details {
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .subscription-name {
+    font-size: 16px;
+  }
+
+  .subscription-validity {
+    font-size: 13px;
+  }
+
+  .subscription-price {
+    font-size: 22px;
+  }
+
+  .subscription-actions {
+    padding: 16px 20px 20px 20px;
+  }
+
+  .subscription-btn-primary,
+  .subscription-btn-secondary {
+    padding: 12px 20px;
+    font-size: 15px;
+  }
+}
+
+/* ============================================
+   Page Chat - Interface unidirectionnelle (Enseignant → Parents)
+   Style inspiré de WhatsApp
+   ============================================ */
+
+.chat-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #ece5dd;
+  background-image: url("../img/chat-background.png");
+  background-size: auto;
+  background-position: top left;
+  background-repeat: repeat;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Header du chat */
+.chat-header {
+  background-color: #ffffff;
+  padding: 8px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.chat-header-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 100%;
+  min-height: 56px;
+  box-sizing: border-box;
+}
+
+.chat-back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: #54656f;
+  text-decoration: none;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.chat-back-btn:hover {
+  background-color: #f0f2f5;
+}
+
+.chat-back-btn ion-icon {
+  font-size: 24px;
+}
+
+.chat-header-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.chat-header-avatar {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.chat-header-avatar .avatar-placeholder {
+  font-size: 14px;
+}
+
+.chat-header-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.chat-header-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #111b21;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-header-subtitle {
+  font-size: 13px;
+  color: #667781;
+  margin: 2px 0 0 0;
+}
+
+.chat-header-menu-btn {
+  background: none;
+  border: none;
+  color: #54656f;
+  font-size: 22px;
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  flex-shrink: 0;
+}
+
+.chat-header-menu-btn:hover {
+  background-color: #f0f2f5;
+}
+
+/* Zone de messages */
+.chat-messages-container {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 10px 8px 10px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.chat-message-item {
+  display: flex;
+  width: 100%;
+  animation: fadeIn 0.3s ease;
+  margin-bottom: 1px;
+  box-sizing: border-box;
+}
+
+.chat-message-item.sent {
+  justify-content: flex-end;
+  padding-left: 0;
+  padding-right: 8px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chat-message-bubble {
+  max-width: 65%;
+  min-width: 60px;
+  padding: 6px 7px 8px 9px;
+  border-radius: 7.5px;
+  position: relative;
+  word-wrap: break-word;
+  box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+  box-sizing: border-box;
+}
+
+.chat-message-bubble.sent {
+  background-color: #dcf8c6;
+  margin-left: auto;
+  border-bottom-right-radius: 0;
+  position: relative;
+}
+
+.chat-message-bubble.sent::after {
+  content: '';
+  position: absolute;
+  right: -8px;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 13px 8px;
+  border-color: transparent transparent #dcf8c6 transparent;
+  filter: drop-shadow(0 1px 0.5px rgba(0, 0, 0, 0.13));
+}
+
+.chat-message-text {
+  font-size: 14.2px;
+  line-height: 19px;
+  color: #111b21;
+  margin: 0;
+  word-break: break-word;
+  padding: 0;
+  white-space: pre-wrap;
+}
+
+.chat-message-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 3px;
+  margin-top: 2px;
+  margin-left: 8px;
+  float: right;
+  clear: both;
+}
+
+.chat-message-time {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.45);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.chat-message-status {
+  font-size: 16px;
+  color: #53bdeb;
+  flex-shrink: 0;
+  margin-left: 2px;
+  line-height: 1;
+}
+
+/* Zone de saisie */
+.chat-input-container {
+  background-color: #f0f2f5;
+  border-top: 1px solid #d4d4d4;
+  padding: 6px 8px;
+  position: sticky;
+  bottom: 0;
+  z-index: 100;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.chat-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #ffffff;
+  border-radius: 21px;
+  padding: 5px 2px 5px 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  min-height: 42px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.chat-attach-btn {
+  background: none;
+  border: none;
+  color: #54656f;
+  font-size: 24px;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+}
+
+.chat-attach-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.chat-input {
+  flex: 1;
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 15px;
+  color: #111b21;
+  padding: 9px 8px 9px 4px;
+  font-family: var(--font-family);
+  resize: none;
+  max-height: 100px;
+  line-height: 20px;
+  min-height: 20px;
+  box-sizing: border-box;
+}
+
+.chat-input::placeholder {
+  color: #999999;
+}
+
+.chat-send-btn {
+  background-color: #25d366;
+  border: none;
+  color: white;
+  font-size: 20px;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  margin-right: 2px;
+}
+
+.chat-send-btn:hover {
+  background-color: #20ba5a;
+  transform: scale(1.05);
+}
+
+.chat-send-btn:active {
+  transform: scale(0.95);
+}
+
+.chat-send-btn:disabled {
+  background-color: #cbd5e0;
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.6;
+}
+
+/* Responsive pour la page chat */
+@media (max-width: 480px) {
+  .chat-header {
+    padding: 6px 12px;
+  }
+
+  .chat-header-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .chat-header-title {
+    font-size: 15px;
+  }
+
+  .chat-header-subtitle {
+    font-size: 12px;
+  }
+
+  .chat-messages-container {
+    padding: 8px 4px 8px 12px;
+    gap: 1px;
+  }
+
+  .chat-message-item.sent {
+    padding-right: 4px;
+  }
+
+  .chat-message-bubble {
+    max-width: 80%;
+    padding: 6px 7px 8px 9px;
+  }
+
+  .chat-message-text {
+    font-size: 14px;
+  }
+
+  .chat-input-container {
+    padding: 6px 10px;
+  }
+
+  .chat-input-wrapper {
+    padding: 6px 10px;
+  }
+
+  .chat-send-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+  }
+}
+
+/* ============================================
+   Page Abonnement - Liste des abonnements
+   ============================================ */
+
+/* Bouton retour dans le header */
+.subscription-back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-right: 12px;
+  border-radius: 50%;
+  color: #050505;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.subscription-back-btn ion-icon {
+  font-size: 24px;
+}
+
+.subscription-back-btn:hover {
+  background-color: #f0f2f5;
+}
+
+.subscription-back-btn:active {
+  background-color: #e4e6eb;
+}
+
+/* Container de la liste */
+.subscription-list-container {
+  padding: 20px 16px;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: calc(100vh - 140px);
+}
+
+@media (min-width: 768px) {
+  .subscription-list-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 24px 20px;
+    gap: 24px;
+  }
+}
+
+/* Carte d'abonnement */
+.subscription-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid #e4e6eb;
+  animation: fadeInUp 0.4s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.subscription-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.subscription-card:active {
+  transform: translateY(0);
+}
+
+/* En-tête de la carte */
+.subscription-card-header {
+  display: flex;
+  align-items: center;
+  padding: 18px 20px;
+  border-bottom: 1px solid #e4e6eb;
+  gap: 14px;
+  background: linear-gradient(to bottom, #ffffff 0%, #fafbfc 100%);
+}
+
+.subscription-avatar {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+}
+
+.subscription-avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #002FBD 0%, #0040e6 50%, #0052ff 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 20px;
+  box-shadow: 0 2px 8px rgba(0, 47, 189, 0.25);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.subscription-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.subscription-card-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #050505;
+  margin: 0 0 6px 0;
+  line-height: 1.3;
+  letter-spacing: -0.2px;
+}
+
+.subscription-card-location {
+  font-size: 14px;
+  color: #65676b;
+  margin: 0;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.subscription-card-location::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #65676b;
+  margin-right: 2px;
+}
+
+.subscription-card-menu {
+  background: none;
+  border: none;
+  color: #65676b;
+  font-size: 20px;
+  padding: 4px;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+}
+
+.subscription-card-menu:hover {
+  background-color: #f0f2f5;
+}
+
+/* Corps de la carte */
+.subscription-card-body {
+  padding: 20px;
+  background-color: #ffffff;
+}
+
+.subscription-classes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.subscription-class-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: linear-gradient(to right, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 10px;
+  border: 1px solid #e4e6eb;
+  transition: all 0.2s ease;
+}
+
+.subscription-class-item:hover {
+  background: linear-gradient(to right, #f0f2f5 0%, #f8f9fa 100%);
+  border-color: #d0d3d8;
+  transform: translateX(2px);
+}
+
+.subscription-class-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+}
+
+.subscription-class-icon {
+  font-size: 22px;
+  color: #002FBD;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #002FBD 0%, #0040e6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subscription-class-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #050505;
+  letter-spacing: -0.1px;
+}
+
+.subscription-class-status {
+  flex-shrink: 0;
+}
+
+.subscription-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.subscription-status-badge.active {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  color: #155724;
+  border: 1px solid #b8dcc2;
+}
+
+/* Pied de la carte */
+.subscription-card-footer {
+  padding: 14px 20px;
+  border-top: 1px solid #e4e6eb;
+  background: linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%);
+}
+
+.subscription-card-stats {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.subscription-stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #65676b;
+}
+
+.subscription-stat ion-icon {
+  font-size: 18px;
+  color: #002FBD;
+  opacity: 0.7;
+}
+
+.subscription-date {
+  font-size: 13px;
+  font-weight: 600;
+  color: #050505;
+  padding: 4px 10px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e4e6eb;
+}
+
+/* État vide */
+.subscription-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+  min-height: 500px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+
+}
+
+.empty-state-icon {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f0f2f5 0%, #e4e6eb 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 3px solid #ffffff;
+}
+
+.empty-state-icon ion-icon {
+  font-size: 48px;
+  color: #002FBD;
+  opacity: 0.6;
+}
+
+.empty-state-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #050505;
+  margin: 0 0 12px 0;
+  letter-spacing: -0.3px;
+}
+
+.empty-state-text {
+  font-size: 16px;
+  color: #65676b;
+  margin: 0 0 32px 0;
+  max-width: 320px;
+  line-height: 1.5;
+}
+
+.empty-state-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, #002FBD 0%, #0040e6 100%);
+  color: white;
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 700;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 47, 189, 0.3);
+  border: none;
+}
+
+.empty-state-btn:hover {
+  background: linear-gradient(135deg, #0024a0 0%, #0033cc 100%);
+  box-shadow: 0 6px 16px rgba(0, 47, 189, 0.4);
+  transform: translateY(-2px);
+}
+
+.empty-state-btn:active {
+  background: linear-gradient(135deg, #001d7a 0%, #0026b3 100%);
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 47, 189, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .subscription-back-btn {
+    width: 36px;
+    height: 36px;
+    margin-right: 8px;
+  }
+
+  .subscription-back-btn ion-icon {
+    font-size: 22px;
+  }
+
+  .subscription-list-container {
+    padding: 16px 12px;
+    gap: 16px;
+  }
+
+  .subscription-card {
+    border-radius: 12px;
+  }
+
+  .subscription-card-header {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .subscription-avatar {
+    width: 48px;
+    height: 48px;
+  }
+
+  .subscription-avatar-placeholder {
+    font-size: 18px;
+  }
+
+  .subscription-card-title {
+    font-size: 16px;
+  }
+
+  .subscription-card-location {
+    font-size: 13px;
+  }
+
+  .subscription-card-body {
+    padding: 16px;
+  }
+
+  .subscription-class-item {
+    padding: 12px 14px;
+  }
+
+  .subscription-class-icon {
+    font-size: 20px;
+  }
+
+  .subscription-class-name {
+    font-size: 14px;
+  }
+
+  .subscription-card-footer {
+    padding: 12px 16px;
+  }
+
+  .subscription-empty-state {
+    padding: 60px 16px;
+    min-height: 400px;
+  }
+
+  .empty-state-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 24px;
+  }
+
+  .empty-state-icon ion-icon {
+    font-size: 40px;
+  }
+
+  .empty-state-title {
+    font-size: 20px;
+  }
+
+  .empty-state-text {
+    font-size: 15px;
+    max-width: 280px;
+  }
+
+  .empty-state-btn {
+    padding: 12px 24px;
+    font-size: 15px;
+  }
+}
+
+/* ============================================
+   Page Assistant IA - Interface ChatGPT
+   ============================================ */
+
+/* Page principale */
+.ai-chat-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+/* Header */
+.ai-chat-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.ai-chat-back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-right: 12px;
+  border-radius: 50%;
+  color: #050505;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.ai-chat-back-btn ion-icon {
+  font-size: 24px;
+}
+
+.ai-chat-back-btn:hover {
+  background-color: #f0f2f5;
+}
+
+.ai-chat-header-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ai-icon {
+  font-size: 24px;
+  color: #002FBD;
+}
+
+.ai-chat-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #050505;
+  margin: 0;
+}
+
+/* Container de messages */
+.ai-chat-messages-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 16px 80px;
+  background-color: #ffffff;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Message de bienvenue */
+.ai-welcome-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.ai-welcome-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #002FBD 0%, #0040e6 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 47, 189, 0.2);
+}
+
+.ai-welcome-icon ion-icon {
+  font-size: 32px;
+  color: white;
+}
+
+.ai-welcome-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #050505;
+  margin: 0 0 12px 0;
+}
+
+.ai-welcome-text {
+  font-size: 15px;
+  color: #65676b;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Messages */
+.ai-message {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  animation: fadeInMessage 0.3s ease-out;
+  max-width: 85%;
+}
+
+@keyframes fadeInMessage {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ai-message.user {
+  flex-direction: row-reverse;
+  margin-left: auto;
+}
+
+.ai-message-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.ai-message.user .ai-message-avatar {
+  background: linear-gradient(135deg, #002FBD 0%, #0040e6 100%);
+  color: white;
+}
+
+.ai-message.assistant .ai-message-avatar {
+  background-color: #e4e6eb;
+  color: #050505;
+}
+
+.ai-message.assistant .ai-message-avatar ion-icon {
+  font-size: 18px;
+  color: #002FBD;
+}
+
+.ai-message-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.ai-message-bubble {
+  padding: 12px 16px;
+  border-radius: 18px;
+  word-wrap: break-word;
+  line-height: 1.5;
+  position: relative;
+}
+
+.ai-message.user .ai-message-bubble {
+  background: linear-gradient(135deg, #002FBD 0%, #0040e6 100%);
+  color: white;
+  border-bottom-right-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 47, 189, 0.2);
+}
+
+.ai-message.assistant .ai-message-bubble {
+  background-color: #f0f2f5;
+  color: #050505;
+  border-bottom-left-radius: 4px;
+}
+
+.ai-message-text {
+  font-size: 15px;
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.ai-message-time {
+  font-size: 11px;
+  color: #65676b;
+  margin-top: 4px;
+  padding: 0 4px;
+  opacity: 0.7;
+}
+
+.ai-message.user .ai-message-time {
+  text-align: right;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Zone de saisie */
+.ai-chat-input-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  border-top: 1px solid #e5e5e5;
+  padding: 12px 16px;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+  z-index: 100;
+}
+
+.ai-chat-form {
+  max-width: 100%;
+}
+
+/* Zone de prévisualisation des fichiers */
+.ai-chat-files-preview {
+  padding: 8px 16px;
+  border-bottom: 1px solid #e5e5e5;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.ai-chat-file-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #f0f2f5;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 13px;
+  color: #050505;
+  max-width: 200px;
+}
+
+.ai-chat-file-item img {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.ai-chat-file-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.ai-chat-file-item-name {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+}
+
+.ai-chat-file-item-size {
+  font-size: 11px;
+  color: #65676b;
+}
+
+.ai-chat-file-item-remove {
+  background: none;
+  border: none;
+  color: #65676b;
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  transition: background-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.ai-chat-file-item-remove:hover {
+  background-color: #e4e6eb;
+  color: #050505;
+}
+
+.ai-chat-file-item-remove ion-icon {
+  font-size: 14px;
+}
+
+.ai-chat-input-wrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  background-color: #f0f2f5;
+  border-radius: 24px;
+  padding: 8px 12px;
+  border: 1px solid #e4e6eb;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ai-chat-input-wrapper:focus-within {
+  border-color: #002FBD;
+  box-shadow: 0 0 0 3px rgba(0, 47, 189, 0.1);
+  background-color: #ffffff;
+}
+
+.ai-chat-input {
+  flex: 1;
+  border: none;
+  background: none;
+  font-size: 15px;
+  color: #050505;
+  resize: none;
+  max-height: 120px;
+  overflow-y: auto;
+  font-family: inherit;
+  line-height: 1.5;
+  padding: 4px 0;
+  min-height: 20px;
+}
+
+.ai-chat-input::placeholder {
+  color: #65676b;
+}
+
+.ai-chat-input:focus {
+  outline: none;
+}
+
+/* Bouton d'upload de fichier */
+.ai-chat-file-input {
+  display: none;
+}
+
+.ai-chat-file-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: transparent;
+  color: #65676b;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.ai-chat-file-btn:hover {
+  background-color: #e4e6eb;
+  color: #050505;
+}
+
+.ai-chat-file-btn:active {
+  transform: scale(0.95);
+}
+
+.ai-chat-file-btn ion-icon {
+  font-size: 20px;
+}
+
+.ai-chat-send-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #002FBD 0%, #0040e6 100%);
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 47, 189, 0.2);
+}
+
+.ai-chat-send-btn:hover {
+  background: linear-gradient(135deg, #0024a0 0%, #0033cc 100%);
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 47, 189, 0.3);
+}
+
+.ai-chat-send-btn:active {
+  transform: scale(0.95);
+}
+
+.ai-chat-send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.ai-chat-send-btn ion-icon {
+  font-size: 20px;
+}
+
+/* Indicateur de frappe */
+.ai-typing-indicator {
+  display: flex;
+  gap: 4px;
+  padding: 12px 16px;
+  align-items: center;
+}
+
+.ai-typing-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #65676b;
+  animation: typingDot 1.4s infinite;
+}
+
+.ai-typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.ai-typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typingDot {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  30% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .ai-chat-messages-container {
+    padding: 16px 12px 80px;
+  }
+
+  .ai-welcome-message {
+    padding: 32px 16px;
+  }
+
+  .ai-welcome-icon {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 16px;
+  }
+
+  .ai-welcome-icon ion-icon {
+    font-size: 28px;
+  }
+
+  .ai-welcome-title {
+    font-size: 18px;
+  }
+
+  .ai-welcome-text {
+    font-size: 14px;
+  }
+
+  .ai-message {
+    max-width: 90%;
+  }
+
+  .ai-message-bubble {
+    padding: 10px 14px;
+  }
+
+  .ai-message-text {
+    font-size: 14px;
+  }
+
+  .ai-chat-input-container {
+    bottom: 0;
+    padding: 10px 12px;
+  }
+
+  .ai-chat-input {
+    font-size: 14px;
+  }
+
+  .ai-chat-send-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .ai-chat-send-btn ion-icon {
+    font-size: 18px;
+  }
+
+  .ai-chat-file-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .ai-chat-file-btn ion-icon {
+    font-size: 18px;
+  }
+
+  .ai-chat-files-preview {
+    padding: 6px 12px;
+    max-height: 100px;
+  }
+
+  .ai-chat-file-item {
+    max-width: 150px;
+    padding: 4px 8px;
+  }
+
+  .ai-chat-file-item img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .ai-chat-file-item-name {
+    font-size: 11px;
+  }
+
+  .ai-chat-file-item-size {
+    font-size: 10px;
+  }
+}
+
+/* ============================================
+   Page Notifications - Design inspiré de Facebook
+   ============================================ */
+
+/* Page principale */
+.notification-page {
+  background-color: #f0f2f5;
+}
+
+.notification-main-content {
+  background-color: #f0f2f5;
+  min-height: calc(100vh - 140px);
+}
+
+/* Header */
+.notification-back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-right: 12px;
+  border-radius: 50%;
+  color: #050505;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.notification-back-btn ion-icon {
+  font-size: 24px;
+}
+
+.notification-back-btn:hover {
+  background-color: #e4e6eb;
+}
+
+.notification-page-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #050505;
+  margin: 0;
+}
+
+/* Container de notifications */
+.notification-list-container {
+  padding: 8px;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+@media (min-width: 768px) {
+  .notification-list-container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 12px;
+    gap: 12px;
+  }
+}
+
+/* Carte de notification style Facebook */
+.notification-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+  border: 1px solid #e4e6eb;
+  animation: fadeInNotification 0.3s ease-out;
+}
+
+@keyframes fadeInNotification {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.notification-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.notification-card.unread {
+  background-color: #e7f3ff;
+  border-left: 3px solid #1877f2;
+}
+
+/* Contenu de la notification */
+.notification-content {
+  display: flex;
+  align-items: flex-start;
+  padding: 12px;
+  gap: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.notification-content:hover {
+  background-color: #f0f2f5;
+}
+
+.notification-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 16px;
+  background-color: #1877f2;
+  color: white;
+}
+
+.notification-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.notification-icon-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e4e6eb;
+}
+
+.notification-icon-wrapper ion-icon {
+  font-size: 20px;
+  color: #1877f2;
+}
+
+.notification-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.notification-text {
+  font-size: 15px;
+  color: #050505;
+  margin: 0 0 4px 0;
+  line-height: 1.33;
+}
+
+.notification-text strong {
+  font-weight: 600;
+  color: #050505;
+}
+
+.notification-time {
+  font-size: 13px;
+  color: #65676b;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.notification-time ion-icon {
+  font-size: 12px;
+}
+
+.notification-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #e4e6eb;
+}
+
+.notification-action-btn {
+  background: none;
+  border: none;
+  color: #65676b;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.notification-action-btn:hover {
+  background-color: #e4e6eb;
+}
+
+.notification-action-btn.primary {
+  background-color: #1877f2;
+  color: white;
+}
+
+.notification-action-btn.primary:hover {
+  background-color: #166fe5;
+}
+
+.notification-action-btn ion-icon {
+  font-size: 16px;
+}
+
+/* Badge de notification non lue */
+.notification-badge {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #1877f2;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+/* État vide */
+.notification-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  min-height: 400px;
+}
+
+.notification-empty-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #e4e6eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.notification-empty-icon ion-icon {
+  font-size: 40px;
+  color: #65676b;
+}
+
+.notification-empty-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #050505;
+  margin: 0 0 8px 0;
+}
+
+.notification-empty-text {
+  font-size: 15px;
+  color: #65676b;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .notification-list-container {
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .notification-content {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .notification-avatar,
+  .notification-icon-wrapper {
+    width: 36px;
+    height: 36px;
+  }
+
+  .notification-icon-wrapper ion-icon {
+    font-size: 18px;
+  }
+
+  .notification-text {
+    font-size: 14px;
+  }
+
+  .notification-time {
+    font-size: 12px;
+  }
+
+  .notification-actions {
+    flex-wrap: wrap;
+  }
+
+  .notification-action-btn {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+
+  .notification-empty-state {
+    padding: 40px 16px;
+    min-height: 300px;
+  }
+
+  .notification-empty-icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 20px;
+  }
+
+  .notification-empty-icon ion-icon {
+    font-size: 32px;
+  }
+
+  .notification-empty-title {
+    font-size: 18px;
+  }
+
+  .notification-empty-text {
+    font-size: 14px;
+  }
+>>>>>>> Stashed changes
 }
