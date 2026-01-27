@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#002FBD" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>Chat - 6ème Année A | Droussi</title>
+  <meta name="description" content="Chat avec les parents - Droussi" />
+  <meta name="keywords" content="éducation, Tunisie, chat, communication, Droussi" />
+  <link rel="icon" type="image/png" href="assets/img/droussi icons/android/android-launchericon-72-72.png"
+    sizes="32x32" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/droussi icons/android/android-launchericon-192-192.png" />
+  <link rel="stylesheet" href="assets/css/style_app.css" />
+  <link rel="manifest" href="__manifest.json" />
+</head>
+
+<body class="chat-page">
+  <!-- Header avec bouton retour -->
+  <header class="chat-header">
+    <div class="chat-header-content">
+      <a href="Teacher.html" class="chat-back-btn">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </a>
+      <div class="chat-header-info">
+        <div class="chat-header-avatar">
+          <div class="avatar-placeholder">6A</div>
+        </div>
+        <div class="chat-header-text">
+          <h2 class="chat-header-title">6ème Année A</h2>
+          <p class="chat-header-subtitle">28 parents</p>
+        </div>
+      </div>
+      <button class="chat-header-menu-btn" aria-label="Menu">
+        <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+      </button>
+    </div>
+  </header>
+
+  <!-- Zone de messages -->
+  <main class="chat-messages-container" id="chatMessages">
+    <!-- Message 1 -->
+    <div class="chat-message-item sent">
+      <div class="chat-message-bubble sent">
+        <p class="chat-message-text">Bonjour à tous, je vous rappelle que la réunion parents-professeurs aura lieu demain à 15h dans la salle de classe.</p>
+        <div class="chat-message-footer">
+          <span class="chat-message-time">14:30</span>
+          <ion-icon name="checkmark-done" class="chat-message-status"></ion-icon>
+        </div>
+      </div>
+    </div>
+
+    <!-- Message 2 -->
+    <div class="chat-message-item sent">
+      <div class="chat-message-bubble sent">
+        <p class="chat-message-text">Les devoirs pour cette semaine : Mathématiques pages 45-50, Français rédaction sur le thème "Les saisons".</p>
+        <div class="chat-message-footer">
+          <span class="chat-message-time">Hier 16:20</span>
+          <ion-icon name="checkmark-done" class="chat-message-status"></ion-icon>
+        </div>
+      </div>
+    </div>
+
+    <!-- Message 3 -->
+    <div class="chat-message-item sent">
+      <div class="chat-message-bubble sent">
+        <p class="chat-message-text">Rappel : Sortie scolaire prévue le 15 mars. N'oubliez pas de remettre l'autorisation signée avant le 10 mars.</p>
+        <div class="chat-message-footer">
+          <span class="chat-message-time">Lun 09:15</span>
+          <ion-icon name="checkmark-done" class="chat-message-status"></ion-icon>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Zone de saisie -->
+  <div class="chat-input-container">
+    <div class="chat-input-wrapper">
+      <button class="chat-attach-btn" aria-label="Joindre un fichier">
+        <ion-icon name="attach-outline"></ion-icon>
+      </button>
+      <input type="text" class="chat-input" id="chatInput" placeholder="Tapez votre message..." />
+      <button class="chat-send-btn" id="chatSendBtn" aria-label="Envoyer">
+        <ion-icon name="send"></ion-icon>
+      </button>
+    </div>
+  </div>
+
+  <script src="assets/js/app.js"></script>
+  <!-- Ionicons -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
+</body>
+
+</html>

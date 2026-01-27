@@ -2,28 +2,54 @@
 <html lang="fr">
 
 <head>
+  <meta charset="UTF-8" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport"
     content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="theme-color" content="#002FBD" />
-  <title>Droussi</title>
-  <meta name="description" content="Droussi HTML" />
-  <meta name="keywords" content="bootstrap 5, mobile template, cordova, phonegap, mobile, html" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>Droussi - Application Éducative</title>
+  <meta name="description" content="Droussi - Application éducative pour les parents et enseignants en Tunisie" />
+  <meta name="keywords" content="éducation, Tunisie, parents, enseignants, école, Droussi" />
   <link rel="icon" type="image/png" href="assets/img/droussi icons/android/android-launchericon-72-72.png"
     sizes="32x32" />
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/droussi icons/android/android-launchericon-72-72.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/droussi icons/android/android-launchericon-192-192.png" />
   <link rel="stylesheet" href="assets/css/style_app.css" />
   <link rel="manifest" href="__manifest.json" />
-
 </head>
 
 <body>
   <div class="welcome-container">
-    <img class="logo-welcome" src="./assets/img/droussi-full_white_253.png" alt="Droussi" />
+    <img class="logo-welcome" src="./assets/img/droussi-full_white_253.png" alt="Droussi - Application Éducative" 
+         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+    <div style="display:none; color: white; font-size: 24px; text-align: center;">Droussi</div>
   </div>
   <script src="assets/js/app.js"></script>
+  <script>
+    // Enregistrer le service worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('./service-worker.js')
+          .then(function(registration) {
+            console.log('Service Worker enregistré avec succès:', registration.scope);
+          })
+          .catch(function(error) {
+            console.log('Échec de l\'enregistrement du Service Worker:', error);
+          });
+      });
+    }
+    
+    // Gestion globale des erreurs
+    window.addEventListener('error', function(e) {
+      console.error('Erreur globale:', e.error);
+    });
+    
+    window.addEventListener('unhandledrejection', function(e) {
+      console.error('Promesse rejetée non gérée:', e.reason);
+    });
+  </script>
 </body>
 
 </html>
