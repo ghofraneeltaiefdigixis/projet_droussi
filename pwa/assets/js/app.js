@@ -3,53 +3,17 @@
  * Droussi - Application JavaScript Principale
  * ============================================
  * Application éducative pour les parents et enseignants en Tunisie
-<<<<<<< Updated upstream
- * Version: 3.0
+ * Version: 3.4
  */
+var APP_DEBUG = false;
+var APP_VERSION = '3.4';
 
 // ============================================
-// CONSTANTES GLOBALES
-// ============================================
-const APP_CONFIG = {
-  REDIRECT_DELAY: 3000,
-  MODAL_ANIMATION_DELAY: 300,
-  DROPDOWN_CLOSE_DELAY: 200,
-  PHONE_MIN_LENGTH: 6,
-  PHONE_MAX_LENGTH: 15
-};
-
-const STORAGE_KEYS = {
-  USER_ROLE: 'userRole',
-  TEACHER_CLASSES: 'teacherClasses',
-  TEACHER_SUBSCRIBED: 'teacherSubscribed',
-  PARENT_CLASSES: 'parentClasses',
-  PARENT_SUBSCRIBED: 'parentSubscribed'
-};
-
-const ROUTES = {
-  INDEX: 'index.html',
-  CHOOSE_ROLE: 'Choix_role.html',
-  CONNEXION: 'Connexion.html',
-  PARENT: 'Parent.html',
-  TEACHER: 'Teacher.html',
-  GOUVERNORAT: 'gouvernorat.html',
-  CLASSE: 'classe.html'
-};
-
-// ============================================
-// UTILITAIRES RÉUTILISABLES
-=======
- * Version: 3.2
- */
-var APP_DEBUG = false; // Mettre à true en développement pour les logs
-
-// ============================================
-// ENREGISTREMENT DU SERVICE WORKER (avec cache-bust pour éviter cache persistant)
->>>>>>> Stashed changes
+// SERVICE WORKER
 // ============================================
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
-    navigator.serviceWorker.register('./service-worker.js?v=3.2')
+    navigator.serviceWorker.register('./service-worker.js?v=' + APP_VERSION)
       .then(function(registration) {
         if (APP_DEBUG) console.log('[App] Service Worker enregistré:', registration.scope);
         registration.addEventListener('updatefound', function() {
@@ -97,6 +61,51 @@ const STORAGE_KEYS = {
   PARENT_SUBSCRIBED: 'parentSubscribed'
 };
 
+/** Version du schéma de stockage - incrémenter pour forcer un nettoyage */
+var STORAGE_VERSION = 1;
+var STORAGE_VERSION_KEY = 'droussi-storage-version';
+
+/** Nombre max de classes stockées (évite saturation localStorage) */
+var MAX_STORED_CLASSES = 100;
+function trimClassesToLimit(arr) {
+  return arr.length <= MAX_STORED_CLASSES ? arr : arr.slice(-MAX_STORED_CLASSES);
+}
+
+/** Toutes les clés légitimes Droussi (whitelist pour le nettoyage) */
+var STORAGE_WHITELIST = [
+  STORAGE_KEYS.USER_ROLE,
+  STORAGE_KEYS.TEACHER_CLASSES,
+  STORAGE_KEYS.TEACHER_SUBSCRIBED,
+  STORAGE_KEYS.PARENT_CLASSES,
+  STORAGE_KEYS.PARENT_SUBSCRIBED,
+  'selectedGovernorat',
+  'selectedGovernoratCode',
+  'selectedDelegation',
+  'selectedDelegationCode',
+  'selectedEcole',
+  'selectedEcoleCode',
+  'droussi-install-dismissed',
+  STORAGE_VERSION_KEY
+];
+
+/** Nettoie le localStorage : supprime les clés non utilisées par Droussi */
+function cleanupLocalStorage() {
+  try {
+    var currentVersion = localStorage.getItem(STORAGE_VERSION_KEY);
+    if (currentVersion !== String(STORAGE_VERSION)) {
+      localStorage.setItem(STORAGE_VERSION_KEY, String(STORAGE_VERSION));
+    }
+    var keysToRemove = [];
+    for (var i = 0; i < localStorage.length; i++) {
+      var key = localStorage.key(i);
+      if (key && STORAGE_WHITELIST.indexOf(key) === -1) {
+        keysToRemove.push(key);
+      }
+    }
+    keysToRemove.forEach(function(k) { localStorage.removeItem(k); });
+  } catch (e) {}
+}
+
 const ROUTES = {
   INDEX: 'index.html',
   CHOOSE_ROLE: 'Choix_role.html',
@@ -106,17 +115,52 @@ const ROUTES = {
   GOUVERNORAT: 'gouvernorat.html',
   CLASSE: 'classe.html'
 };
+function goToGovernorat() { window.location.href = ROUTES.GOUVERNORAT; }
+
+/** Clés de session à effacer à la déconnexion */
+var SESSION_KEYS = [
+  STORAGE_KEYS.USER_ROLE,
+  STORAGE_KEYS.TEACHER_CLASSES,
+  STORAGE_KEYS.TEACHER_SUBSCRIBED,
+  STORAGE_KEYS.PARENT_CLASSES,
+  STORAGE_KEYS.PARENT_SUBSCRIBED,
+  'selectedGovernorat',
+  'selectedGovernoratCode',
+  'selectedDelegation',
+  'selectedDelegationCode',
+  'selectedEcole',
+  'selectedEcoleCode'
+];
+
+/**
+ * Vide les données de session (localStorage) puis redirige vers Choix_role.
+ * @param {boolean} confirmFirst - si true, affiche une boîte de confirmation avant de déconnecter
+ */
+function doLogout(confirmFirst) {
+  if (confirmFirst && !confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) return;
+  SESSION_KEYS.forEach(function(key) { localStorage.removeItem(key); });
+  window.location.href = ROUTES.CHOOSE_ROLE;
+}
+
+/** Nettoyage du cache localStorage au démarrage de l'app */
+if (typeof window !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', cleanupLocalStorage);
+  } else {
+    cleanupLocalStorage();
+  }
+}
 
 // ============================================
 // UTILITAIRES RÉUTILISABLES
 // ============================================
-/** Échappe les caractères HTML pour éviter les injections (XSS) */
-function escapeHtml(str) {
+/** Échappe les caractères HTML (XSS). Utilise I18n.escapeHtml si disponible (i18n chargé avant app). */
+var escapeHtml = (typeof window !== 'undefined' && window.escapeHtml) ? window.escapeHtml : function (str) {
   if (str == null || typeof str !== 'string') return '';
   var div = document.createElement('div');
   div.textContent = str;
   return div.innerHTML;
-}
+};
 
 const AppUtils = {
   /**
@@ -178,11 +222,7 @@ const AppUtils = {
         if (redirectUrl) {
           window.location.href = redirectUrl;
         } else {
-<<<<<<< Updated upstream
-          console.log('Formulaire soumis:', { 
-=======
           if (APP_DEBUG) console.log('Formulaire soumis:', { 
->>>>>>> Stashed changes
             email: emailInput.value.trim(), 
             password: passwordInput.value.trim() 
           });
@@ -247,11 +287,7 @@ const AppUtils = {
    * @returns {null}
    */
   handleError(error, context) {
-<<<<<<< Updated upstream
-    console.error(`Erreur dans ${context}:`, error);
-=======
     if (APP_DEBUG) console.error('Erreur dans ' + context + ':', error);
->>>>>>> Stashed changes
     return null;
   },
 
@@ -1489,11 +1525,7 @@ if (document.getElementById('governoratForm')) {
       e.preventDefault();
       
       if (selectedGovernorat && selectedDelegation && selectedEcole) {
-<<<<<<< Updated upstream
-        console.log('Sélection complète:', {
-=======
         if (APP_DEBUG) console.log('Sélection complète:', {
->>>>>>> Stashed changes
           gouvernorat: governoratInput.value,
           délégation: delegationInput.value,
           école: ecoleInput.value,
@@ -1510,22 +1542,19 @@ if (document.getElementById('governoratForm')) {
   }
 }
 
-// Page Choisir Téléphone - Saisie du numéro (code simplifié pour l'exemple)
-if (document.getElementById('phoneNumber')) {
-  // Code pour la gestion du téléphone - conservé mais simplifié
-  // (Le code complet est très long, on peut le garder tel quel ou le refactoriser)
-<<<<<<< Updated upstream
-  console.log('Page téléphone détectée');
-=======
-  if (APP_DEBUG) console.log('Page téléphone détectée');
->>>>>>> Stashed changes
-}
-
 // Page Classe - Sélection de classe
 if (document.getElementById('classesContainer')) {
   const classesContainer = document.getElementById('classesContainer');
   const continueBtn = document.getElementById('continueBtn');
-  
+  const selectedEcoleNameEl = document.getElementById('selectedEcoleName');
+
+  // Afficher l'école sélectionnée
+  if (selectedEcoleNameEl) {
+    const ecoleName = localStorage.getItem('selectedEcole') || '';
+    selectedEcoleNameEl.textContent = ecoleName ? 'École : ' + ecoleName : '';
+    if (!ecoleName) selectedEcoleNameEl.style.display = 'none';
+  }
+
   // Créer les classes 1, 2, 3, 4, 5 et 6
   const classeNumbers = [1, 2, 3, 4, 5, 6];
   const classes = classeNumbers.map(() => ({
@@ -1547,43 +1576,42 @@ if (document.getElementById('classesContainer')) {
   const renderClasses = () => {
     classesContainer.innerHTML = '';
     
+    /* Ligne des numéros 1..6 au-dessus */
+    const numbersRow = document.createElement('div');
+    numbersRow.className = 'classe-numbers-row';
+    classeNumbers.forEach((num) => {
+      const numEl = document.createElement('div');
+      numEl.className = 'classe-number';
+      numEl.textContent = num;
+      numbersRow.appendChild(numEl);
+    });
+    classesContainer.appendChild(numbersRow);
+    
+    /* Colonnes de lettres en dessous, alignées sous chaque numéro */
+    const lettersRow = document.createElement('div');
+    lettersRow.className = 'classe-letters-row';
     classes.forEach((classe, i) => {
-      const classeRow = document.createElement('div');
-      classeRow.className = 'classe-row';
-      
+      const col = document.createElement('div');
+      col.className = 'classe-col';
       const lettresDiv = document.createElement('div');
       lettresDiv.className = 'classe-lettres';
-      
       classe.lettres.forEach((letter) => {
         const btn = document.createElement('button');
         btn.className = 'classe-letter-btn';
         btn.textContent = letter;
         btn.setAttribute('type', 'button');
         btn.onclick = () => toggleLetter(i, letter);
-        
-        if (classe.selected.has(letter)) {
-          btn.classList.add('active');
-        }
-        
+        if (classe.selected.has(letter)) btn.classList.add('active');
         lettresDiv.appendChild(btn);
       });
-
-      const classNum = document.createElement('div');
-      classNum.className = 'classe-number';
-      // Afficher le numéro de classe correspondant à l'index
-      classNum.textContent = classeNumbers[i];
-
-      classeRow.appendChild(classNum);
-      classeRow.appendChild(lettresDiv);
-      classesContainer.appendChild(classeRow);
+      col.appendChild(lettresDiv);
+      lettersRow.appendChild(col);
     });
+    classesContainer.appendChild(lettersRow);
   };
 
   const checkClasseForm = () => {
-    const hasSelection = classes.some(classe => classe.selected.size > 0);
-    if (continueBtn) {
-      continueBtn.disabled = !hasSelection;
-    }
+    /* Bouton "Je m'abonne" toujours actif, pas de désactivation */
   };
 
   // Gestion du modal de confirmation d'abonnement
@@ -1597,46 +1625,65 @@ if (document.getElementById('classesContainer')) {
   const modalPrice = document.getElementById('modalPrice');
   const classesDetails = document.getElementById('classesDetails');
   
-  // Fonction pour ouvrir le modal avec les données
-  const openSubscriptionModal = () => {
+  const governorat = localStorage.getItem('selectedGovernorat') || '';
+  const delegation = localStorage.getItem('selectedDelegation') || '';
+  const ecole = localStorage.getItem('selectedEcole') || '';
+  const ecoleCode = localStorage.getItem('selectedEcoleCode') || '';
+
+  const updateModalTotals = () => {
+    if (!classesDetails) return;
+    const checked = classesDetails.querySelectorAll('.subscription-class-checkbox:checked');
+    const total = checked.length;
+    if (modalAmount) modalAmount.textContent = total === 1 ? '1 Classe' : total + ' Classes';
+    if (modalPrice) modalPrice.textContent = total + ' DT';
+  };
+
+  // Construire les sélections depuis la page (partagé parent modal / enseignant direct)
+  const getSelectionsFromPage = () => {
     const selections = [];
     classes.forEach((classe, index) => {
       const lettres = Array.from(classe.selected);
-      // Utiliser le numéro de classe correspondant à l'index
       const classeNumber = classeNumbers[index];
       lettres.forEach(lettre => {
         selections.push({
           classe: classeNumber,
-          lettre: lettre
+          lettre: lettre,
+          ecole: ecole,
+          ecoleCode: ecoleCode,
+          delegation: delegation,
+          governorat: governorat
         });
       });
     });
+    return selections;
+  };
+
+  // Fonction pour ouvrir le modal avec les données
+  const openSubscriptionModal = () => {
+    const selections = getSelectionsFromPage();
     
-    // Mettre à jour le contenu du modal
-    if (modalAmount) {
-      const totalClasses = selections.length;
-      modalAmount.textContent = totalClasses === 1 ? '1 Classe' : `${totalClasses} Classes`;
-    }
-    
-    if (modalPrice) {
-      const totalClasses = selections.length;
-      modalPrice.textContent = `${totalClasses} DT`;
-    }
-    
-    // Afficher les détails des classes
     if (classesDetails) {
       classesDetails.innerHTML = '';
       selections.forEach(item => {
         const classDiv = AppUtils.createElement('div', {
-<<<<<<< Updated upstream
-          style: 'padding: 12px; background: #f8f9fa; border-radius: 8px; margin-bottom: 8px;'
-=======
-          style: 'padding: 12px; border-radius: 8px; margin-bottom: 8px;'
->>>>>>> Stashed changes
+          className: 'subscription-class-item'
         });
-        classDiv.innerHTML = `<strong>${item.classe}ème Année ${item.lettre}</strong>`;
+        classDiv.setAttribute('data-classe', item.classe);
+        classDiv.setAttribute('data-lettre', item.lettre);
+        classDiv.setAttribute('data-ecole', item.ecole || '');
+        classDiv.setAttribute('data-ecole-code', item.ecoleCode || '');
+        classDiv.setAttribute('data-delegation', item.delegation || '');
+        classDiv.setAttribute('data-governorat', item.governorat || '');
+        const labelText = item.classe + 'ème Année ' + item.lettre;
+        const labelEscaped = escapeHtml(labelText);
+        classDiv.innerHTML =
+          '<span class="subscription-class-label">' + item.classe + 'ème Année ' + escapeHtml(item.lettre) + '</span>' +
+          '<input type="checkbox" class="subscription-class-checkbox" checked aria-label="' + labelEscaped + '">';
+        const cb = classDiv.querySelector('.subscription-class-checkbox');
+        if (cb) cb.addEventListener('change', updateModalTotals);
         classesDetails.appendChild(classDiv);
       });
+      updateModalTotals();
     }
     
     subscriptionModal.open();
@@ -1646,6 +1693,32 @@ if (document.getElementById('classesContainer')) {
   if (continueBtn) {
     continueBtn.addEventListener('click', () => {
       if (!continueBtn.disabled) {
+        // Enseignant : pas de modal paiement, enregistrer les classes puis rediriger vers Teacher.html
+        if (AppUtils.getUserRole() === 'teacher') {
+          const selections = getSelectionsFromPage();
+          if (selections.length > 0) {
+            const classesKey = STORAGE_KEYS.TEACHER_CLASSES;
+            const subscribedKey = STORAGE_KEYS.TEACHER_SUBSCRIBED;
+            const existingClasses = JSON.parse(localStorage.getItem(classesKey) || '[]');
+            const classesSet = new Set();
+            existingClasses.forEach(c => {
+              classesSet.add(`${c.ecoleCode || ''}-${c.classe}-${c.lettre}`);
+            });
+            const newClasses = selections.filter(c => {
+              const key = `${c.ecoleCode || ''}-${c.classe}-${c.lettre}`;
+              if (!classesSet.has(key)) {
+                classesSet.add(key);
+                return true;
+              }
+              return false;
+            });
+            const allClasses = trimClassesToLimit([...existingClasses, ...newClasses]);
+            localStorage.setItem(classesKey, JSON.stringify(allClasses));
+            localStorage.setItem(subscribedKey, 'true');
+          }
+          window.location.href = ROUTES.TEACHER;
+          return;
+        }
         openSubscriptionModal();
       }
     });
@@ -1660,34 +1733,25 @@ if (document.getElementById('classesContainer')) {
   
   const handleSubscription = () => {
     const selections = [];
-    
-    // Récupérer les informations de l'école
-    const governorat = localStorage.getItem('selectedGovernorat') || '';
-    const delegation = localStorage.getItem('selectedDelegation') || '';
-    const ecole = localStorage.getItem('selectedEcole') || '';
-    const ecoleCode = localStorage.getItem('selectedEcoleCode') || '';
-    
-    classes.forEach((classe, index) => {
-      const lettres = Array.from(classe.selected);
-      // Utiliser le numéro de classe correspondant à l'index
-      const classeNumber = classeNumbers[index];
-      lettres.forEach(lettre => {
-        selections.push({
-          classe: classeNumber,
-          lettre: lettre,
-          ecole: ecole,
-          ecoleCode: ecoleCode,
-          delegation: delegation,
-          governorat: governorat
-        });
+    const items = document.querySelectorAll('#classesDetails .subscription-class-item');
+    if (items && items.length > 0) {
+      items.forEach(row => {
+        const checkbox = row.querySelector('.subscription-class-checkbox');
+        if (checkbox && checkbox.checked) {
+          selections.push({
+            classe: parseInt(row.getAttribute('data-classe'), 10),
+            lettre: row.getAttribute('data-lettre') || '',
+            ecole: row.getAttribute('data-ecole') || '',
+            ecoleCode: row.getAttribute('data-ecole-code') || '',
+            delegation: row.getAttribute('data-delegation') || '',
+            governorat: row.getAttribute('data-governorat') || ''
+          });
+        }
       });
-    });
-    
-    if (selections.length > 0) {
+    }
+    if (selections.length === 0) return;
+    {
       // Récupérer le rôle de l'utilisateur
-<<<<<<< Updated upstream
-      const userRole = AppUtils.getUserRole();
-=======
       let userRole = AppUtils.getUserRole();
       
       // Fallback : si le rôle n'est pas défini, essayer de le détecter depuis l'URL ou utiliser 'parent' par défaut
@@ -1706,7 +1770,6 @@ if (document.getElementById('classesContainer')) {
           AppUtils.saveUserRole('parent');
         }
       }
->>>>>>> Stashed changes
       
       // Déterminer les clés de stockage selon le rôle
       const classesKey = userRole === 'parent' ? STORAGE_KEYS.PARENT_CLASSES : STORAGE_KEYS.TEACHER_CLASSES;
@@ -1736,14 +1799,11 @@ if (document.getElementById('classesContainer')) {
       const allClasses = [...existingClasses, ...newClasses];
       
       // Sauvegarder toutes les classes dans localStorage selon le rôle
-      localStorage.setItem(classesKey, JSON.stringify(allClasses));
+      localStorage.setItem(classesKey, JSON.stringify(trimClassesToLimit(allClasses)));
       localStorage.setItem(subscribedKey, 'true');
       
-<<<<<<< Updated upstream
-=======
       if (APP_DEBUG) console.log('Abonnement réussi pour', userRole, ':', allClasses);
       
->>>>>>> Stashed changes
       // Fermer le modal
       subscriptionModal.close();
       
@@ -1765,61 +1825,18 @@ if (document.getElementById('classesContainer')) {
   }
 }
 
-<<<<<<< Updated upstream
-// Page Parent - Modal de bienvenue et affichage des classes
-if (document.getElementById('welcomeModal') && document.body.classList.contains('app-style-page') && !document.getElementById('classesSection')) {
-  const welcomeModal = new Modal({
-    modalId: 'welcomeModal',
-    backdropSelector: '.welcome-modal-backdrop',
-    closeBtnSelector: null
-  });
-  
-  const parentPostsContainer = document.getElementById('parentPostsContainer');
-  
-  // Vérifier si le parent est déjà abonné
-  const isSubscribed = localStorage.getItem(STORAGE_KEYS.PARENT_SUBSCRIBED) === 'true';
-  const parentClasses = JSON.parse(localStorage.getItem(STORAGE_KEYS.PARENT_CLASSES) || '[]');
-  
-  if (isSubscribed && parentClasses.length > 0) {
-    // Afficher les classes sous forme de posts et masquer la modal
-    console.log('Parent abonné, affichage des classes:', parentClasses);
-    if (parentPostsContainer) {
-      renderParentClasses(parentClasses);
-    }
-  } else {
-    console.log('Parent non abonné, affichage de la modal');
-    // Afficher le modal au chargement de la page
-    if (document.readyState === 'loading') {
-      window.addEventListener('DOMContentLoaded', () => {
-        setTimeout(() => welcomeModal.open(), APP_CONFIG.MODAL_ANIMATION_DELAY);
-      });
-    } else {
-      setTimeout(() => welcomeModal.open(), APP_CONFIG.MODAL_ANIMATION_DELAY);
-    }
-  }
-=======
 // Page Parent - Affichage des classes comme posts Facebook
 if (document.getElementById('parentPostsContainer') && document.body.classList.contains('app-style-page') && !document.getElementById('classesSection')) {
   const parentPostsContainer = document.getElementById('parentPostsContainer');
   const subscriptionSection = document.getElementById('subscriptionSection');
-  const parentFab = document.getElementById('parentFab');
->>>>>>> Stashed changes
   
   // Fonction pour afficher les classes sous forme de posts style Facebook
   function renderParentClasses(classes) {
     if (!parentPostsContainer || !classes || classes.length === 0) {
-<<<<<<< Updated upstream
-      console.log('Aucune classe à afficher');
-      return;
-    }
-    
-    console.log('Affichage des classes en posts:', classes);
-=======
       if (APP_DEBUG) console.log('Aucune classe à afficher');
       return;
     }
     if (APP_DEBUG) console.log('Affichage des classes en posts:', classes);
->>>>>>> Stashed changes
     parentPostsContainer.innerHTML = '';
     
     // Grouper les classes par école
@@ -1837,13 +1854,10 @@ if (document.getElementById('parentPostsContainer') && document.body.classList.c
       const ecoleClasses = classesByEcole[ecoleName];
       
       ecoleClasses.forEach((classe) => {
-<<<<<<< Updated upstream
-=======
         // Container pour chaque post
         const postContainer = document.createElement('div');
         postContainer.className = 'parent-post-container';
         
->>>>>>> Stashed changes
         const post = document.createElement('div');
         post.className = 'parent-post';
         
@@ -1870,31 +1884,10 @@ if (document.getElementById('parentPostsContainer') && document.body.classList.c
           <div class="parent-post-content">
             <p class="parent-post-text">Bienvenue dans la classe ${classeNum}ème Année ${classeLettre} ! Suivez les actualités et les communications de l'enseignant.</p>
           </div>
-          <div class="parent-post-actions">
-            <button class="parent-post-action-btn">
-              <ion-icon name="thumbs-up-outline"></ion-icon>
-              <span>J'aime</span>
-            </button>
-<<<<<<< Updated upstream
-            <button class="parent-post-action-btn">
-              <ion-icon name="chatbubble-outline"></ion-icon>
-              <span>Commenter</span>
-            </button>
-            <button class="parent-post-action-btn">
-              <ion-icon name="share-outline"></ion-icon>
-              <span>Partager</span>
-            </button>
-          </div>
-        `;
-        
-        parentPostsContainer.appendChild(post);
-=======
-          </div>
         `;
         
         postContainer.appendChild(post);
         parentPostsContainer.appendChild(postContainer);
->>>>>>> Stashed changes
       });
     });
   }
@@ -1906,16 +1899,6 @@ if (document.getElementById('parentPostsContainer') && document.body.classList.c
     const date = new Date(now);
     date.setDate(date.getDate() - daysAgo);
     
-<<<<<<< Updated upstream
-    if (daysAgo === 0) {
-      return "Aujourd'hui";
-    } else if (daysAgo === 1) {
-      return "Hier";
-    } else {
-      const options = { day: 'numeric', month: 'long' };
-      return date.toLocaleDateString('fr-FR', options);
-    }
-=======
     const options = { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' };
     return date.toLocaleDateString('fr-FR', options);
   }
@@ -1924,94 +1907,24 @@ if (document.getElementById('parentPostsContainer') && document.body.classList.c
   const isSubscribed = localStorage.getItem(STORAGE_KEYS.PARENT_SUBSCRIBED) === 'true';
   const parentClasses = JSON.parse(localStorage.getItem(STORAGE_KEYS.PARENT_CLASSES) || '[]');
   
+  // Affichage section / contenu géré par initParentSubscriptionSection() (toutes les pages parent)
   if (isSubscribed && parentClasses.length > 0) {
-    // Afficher les classes sous forme de posts et masquer la section d'abonnement
     if (APP_DEBUG) console.log('Parent abonné, affichage des classes:', parentClasses);
-    if (parentPostsContainer) {
-      parentPostsContainer.style.display = 'block';
-      renderParentClasses(parentClasses);
-    }
-    if (subscriptionSection) {
-      subscriptionSection.style.display = 'none';
-    }
-    // Afficher le FAB
-    if (parentFab) {
-      parentFab.style.display = 'flex';
-    }
-  } else {
-    if (APP_DEBUG) console.log('Parent non abonné, affichage de la section d\'abonnement');
-    // Afficher la section d'abonnement et masquer les posts
-    if (subscriptionSection) {
-      subscriptionSection.style.display = 'block';
-    }
-    if (parentPostsContainer) {
-      parentPostsContainer.style.display = 'none';
-    }
-    // Masquer le FAB
-    if (parentFab) {
-      parentFab.style.display = 'none';
-    }
+    renderParentClasses(parentClasses);
   }
   
-  // Gestion du bouton FAB pour ajouter un abonnement (uniquement sur Parent.html)
-  if (parentFab) {
-    parentFab.addEventListener('click', () => {
-      // Rediriger vers gouvernorat.html pour ajouter un nouvel abonnement
-      window.location.href = ROUTES.GOUVERNORAT;
-    });
->>>>>>> Stashed changes
+  // Bouton central du menu bas (même que page Abonnement) : ajouter un abonnement
+  const addSubscriptionBtn = document.getElementById('addSubscriptionBtn');
+  if (addSubscriptionBtn) {
+    addSubscriptionBtn.addEventListener('click', function(e) { e.preventDefault(); goToGovernorat(); });
   }
   
-  // Gérer le bouton S'abonner
+  // Gérer le bouton S'abonner (déjà attaché par initParentSubscriptionSection, doublon inoffensif)
   const subscribeBtn = document.getElementById('subscribeBtn');
   if (subscribeBtn) {
-    subscribeBtn.addEventListener('click', () => {
-      window.location.href = ROUTES.GOUVERNORAT;
-    });
+    subscribeBtn.addEventListener('click', function () { goToGovernorat(); });
   }
   
-<<<<<<< Updated upstream
-  // Fermer le modal en glissant vers le bas (optionnel)
-  let startY = 0;
-  let currentY = 0;
-  let isDragging = false;
-  const dialog = welcomeModal.modal?.querySelector('.welcome-modal-dialog');
-  
-  if (dialog) {
-    dialog.addEventListener('touchstart', (e) => {
-      startY = e.touches[0].clientY;
-      isDragging = true;
-    });
-    
-    dialog.addEventListener('touchmove', (e) => {
-      if (!isDragging) return;
-      currentY = e.touches[0].clientY;
-      const diff = currentY - startY;
-      
-      if (diff > 0) {
-        dialog.style.transform = `translateY(${diff}px)`;
-      }
-    });
-    
-    dialog.addEventListener('touchend', () => {
-      if (isDragging && currentY - startY > 100) {
-        welcomeModal.close();
-      }
-      dialog.style.transform = '';
-      isDragging = false;
-    });
-  }
-}
-
-// Page Teacher - Modal de bienvenue et gestion des classes
-if (document.getElementById('welcomeModal') && document.getElementById('classesSection')) {
-  const welcomeModal = new Modal({
-    modalId: 'welcomeModal',
-    backdropSelector: '.welcome-modal-backdrop',
-    closeBtnSelector: null
-  });
-  
-=======
   // Fermer le modal en glissant (uniquement si la page a un welcomeModal, ex. Teacher)
   var welcomeModalEl = document.getElementById('welcomeModal');
   if (welcomeModalEl) {
@@ -2052,7 +1965,6 @@ if (document.getElementById('classesSection') && document.getElementById('classe
   }) : null;
   
   const subscriptionSection = document.getElementById('subscriptionSection');
->>>>>>> Stashed changes
   const classesSection = document.getElementById('classesSection');
   const classesList = document.getElementById('classesList');
   
@@ -2061,16 +1973,11 @@ if (document.getElementById('classesSection') && document.getElementById('classe
   const teacherClasses = JSON.parse(localStorage.getItem(STORAGE_KEYS.TEACHER_CLASSES) || '[]');
   
   if (isSubscribed && teacherClasses.length > 0) {
-<<<<<<< Updated upstream
-    // Afficher les classes et masquer la modal
-    console.log('Enseignant abonné, affichage des classes:', teacherClasses);
-=======
     // Déjà abonné : masquer l'invitation d'abonnement, afficher les classes
     if (APP_DEBUG) console.log('Enseignant abonné, affichage des classes:', teacherClasses);
     if (subscriptionSection) {
       subscriptionSection.style.display = 'none';
     }
->>>>>>> Stashed changes
     if (classesSection) {
       classesSection.style.display = 'flex';
     }
@@ -2078,16 +1985,6 @@ if (document.getElementById('classesSection') && document.getElementById('classe
       renderTeacherClasses(teacherClasses);
     }
   } else {
-<<<<<<< Updated upstream
-    console.log('Enseignant non abonné, affichage de la modal');
-    // Afficher la modal de bienvenue
-    if (document.readyState === 'loading') {
-      window.addEventListener('DOMContentLoaded', () => {
-        setTimeout(() => welcomeModal.open(), APP_CONFIG.MODAL_ANIMATION_DELAY);
-      });
-    } else {
-      setTimeout(() => welcomeModal.open(), APP_CONFIG.MODAL_ANIMATION_DELAY);
-=======
     if (APP_DEBUG) console.log('Enseignant non abonné, affichage de la section d\'abonnement');
     // Non abonné : afficher l'invitation, masquer la liste des classes
     if (subscriptionSection) {
@@ -2108,28 +2005,15 @@ if (document.getElementById('classesSection') && document.getElementById('classe
       } else {
         setTimeout(() => welcomeModal.open(), APP_CONFIG.MODAL_ANIMATION_DELAY);
       }
->>>>>>> Stashed changes
     }
   }
   
   // Gérer le bouton S'abonner aux classes
   const subscribeBtn = document.getElementById('subscribeBtn');
   if (subscribeBtn) {
-    subscribeBtn.addEventListener('click', () => {
-      // Rediriger vers gouvernorat.html pour commencer le processus d'abonnement
-      window.location.href = ROUTES.GOUVERNORAT;
-    });
+    subscribeBtn.addEventListener('click', function () { goToGovernorat(); });
   }
   
-<<<<<<< Updated upstream
-  // Fermer le modal en glissant vers le bas
-  let startY = 0;
-  let currentY = 0;
-  let isDragging = false;
-  const dialog = welcomeModal.modal?.querySelector('.welcome-modal-dialog');
-  
-  if (dialog) {
-=======
   // Fermer le modal en glissant vers le bas (uniquement si le modal existe)
   let startY = 0;
   let currentY = 0;
@@ -2137,7 +2021,6 @@ if (document.getElementById('classesSection') && document.getElementById('classe
   const dialog = welcomeModal?.modal?.querySelector('.welcome-modal-dialog');
   
   if (welcomeModal && dialog) {
->>>>>>> Stashed changes
     dialog.addEventListener('touchstart', (e) => {
       startY = e.touches[0].clientY;
       isDragging = true;
@@ -2165,18 +2048,10 @@ if (document.getElementById('classesSection') && document.getElementById('classe
   // Fonction pour afficher les classes de l'enseignant
   function renderTeacherClasses(classes) {
     if (!classesList || !classes || classes.length === 0) {
-<<<<<<< Updated upstream
-      console.log('Aucune classe à afficher');
-      return;
-    }
-    
-    console.log('Affichage des classes:', classes);
-=======
       if (APP_DEBUG) console.log('Aucune classe à afficher');
       return;
     }
     if (APP_DEBUG) console.log('Affichage des classes:', classes);
->>>>>>> Stashed changes
     classesList.innerHTML = '';
     
     // Grouper les classes par école
@@ -2193,20 +2068,6 @@ if (document.getElementById('classesSection') && document.getElementById('classe
     Object.keys(classesByEcole).forEach((ecoleName, ecoleIndex) => {
       const ecoleClasses = classesByEcole[ecoleName];
       
-<<<<<<< Updated upstream
-      // En-tête de l'école
-      const ecoleHeader = document.createElement('div');
-      ecoleHeader.className = 'teacher-ecole-header';
-      ecoleHeader.innerHTML = `
-        <div class="ecole-header-content">
-          <ion-icon name="school-outline" class="ecole-header-icon"></ion-icon>
-          <div class="ecole-header-text">
-            <h4 class="ecole-header-title">${ecoleName}</h4>
-            <p class="ecole-header-subtitle">${ecoleClasses.length} ${ecoleClasses.length === 1 ? 'classe' : 'classes'}</p>
-          </div>
-        </div>
-      `;
-=======
       // En-tête de l'école (nom échappé pour éviter XSS)
       var ecoleHeader = document.createElement('div');
       ecoleHeader.className = 'teacher-ecole-header';
@@ -2217,7 +2078,6 @@ if (document.getElementById('classesSection') && document.getElementById('classe
         '<h4 class="ecole-header-title">' + escapeHtml(ecoleName) + '</h4>' +
         '<p class="ecole-header-subtitle">' + (ecoleClasses.length === 1 ? '1 classe' : ecoleClasses.length + ' classes') + '</p>' +
         '</div></div>';
->>>>>>> Stashed changes
       classesList.appendChild(ecoleHeader);
       
       // Classes de cette école
@@ -2247,12 +2107,7 @@ if (document.getElementById('classesSection') && document.getElementById('classe
             </div>
             <div class="chat-preview">
               <div class="chat-message-preview">
-<<<<<<< Updated upstream
-                <ion-icon name="send-outline" class="chat-send-icon"></ion-icon>
-                <span class="chat-message-text">${getLastMessageText(globalIndex)}</span>
-=======
                 <span class="chat-message-text-list">${getLastMessageText(globalIndex)}</span>
->>>>>>> Stashed changes
               </div>
               <span class="chat-status-sent">
                 <ion-icon name="checkmark-done"></ion-icon>
@@ -2287,13 +2142,10 @@ if (document.getElementById('classesSection') && document.getElementById('classe
     return messages[index % messages.length] || 'Nouveau message';
   }
   
-  // Gestion du bouton FAB pour ajouter un autre abonnement
-  const fabBtn = document.querySelector('.app-fab');
+  // Gestion du bouton central (menu bas) pour ajouter un autre abonnement
+  const fabBtn = document.getElementById('teacherFab') || document.querySelector('.app-fab');
   if (fabBtn) {
-    fabBtn.addEventListener('click', () => {
-      // Rediriger vers gouvernorat.html pour ajouter un nouvel abonnement
-      window.location.href = ROUTES.GOUVERNORAT;
-    });
+    fabBtn.addEventListener('click', function(e) { e.preventDefault(); goToGovernorat(); });
   }
 }
 
@@ -2331,17 +2183,7 @@ if (document.getElementById('governoratList') && !document.getElementById('deleg
     });
   };
   
-  // Fonction pour mettre à jour l'état du bouton
-  const updateButtonState = () => {
-    if (continueBtn) {
-      const hasSelection = selectedGovernoratValue.trim() !== '';
-      continueBtn.disabled = !hasSelection;
-      continueBtn.classList.toggle('active', hasSelection);
-    }
-  };
-  
-  // Initialiser le bouton comme désactivé
-  updateButtonState();
+  // Bouton Continuer toujours activé (pas d'état disabled)
   
   // Gestion de la recherche
   if (governoratSearch) {
@@ -2366,8 +2208,6 @@ if (document.getElementById('governoratList') && !document.getElementById('deleg
       
       selectedGovernoratValue = item.textContent;
       selectedGovernoratCode = item.getAttribute('data-value');
-      
-      updateButtonState();
     });
   }
   
@@ -2446,17 +2286,7 @@ if (document.getElementById('delegationList') && !document.getElementById('gover
       });
     };
     
-    // Fonction pour mettre à jour l'état du bouton
-    const updateButtonState = () => {
-      if (continueBtn) {
-        const hasSelection = selectedDelegationValue.trim() !== '';
-        continueBtn.disabled = !hasSelection;
-        continueBtn.classList.toggle('active', hasSelection);
-      }
-    };
-    
-    // Initialiser le bouton comme désactivé
-    updateButtonState();
+    // Bouton Continuer toujours activé (même fonctionnement que gouvernorat)
     
     // Gestion de la recherche
     if (delegationSearch) {
@@ -2481,8 +2311,6 @@ if (document.getElementById('delegationList') && !document.getElementById('gover
         
         selectedDelegationValue = item.textContent;
         selectedDelegationCode = item.getAttribute('data-value');
-        
-        updateButtonState();
       });
     }
     
@@ -2562,17 +2390,7 @@ if (document.getElementById('ecoleList') && !document.getElementById('delegation
       });
     };
     
-    // Fonction pour mettre à jour l'état du bouton
-    const updateButtonState = () => {
-      if (continueBtn) {
-        const hasSelection = selectedEcoleValue.trim() !== '';
-        continueBtn.disabled = !hasSelection;
-        continueBtn.classList.toggle('active', hasSelection);
-      }
-    };
-    
-    // Initialiser le bouton comme désactivé
-    updateButtonState();
+    // Bouton Continuer toujours activé (même fonctionnement que gouvernorat)
     
     // Gestion de la recherche
     if (ecoleSearch) {
@@ -2597,8 +2415,6 @@ if (document.getElementById('ecoleList') && !document.getElementById('delegation
         
         selectedEcoleValue = item.textContent;
         selectedEcoleCode = item.getAttribute('data-value');
-        
-        updateButtonState();
       });
     }
     
@@ -2635,31 +2451,6 @@ if (document.querySelector('.chat-page')) {
   const chatInput = document.getElementById('chatInput');
   const chatSendBtn = document.getElementById('chatSendBtn');
   const chatMessages = document.getElementById('chatMessages');
-<<<<<<< Updated upstream
-
-  // Fonction pour ajouter un message à l'interface
-  function addMessage(text) {
-    if (!text.trim()) return;
-
-    const messageItem = document.createElement('div');
-    messageItem.className = 'chat-message-item sent';
-
-    const now = new Date();
-    const timeString = now.toLocaleTimeString('fr-FR', { 
-      hour: '2-digit', 
-      minute: '2-digit' 
-    });
-
-    messageItem.innerHTML = `
-      <div class="chat-message-bubble sent">
-        <p class="chat-message-text">${text}</p>
-        <div class="chat-message-footer">
-          <span class="chat-message-time">${timeString}</span>
-          <ion-icon name="checkmark-done" class="chat-message-status"></ion-icon>
-        </div>
-      </div>
-    `;
-=======
   const chatAttachBtn = document.getElementById('chatAttachBtn');
   const chatFileInput = document.getElementById('chatFileInput');
   const chatCameraBtn = document.getElementById('chatCameraBtn');
@@ -2713,7 +2504,8 @@ if (document.querySelector('.chat-page')) {
   }
 
   // Fonction pour ajouter un message à l'interface (texte échappé pour éviter XSS)
-  function addMessage(text) {
+  // dueDate : date optionnelle au format YYYY-MM-DD pour "devoir maison"
+  function addMessage(text, dueDate) {
     if (!text.trim()) return;
 
     var messageItem = document.createElement('div');
@@ -2722,26 +2514,70 @@ if (document.querySelector('.chat-page')) {
     var now = new Date();
     var timeString = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
 
+    var dateLine = '';
+    if (dueDate) {
+      var d = new Date(dueDate + 'T12:00:00');
+      var dateFormatted = d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+      dateLine = '<span class="chat-message-devoir-date">À rendre pour le : ' + escapeHtml(dateFormatted) + '</span>';
+    }
+
     messageItem.innerHTML =
       '<div class="chat-message-bubble sent">' +
       '<p class="chat-message-text"></p>' +
+      dateLine +
       '<div class="chat-message-footer">' +
       '<span class="chat-message-time">' + escapeHtml(timeString) + '</span>' +
       '<ion-icon name="checkmark-done" class="chat-message-status"></ion-icon>' +
       '</div></div>';
     messageItem.querySelector('.chat-message-text').textContent = text;
->>>>>>> Stashed changes
 
     chatMessages.appendChild(messageItem);
-    // Scroll vers le bas avec un léger délai pour s'assurer que le DOM est mis à jour
     setTimeout(() => {
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }, 10);
 
-    // Réinitialiser le champ de saisie
     chatInput.value = '';
     updateSendButton();
   }
+
+  // Modal date de devoir maison
+  var devoirDateModal = document.getElementById('devoirDateModal');
+  var devoirDateInput = document.getElementById('devoirDateInput');
+  var devoirDateSend = document.getElementById('devoirDateSend');
+  var devoirDateCancel = document.getElementById('devoirDateCancel');
+  var devoirDateModalClose = document.getElementById('devoirDateModalClose');
+  var devoirDateModalBackdrop = document.getElementById('devoirDateModalBackdrop');
+  var pendingMessageText = '';
+
+  function openDevoirDateModal(messageText) {
+    pendingMessageText = messageText;
+    var tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    devoirDateInput.value = tomorrow.toISOString().slice(0, 10);
+    if (devoirDateModal) devoirDateModal.classList.add('show');
+  }
+
+  function closeDevoirDateModal() {
+    if (devoirDateModal) devoirDateModal.classList.remove('show');
+    if (pendingMessageText && chatInput) {
+      chatInput.value = pendingMessageText;
+      updateSendButton();
+    }
+    pendingMessageText = '';
+  }
+
+  function sendWithDevoirDate() {
+    var dateVal = devoirDateInput ? devoirDateInput.value : '';
+    if (pendingMessageText) {
+      addMessage(pendingMessageText, dateVal || undefined);
+    }
+    closeDevoirDateModal();
+  }
+
+  if (devoirDateSend) devoirDateSend.addEventListener('click', sendWithDevoirDate);
+  if (devoirDateCancel) devoirDateCancel.addEventListener('click', closeDevoirDateModal);
+  if (devoirDateModalClose) devoirDateModalClose.addEventListener('click', closeDevoirDateModal);
+  if (devoirDateModalBackdrop) devoirDateModalBackdrop.addEventListener('click', closeDevoirDateModal);
 
   // Fonction pour mettre à jour l'état du bouton d'envoi
   function updateSendButton() {
@@ -2759,23 +2595,21 @@ if (document.querySelector('.chat-page')) {
     }
   }
 
-  // Gestion de l'envoi de message
+  // Gestion de l'envoi de message : ouvrir le modal date de devoir puis envoyer
   if (chatSendBtn && chatInput) {
-    // Clic sur le bouton d'envoi
     chatSendBtn.addEventListener('click', () => {
       const messageText = chatInput.value.trim();
       if (messageText) {
-        addMessage(messageText);
+        openDevoirDateModal(messageText);
       }
     });
 
-    // Appui sur Entrée dans le champ de saisie
     chatInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
         const messageText = chatInput.value.trim();
         if (messageText) {
-          addMessage(messageText);
+          openDevoirDateModal(messageText);
         }
       }
     });
@@ -2802,20 +2636,6 @@ if (document.getElementById('headerMenuBtn') && document.getElementById('headerD
   const menuBtn = document.getElementById('headerMenuBtn');
   const dropdownMenu = document.getElementById('headerDropdownMenu');
   const logoutBtn = document.getElementById('logoutBtn');
-<<<<<<< Updated upstream
-  
-  // Ouvrir/fermer le menu au clic sur le bouton
-  if (menuBtn && dropdownMenu) {
-    menuBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      dropdownMenu.classList.toggle('show');
-    });
-    
-    // Fermer le menu en cliquant en dehors
-    document.addEventListener('click', (e) => {
-      if (!menuBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
-        dropdownMenu.classList.remove('show');
-=======
 
   function setMenuOpen(open) {
     dropdownMenu.classList.toggle('show', open);
@@ -2836,16 +2656,10 @@ if (document.getElementById('headerMenuBtn') && document.getElementById('headerD
     document.addEventListener('click', function(e) {
       if (!menuBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
         setMenuOpen(false);
->>>>>>> Stashed changes
       }
     });
   }
   
-<<<<<<< Updated upstream
-  // Gestion de la déconnexion
-  if (logoutBtn) {
-    logoutBtn.addEventListener('click', () => {
-=======
   // Fermer le menu au clic sur un élément du menu
   if (dropdownMenu) {
     dropdownMenu.addEventListener('click', function(e) {
@@ -2855,27 +2669,10 @@ if (document.getElementById('headerMenuBtn') && document.getElementById('headerD
     });
   }
 
-  // Gestion de la déconnexion
   if (logoutBtn) {
     logoutBtn.addEventListener('click', function() {
       setMenuOpen(false);
->>>>>>> Stashed changes
-      // Confirmer la déconnexion
-      if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
-        // Effacer toutes les données de session
-        localStorage.removeItem(STORAGE_KEYS.USER_ROLE);
-        localStorage.removeItem(STORAGE_KEYS.TEACHER_CLASSES);
-        localStorage.removeItem(STORAGE_KEYS.TEACHER_SUBSCRIBED);
-        localStorage.removeItem(STORAGE_KEYS.PARENT_CLASSES);
-        localStorage.removeItem(STORAGE_KEYS.PARENT_SUBSCRIBED);
-        localStorage.removeItem('selectedGovernorat');
-        localStorage.removeItem('selectedDelegation');
-        localStorage.removeItem('selectedEcole');
-        localStorage.removeItem('selectedEcoleCode');
-        
-        // Rediriger vers la page de choix de rôle
-        window.location.href = ROUTES.CHOOSE_ROLE;
-      }
+      doLogout(true);
     });
   }
 }
@@ -2899,118 +2696,140 @@ if (document.getElementById('subscriptionListContainer')) {
   const isSubscribed = localStorage.getItem(subscribedKey) === 'true';
   const subscribedClasses = JSON.parse(localStorage.getItem(classesKey) || '[]');
   
-  // Fonction pour afficher les abonnements
+  const subscriptionListSection = document.getElementById('subscriptionListSection');
+  const subscriptionListView = document.getElementById('subscriptionListView');
+
+  // Fermer tous les menus désabonnement ouverts
+  function closeAllSubscriptionItemMenus() {
+    subscriptionListContainer.querySelectorAll('.subscription-item-dropdown.is-open').forEach(function(dd) {
+      dd.classList.remove('is-open');
+    });
+  }
+
+  // Fonction pour afficher les abonnements en liste (listview)
   function renderSubscriptions(classes) {
     if (!subscriptionListContainer) return;
-    
-    subscriptionListContainer.innerHTML = '';
-    
-    if (!isSubscribed || classes.length === 0) {
-      // Afficher l'état vide
-      if (subscriptionEmptyState) {
-        subscriptionEmptyState.style.display = 'flex';
-      }
+
+    if (classes.length === 0) {
+      if (subscriptionEmptyState) subscriptionEmptyState.style.display = 'flex';
+      if (subscriptionListSection) subscriptionListSection.style.display = 'none';
+      localStorage.setItem(subscribedKey, 'false');
       return;
     }
-    
-    // Masquer l'état vide
-    if (subscriptionEmptyState) {
-      subscriptionEmptyState.style.display = 'none';
-    }
-    
-    // Grouper les classes par école
-    const classesByEcole = {};
-    classes.forEach((classe) => {
-      const ecoleKey = classe.ecole || 'École inconnue';
-      if (!classesByEcole[ecoleKey]) {
-        classesByEcole[ecoleKey] = {
-          ecole: ecoleKey,
-          governorat: classe.governorat || '',
-          delegation: classe.delegation || '',
-          classes: []
-        };
+
+    if (subscriptionEmptyState) subscriptionEmptyState.style.display = 'none';
+    if (subscriptionListSection) subscriptionListSection.style.display = 'block';
+    if (!subscriptionListView) return;
+
+    subscriptionListView.innerHTML = '';
+    classes.forEach(function(classe, index) {
+      const li = document.createElement('li');
+      li.className = 'subscription-list-item';
+      li.setAttribute('data-index', index);
+      const ecoleName = classe.ecole || 'École';
+      const label = classe.classe + 'ème Année ' + escapeHtml(classe.lettre);
+      const sub = ecoleName ? escapeHtml(ecoleName) : '';
+      const contentHtml = '<div class="subscription-list-item-content">' +
+        '<span class="subscription-list-item-title">' + label + '</span>' +
+        (sub ? '<span class="subscription-list-item-subtitle">' + sub + '</span>' : '') +
+        '</div>';
+      const menuHtml = '<div class="subscription-item-menu-wrapper">' +
+        '<button type="button" class="parent-post-menu subscription-item-menu-btn" aria-label="Options">' +
+        '<ion-icon name="ellipsis-horizontal-outline"></ion-icon>' +
+        '</button>' +
+        '<div class="subscription-item-dropdown" role="menu">' +
+        '<button type="button" class="subscription-item-dropdown-option subscription-unsubscribe-btn" role="menuitem">' +
+        '<ion-icon name="remove-circle-outline"></ion-icon>' +
+        '<span>Se désabonner</span>' +
+        '</button>' +
+        '</div>' +
+        '</div>';
+      li.innerHTML = contentHtml + menuHtml;
+      subscriptionListView.appendChild(li);
+
+      const menuBtn = li.querySelector('.subscription-item-menu-btn');
+      const dropdown = li.querySelector('.subscription-item-dropdown');
+      const unsubscribeBtn = li.querySelector('.subscription-unsubscribe-btn');
+
+      if (menuBtn && dropdown) {
+        menuBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          closeAllSubscriptionItemMenus();
+          dropdown.classList.add('is-open');
+          menuBtn.setAttribute('aria-expanded', 'true');
+        });
       }
-      classesByEcole[ecoleKey].classes.push(classe);
-    });
-    
-    // Créer les cartes d'abonnement avec animation
-    Object.keys(classesByEcole).forEach((ecoleName, index) => {
-      const ecoleData = classesByEcole[ecoleName];
-      
-      // Carte principale de l'école
-      const ecoleCard = document.createElement('div');
-      ecoleCard.className = 'subscription-card';
-      ecoleCard.style.opacity = '0';
-      ecoleCard.style.animationDelay = `${index * 0.1}s`;
-      
-      const firstClasse = ecoleData.classes[0];
-      const avatarText = `${firstClasse.classe}${firstClasse.lettre}`;
-      
-      // Construire la localisation
-      const locationParts = [];
-      if (ecoleData.delegation) locationParts.push(ecoleData.delegation);
-      if (ecoleData.governorat) locationParts.push(ecoleData.governorat);
-      const locationText = locationParts.join(', ');
-      
-      ecoleCard.innerHTML = `
-        <div class="subscription-card-header">
-          <div class="subscription-avatar">
-            <div class="subscription-avatar-placeholder">${avatarText}</div>
-          </div>
-          <div class="subscription-card-info">
-            <h3 class="subscription-card-title">${ecoleName}</h3>
-            ${locationText ? `<p class="subscription-card-location">${locationText}</p>` : ''}
-          </div>
-          <button class="subscription-card-menu" aria-label="Options">
-            <ion-icon name="ellipsis-vertical-outline"></ion-icon>
-          </button>
-        </div>
-        <div class="subscription-card-body">
-          <div class="subscription-classes-list">
-            ${ecoleData.classes.map(classe => `
-              <div class="subscription-class-item">
-                <div class="subscription-class-info">
-                  <ion-icon name="school-outline" class="subscription-class-icon"></ion-icon>
-                  <span class="subscription-class-name">${classe.classe}ème Année ${classe.lettre}</span>
-                </div>
-                <div class="subscription-class-status">
-                  <span class="subscription-status-badge active">Actif</span>
-                </div>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-        <div class="subscription-card-footer">
-          <div class="subscription-card-stats">
-            <span class="subscription-stat">
-              <ion-icon name="calendar-outline"></ion-icon>
-              <span>Abonné depuis</span>
-            </span>
-            <span class="subscription-date">Aujourd'hui</span>
-          </div>
-        </div>
-      `;
-      
-      subscriptionListContainer.appendChild(ecoleCard);
-      
-      // Animation d'apparition
-      setTimeout(() => {
-        ecoleCard.style.opacity = '1';
-      }, index * 100);
+
+      if (unsubscribeBtn) {
+        unsubscribeBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          closeAllSubscriptionItemMenus();
+          const idx = parseInt(li.getAttribute('data-index'), 10);
+          const label = li.querySelector('.subscription-list-item-title');
+          const classeLabel = label ? label.textContent : 'cette classe';
+          if (!confirm('Voulez-vous vraiment vous désabonner de ' + classeLabel + ' ?')) return;
+          let updated = JSON.parse(localStorage.getItem(classesKey) || '[]');
+          updated = updated.filter(function(_, i) { return i !== idx; });
+          localStorage.setItem(classesKey, JSON.stringify(updated));
+          if (updated.length === 0) localStorage.setItem(subscribedKey, 'false');
+          renderSubscriptions(updated);
+        });
+      }
     });
   }
-  
+
+  document.addEventListener('click', closeAllSubscriptionItemMenus);
+
   // Afficher les abonnements au chargement
   renderSubscriptions(subscribedClasses);
-  
-  // Gérer le bouton d'ajout d'abonnement
+
+  // Gérer le bouton d'ajout d'abonnement (centre du menu bas)
   if (addSubscriptionBtn) {
-    addSubscriptionBtn.addEventListener('click', () => {
-      window.location.href = ROUTES.GOUVERNORAT;
-    });
+    addSubscriptionBtn.addEventListener('click', function(e) { e.preventDefault(); goToGovernorat(); });
   }
-<<<<<<< Updated upstream
-=======
+}
+
+// ============================================
+// Page Assistant IA - Textes abonnement selon rôle (parent / enseignant)
+// ============================================
+if (document.getElementById('aiChatContentWrapper')) {
+  (function initAssistantIASubscriptionByRole() {
+    var userRole = typeof AppUtils !== 'undefined' && AppUtils.getUserRole ? AppUtils.getUserRole() : (localStorage.getItem(STORAGE_KEYS.USER_ROLE) || 'parent');
+    var isTeacher = userRole === 'teacher';
+    var subscriptionTextEl = document.querySelector('#subscriptionSection .subscription-text');
+    var subscribeBtn = document.getElementById('subscribeBtn');
+    if (subscriptionTextEl) subscriptionTextEl.setAttribute('data-i18n', isTeacher ? 'subscriptionTextTeacher' : 'subscriptionText');
+    if (subscribeBtn) subscribeBtn.setAttribute('data-i18n', isTeacher ? 'subscribeClasses' : 'subscribe');
+    if (typeof I18n !== 'undefined' && I18n.applyPage) I18n.applyPage();
+  })();
+}
+
+// ============================================
+// Page Abonnement - Menu et textes selon rôle (parent / enseignant)
+// ============================================
+if (document.getElementById('subscriptionListContainer')) {
+  (function initAbonnementPageByRole() {
+    var userRole = typeof AppUtils !== 'undefined' && AppUtils.getUserRole ? AppUtils.getUserRole() : (localStorage.getItem(STORAGE_KEYS.USER_ROLE) || 'parent');
+    var isTeacher = userRole === 'teacher';
+
+    var menuHomeLink = document.getElementById('menuHomeLink');
+    if (menuHomeLink) menuHomeLink.href = isTeacher ? 'Teacher.html' : 'Parent.html';
+
+    var menuDevoir = document.querySelector('.menu-item-parent');
+    var menuVerification = document.querySelector('.menu-item-teacher');
+    if (menuDevoir) menuDevoir.style.display = isTeacher ? 'none' : '';
+    if (menuVerification) menuVerification.style.display = isTeacher ? '' : 'none';
+
+    var subscriptionTextEl = document.querySelector('.subscription-section .subscription-text');
+    var subscribeBtn = document.getElementById('subscribeBtn');
+    if (subscriptionTextEl) {
+      subscriptionTextEl.setAttribute('data-i18n', isTeacher ? 'subscriptionTextTeacher' : 'subscriptionText');
+    }
+    if (subscribeBtn) {
+      subscribeBtn.setAttribute('data-i18n', isTeacher ? 'subscribeClasses' : 'subscribe');
+    }
+    if (typeof I18n !== 'undefined' && I18n.applyPage) I18n.applyPage();
+  })();
 }
 
 // ============================================
@@ -3382,17 +3201,8 @@ if (document.getElementById('aiChatMessages')) {
     }
   });
   
-  // Gestion de la déconnexion
   if (aiLogoutBtn) {
-    aiLogoutBtn.addEventListener('click', () => {
-      // Nettoyer le localStorage
-      Object.keys(localStorage).forEach(key => {
-        localStorage.removeItem(key);
-      });
-      
-      // Rediriger vers la page de choix de rôle
-      window.location.href = ROUTES.CHOOSE_ROLE;
-    });
+    aiLogoutBtn.addEventListener('click', function() { doLogout(true); });
   }
 }
 
@@ -3589,17 +3399,373 @@ if (document.getElementById('notificationListContainer')) {
     }
   });
   
-  // Gestion de la déconnexion
   if (notificationLogoutBtn) {
-    notificationLogoutBtn.addEventListener('click', () => {
-      // Nettoyer le localStorage
-      Object.keys(localStorage).forEach(key => {
-        localStorage.removeItem(key);
+    notificationLogoutBtn.addEventListener('click', function() { doLogout(true); });
+  }
+}
+
+// ============================================
+// Page Paramètres - Déconnexion
+// ============================================
+if (document.getElementById('parametresLogoutBtn')) {
+  document.getElementById('parametresLogoutBtn').addEventListener('click', function() { doLogout(true); });
+}
+
+// ============================================
+// CODE CONSOLIDÉ (anciennement inline dans les pages HTML)
+// ============================================
+
+// Gestion globale des erreurs (page index et global)
+window.addEventListener('error', function(e) {
+  console.error('Erreur globale:', e.error);
+});
+window.addEventListener('unhandledrejection', function(e) {
+  console.error('Promesse rejetée non gérée:', e.reason);
+});
+
+// Modal légale (Politique / Conditions) – Choix_role, Connexion, etc.
+(function initLegalModal() {
+  var modal = document.getElementById('legalModal');
+  var backdrop = document.getElementById('legalModalBackdrop');
+  var closeBtn = document.getElementById('legalModalClose');
+  var iframe = document.getElementById('legalModalIframe');
+  var titleEl = document.getElementById('legalModalTitle');
+  var titles = { 'CU.html': 'Conditions d\'utilisation', 'Politique.html': 'Politique de confidentialité' };
+  if (!modal) return;
+  function openLegal(url) {
+    if (iframe) iframe.src = url;
+    if (titleEl) titleEl.textContent = titles[url] || '';
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLegal() {
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if (iframe) iframe.src = 'about:blank';
+  }
+  document.querySelectorAll('.link-legal-modal').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      openLegal(a.getAttribute('data-legal'));
+    });
+  });
+  if (backdrop) backdrop.addEventListener('click', closeLegal);
+  if (closeBtn) closeBtn.addEventListener('click', closeLegal);
+})();
+
+// Modal Installer PWA (Choix_role) – affichée en bas
+(function initInstallModal() {
+  var installModal = document.getElementById('installModal');
+  var installBackdrop = document.getElementById('installModalBackdrop');
+  var installClose = document.getElementById('installModalClose');
+  var installBtn = document.getElementById('installModalBtn');
+  var deferredPrompt = null;
+  var installDismissedKey = 'droussi-install-dismissed';
+  if (!installModal) return;
+  function showInstallModal() {
+    /* Affichage à chaque ouverture : on ne vérifie plus le localStorage "dismissed" */
+    installModal.style.display = '';
+    installModal.classList.add('show');
+    installModal.setAttribute('aria-hidden', 'false');
+  }
+  function hideInstallModal() {
+    installModal.classList.remove('show');
+    installModal.setAttribute('aria-hidden', 'true');
+    setTimeout(function() { installModal.style.display = 'none'; }, 300);
+  }
+  function setDismissed() {
+    try { localStorage.setItem(installDismissedKey, 'true'); } catch (e) {}
+  }
+  window.addEventListener('beforeinstallprompt', function(e) {
+    e.preventDefault();
+    deferredPrompt = e;
+    showInstallModal();
+  });
+  if (installBtn) {
+    installBtn.addEventListener('click', function() {
+      if (!deferredPrompt) { hideInstallModal(); return; }
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function(choice) {
+        deferredPrompt = null;
+        hideInstallModal();
+        if (choice.outcome === 'accepted') setDismissed();
       });
-      
-      // Rediriger vers la page de choix de rôle
-      window.location.href = ROUTES.CHOOSE_ROLE;
     });
   }
->>>>>>> Stashed changes
-}
+  /* Fermer sans mémoriser : à la prochaine ouverture le modal réapparaîtra */
+  if (installClose) installClose.addEventListener('click', function() { hideInstallModal(); });
+  if (installBackdrop) installBackdrop.addEventListener('click', function() { hideInstallModal(); });
+  if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+    setDismissed();
+  }
+})();
+
+// Barre de recherche MobileKit (page Gouvernorat) – toggle au clic
+(function initSearchToggle() {
+  var searchEl = document.getElementById('search');
+  var input = document.getElementById('governoratSearch') || document.getElementById('delegationSearch') || document.getElementById('ecoleSearch');
+  if (!searchEl || !input) return;
+  var toggles = document.querySelectorAll('.toggle-searchbox');
+  function toggleSearch() {
+    var show = searchEl.classList.contains('show');
+    if (show) {
+      searchEl.classList.remove('show');
+      input.blur();
+    } else {
+      searchEl.classList.add('show');
+      input.focus();
+    }
+  }
+  toggles.forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      toggleSearch();
+    });
+  });
+})();
+
+// Date de dernière mise à jour (CU.html, Politique.html)
+(function initUpdateDate() {
+  var el = document.getElementById('updateDate');
+  if (!el) return;
+  el.textContent = new Date().toLocaleDateString('fr-FR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+})();
+
+// ============================================
+// Section "pas d'abonnement" (parent et enseignant sur abonnement.html)
+// Affiche le bloc Bienvenue / S'abonner si pas d'abonnement ; sinon affiche la liste des classes.
+// ============================================
+(function initParentSubscriptionSection() {
+  var section = document.getElementById('subscriptionSection');
+  if (!section) return;
+  var userRole = typeof AppUtils !== 'undefined' && AppUtils.getUserRole ? AppUtils.getUserRole() : (localStorage.getItem(STORAGE_KEYS.USER_ROLE) || '');
+  var isAbonnementPage = !!document.getElementById('subscriptionListContainer');
+
+  var subscribedKey = userRole === 'teacher' ? STORAGE_KEYS.TEACHER_SUBSCRIBED : STORAGE_KEYS.PARENT_SUBSCRIBED;
+  var classesKey = userRole === 'teacher' ? STORAGE_KEYS.TEACHER_CLASSES : STORAGE_KEYS.PARENT_CLASSES;
+  var isAssistantIAPage = !!document.getElementById('aiChatContentWrapper');
+  if (!isAbonnementPage && !isAssistantIAPage && userRole !== 'parent') return;
+
+  var isSubscribed = localStorage.getItem(subscribedKey) === 'true';
+  var classes = [];
+  try { classes = JSON.parse(localStorage.getItem(classesKey) || '[]'); } catch (e) {}
+  var hasClasses = isSubscribed && classes.length > 0;
+
+  var contentContainers = document.querySelectorAll('.page-content-when-subscribed');
+  var titleElements = document.querySelectorAll('.page-title-when-subscribed');
+
+  if (hasClasses) {
+    section.style.display = 'none';
+    contentContainers.forEach(function (el) { el.style.display = ''; });
+    titleElements.forEach(function (el) { el.style.display = ''; });
+  } else {
+    section.style.display = 'block';
+    contentContainers.forEach(function (el) { el.style.display = 'none'; });
+    titleElements.forEach(function (el) { el.style.display = 'none'; });
+  }
+
+  var subscribeBtn = document.getElementById('subscribeBtn');
+  if (subscribeBtn) {
+    subscribeBtn.addEventListener('click', function () { goToGovernorat(); });
+  }
+})();
+
+// ============================================
+// Détection Online / Offline (composant Mobilekit)
+// ============================================
+(function initOnlineOfflineDetection() {
+  var OnlineText = 'Connexion internet rétablie';
+  var OfflineText = 'Pas de connexion internet';
+  var pageBody = document.body;
+  var autoCloseToast = null;
+
+  function closeOnlineOfflineToasts() {
+    ['online-toast', 'offline-toast'].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.classList.remove('show');
+    });
+    if (autoCloseToast) {
+      clearTimeout(autoCloseToast);
+      autoCloseToast = null;
+    }
+  }
+
+  function showToast(targetId, time) {
+    var a = document.getElementById(targetId);
+    if (!a) return;
+    closeOnlineOfflineToasts();
+    setTimeout(function () {
+      a.classList.add('show');
+    }, 100);
+    if (time) {
+      time = time + 100;
+      autoCloseToast = setTimeout(closeOnlineOfflineToasts, time);
+    }
+  }
+
+  function onlineModeToast() {
+    var check = document.getElementById('online-toast');
+    if (check && pageBody.contains(check)) {
+      check.classList.add('show');
+    } else {
+      var div = document.createElement('div');
+      div.id = 'online-toast';
+      pageBody.appendChild(div);
+      var toast = document.getElementById('online-toast');
+      toast.className = 'toast-box bg-success toast-top tap-to-close';
+      toast.innerHTML = "<div class='in'><div class='text'>" + OnlineText + "</div></div>";
+      setTimeout(function () {
+        showToast('online-toast', 3000);
+      }, 500);
+    }
+  }
+
+  function offlineModeToast() {
+    var check = document.getElementById('offline-toast');
+    if (check && pageBody.contains(check)) {
+      check.classList.add('show');
+    } else {
+      var div = document.createElement('div');
+      div.id = 'offline-toast';
+      pageBody.appendChild(div);
+      var toast = document.getElementById('offline-toast');
+      toast.className = 'toast-box bg-danger toast-top tap-to-close';
+      toast.innerHTML = "<div class='in'><div class='text'>" + OfflineText + "</div></div>";
+      setTimeout(function () {
+        showToast('offline-toast', 3000);
+      }, 500);
+    }
+  }
+
+  function onlineMode() {
+    var check = document.getElementById('offline-toast');
+    if (check && pageBody.contains(check)) check.classList.remove('show');
+    onlineModeToast();
+    var toast = document.getElementById('online-toast');
+    if (toast) {
+      toast.addEventListener('click', function () {
+        this.classList.remove('show');
+      }, { once: true });
+      setTimeout(function () {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+  }
+
+  function offlineMode() {
+    var check = document.getElementById('online-toast');
+    if (check && pageBody.contains(check)) check.classList.remove('show');
+    offlineModeToast();
+    var toast = document.getElementById('offline-toast');
+    if (toast) {
+      toast.addEventListener('click', function () {
+        this.classList.remove('show');
+      }, { once: true });
+      setTimeout(function () {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+  }
+
+  window.addEventListener('online', onlineMode);
+  window.addEventListener('offline', offlineMode);
+})();
+
+// ============================================
+// Page Vérification enseignant (caméra + scan QR)
+// ============================================
+(function initVerificationPage() {
+  var formWrap = document.getElementById('formWrap');
+  if (!formWrap) return;
+
+  var alreadyBlock = document.getElementById('alreadyVerifiedBlock');
+  var video = document.getElementById('video');
+  var canvas = document.getElementById('canvas');
+  var ctx = canvas && canvas.getContext('2d');
+  var statusEl = document.getElementById('status');
+  var manualBtn = document.getElementById('manualBtn');
+  var stream = null;
+  var scanning = true;
+
+  try {
+    if (localStorage.getItem('teacherVerified') === 'true') {
+      if (alreadyBlock) alreadyBlock.classList.add('visible');
+      if (formWrap) formWrap.classList.add('hidden');
+      return;
+    }
+  } catch (e) {}
+
+  function t(key) { return (typeof I18n !== 'undefined' && I18n.t) ? I18n.t(key, 'fr') : key; }
+  function setStatus(msg, type) {
+    type = type || 'waiting';
+    statusEl.textContent = msg || t('verificationStatusRequesting');
+    statusEl.className = 'verification-status ' + type;
+  }
+
+  function onVerified() {
+    try { localStorage.setItem('teacherVerified', 'true'); } catch (e) {}
+    setStatus(t('verificationStatusSuccess'), 'success');
+    scanning = false;
+    if (stream) {
+      stream.getTracks().forEach(function(track) { track.stop(); });
+    }
+    setTimeout(function() { window.location.href = 'Teacher.html'; }, 800);
+  }
+
+  if (manualBtn) manualBtn.addEventListener('click', onVerified);
+
+  function tick() {
+    if (!scanning || !video || video.readyState !== video.HAVE_ENOUGH_DATA) {
+      requestAnimationFrame(tick);
+      return;
+    }
+    var w = video.videoWidth;
+    var h = video.videoHeight;
+    if (!w || !h) {
+      requestAnimationFrame(tick);
+      return;
+    }
+    canvas.width = w;
+    canvas.height = h;
+    ctx.drawImage(video, 0, 0);
+    var imageData = ctx.getImageData(0, 0, w, h);
+    var code = typeof jsQR !== 'undefined' && jsQR(imageData.data, w, h);
+    if (code && code.data) {
+      var data = (code.data || '').trim();
+      if (data.indexOf('DROUSSI') !== -1 || data.length >= 8) {
+        onVerified();
+        return;
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function startCamera() {
+    setStatus(t('verificationStatusRequesting'));
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      setStatus(t('verificationStatusNoCamera'), 'error');
+      return;
+    }
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+      .then(function(s) {
+        stream = s;
+        video.srcObject = s;
+        video.setAttribute('playsinline', true);
+        video.play();
+        setStatus(t('verificationStatusFrame'));
+        requestAnimationFrame(tick);
+      })
+      .catch(function() {
+        setStatus(t('verificationStatusDenied'), 'error');
+      });
+  }
+
+  if (video) video.addEventListener('loadedmetadata', function() { video.play().catch(function() {}); });
+  startCamera();
+})();

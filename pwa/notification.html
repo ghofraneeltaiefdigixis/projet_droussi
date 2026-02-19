@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#002FBD" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>Notifications | Droussi</title>
+  <meta name="description" content="Vos notifications sur Droussi" />
+  <meta name="keywords" content="éducation, Tunisie, notifications, Droussi" />
+  <link rel="icon" type="image/png" href="assets/img/logo_lancher.png"
+    sizes="32x32" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/logo_lancher.png" />
+  <link rel="stylesheet" href="assets/css/style_app.css" />
+  <link rel="manifest" href="__manifest.json" />
+</head>
+
+<body class="app-style-page notification-page">
+  <!-- Header Application Style -->
+  <header class="app-header parent-header">
+    <div class="app-header-content">
+      <div class="app-logo-container">
+        <button type="button" class="notification-back-btn" onclick="window.history.back()">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+        </button>
+        <h1 class="notification-page-title" data-i18n="titleNotifications">Notifications</h1>
+      </div>
+      <div class="app-header-actions">
+        <button class="app-icon-btn" id="notificationHeaderMenuBtn" aria-label="Menu">
+          <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+        </button>
+        <!-- Menu déroulant -->
+        <div class="header-dropdown-menu" id="notificationHeaderDropdownMenu">
+          <button type="button" class="header-menu-item" id="notificationMenuBtn" role="menuitem" onclick="window.location.href='notification.html'">
+            <ion-icon name="notifications-outline"></ion-icon>
+            <span data-i18n="notifications">Notifications</span>
+          </button>
+          <a href="parametres.html" class="header-menu-item" role="menuitem">
+            <ion-icon name="settings-outline"></ion-icon>
+            <span data-i18n="settings">Paramètres</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenu principal -->
+  <main class="app-main-content notification-main-content">
+    <!-- Section d'abonnement -->
+    <div class="subscription-section" id="subscriptionSection">
+      <div class="subscription-content">
+        <h2 class="subscription-title" data-i18n="subscriptionWelcome">Bienvenue sur Droussi</h2>
+        <p class="subscription-text" data-i18n="subscriptionText">
+          Bienvenue sur Droussi ! Pour commencer à utiliser toutes les fonctionnalités, veuillez vous abonner à un établissement scolaire.
+        </p>
+        <button class="subscription-btn" id="subscribeBtn" onclick="window.location.href='gouvernorat.html'" data-i18n="subscribe">S'abonner</button>
+      </div>
+    </div>
+    <!-- Container pour les notifications (visible uniquement si abonné) -->
+    <div class="notification-list-container page-content-when-subscribed" id="notificationListContainer">
+      <!-- Message si aucune notification -->
+      <div class="notification-empty-state" id="notificationEmptyState" style="display: none;">
+        <div class="notification-empty-icon">
+          <ion-icon name="notifications-outline"></ion-icon>
+        </div>
+        <h3 class="notification-empty-title" data-i18n="noNotifications">Aucune notification</h3>
+        <p class="notification-empty-text" data-i18n="noNotificationsText">Vous n'avez pas encore de notifications.</p>
+      </div>
+      <!-- Les notifications seront générées dynamiquement -->
+    </div>
+  </main>
+
+  <!-- App Bottom Menu (identique à Parent.html) -->
+  <div class="appBottomMenu">
+    <a href="Parent.html" class="item">
+      <div class="col">
+        <ion-icon name="home-outline"></ion-icon>
+        <strong data-i18n="menuHome">Accueil</strong>
+      </div>
+    </a>
+    <a href="abonnement.html" class="item">
+      <div class="col">
+        <ion-icon name="school-outline"></ion-icon>
+        <strong data-i18n="menuMyClasses">Mes classes</strong>
+      </div>
+    </a>
+    <a href="#" class="item" id="addSubscriptionBtn" data-i18n-aria-label="menuAddSubscription" aria-label="Ajouter un abonnement">
+      <div class="col">
+        <div class="action-button large">
+          <ion-icon name="add-outline"></ion-icon>
+        </div>
+      </div>
+    </a>
+    <a href="devoir_maison.html" class="item">
+      <div class="col">
+        <ion-icon name="book-outline"></ion-icon>
+        <strong data-i18n="menuMyHomework">Mes devoirs</strong>
+      </div>
+    </a>
+    <a href="assistantIA.html" class="item">
+      <div class="col">
+        <ion-icon name="sparkles-outline"></ion-icon>
+        <strong data-i18n="menuAssistantIA">Assistant IA</strong>
+      </div>
+    </a>
+  </div>
+
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/app.js"></script>
+  <!-- Ionicons -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
+</body>
+
+</html>

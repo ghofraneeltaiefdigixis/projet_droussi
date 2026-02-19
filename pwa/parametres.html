@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#002FBD" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>Paramètres | Droussi</title>
+  <meta name="description" content="Paramètres de votre compte Droussi" />
+  <meta name="keywords" content="éducation, Tunisie, paramètres, compte, Droussi" />
+  <link rel="icon" type="image/png" href="assets/img/logo_lancher.png"
+    sizes="32x32" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/logo_lancher.png" />
+  <link rel="stylesheet" href="assets/css/style_app.css" />
+  <link rel="manifest" href="__manifest.json" />
+</head>
+
+<body class="app-style-page parametres-page">
+  <!-- Header style WhatsApp -->
+  <header class="app-header parent-header">
+    <div class="app-header-content">
+      <div class="app-logo-container">
+        <button type="button" class="notification-back-btn" onclick="window.history.back()" data-i18n-aria-label="back" aria-label="Retour">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+        </button>
+        <h1 class="parametres-page-title" data-i18n="titleParams">Paramètres</h1>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenu principal - listview par sections comme WhatsApp -->
+  <main class="app-main-content parametres-main">
+    <div class="parametres-list-container">
+      <!-- Section Compte -->
+      <div class="section full parametres-section">
+        <ul class="listview simple-listview parametres-listview">
+          <li class="parametres-list-item">
+            <a href="#" class="parametres-item-link">
+              <ion-icon name="person-outline"></ion-icon>
+              <span data-i18n="account">Compte</span>
+              <ion-icon name="chevron-forward-outline" class="parametres-item-arrow"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- Section Notifications -->
+      <div class="section full parametres-section">
+        <ul class="listview simple-listview parametres-listview">
+          <li class="parametres-list-item">
+            <a href="notification.html" class="parametres-item-link">
+              <ion-icon name="notifications-outline"></ion-icon>
+              <span data-i18n="notifications">Notifications</span>
+              <ion-icon name="chevron-forward-outline" class="parametres-item-arrow"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- Section Confidentialité -->
+      <div class="section full parametres-section">
+        <ul class="listview simple-listview parametres-listview">
+          <li class="parametres-list-item">
+            <a href="#" class="parametres-item-link">
+              <ion-icon name="lock-closed-outline"></ion-icon>
+              <span data-i18n="privacy">Confidentialité</span>
+              <ion-icon name="chevron-forward-outline" class="parametres-item-arrow"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- Section À propos -->
+      <div class="section full parametres-section">
+        <ul class="listview simple-listview parametres-listview">
+          <li class="parametres-list-item">
+            <a href="#" class="parametres-item-link">
+              <ion-icon name="information-circle-outline"></ion-icon>
+              <span data-i18n="about">À propos</span>
+              <ion-icon name="chevron-forward-outline" class="parametres-item-arrow"></ion-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- Déconnexion -->
+      <div class="section full parametres-section parametres-logout-section">
+        <ul class="listview simple-listview parametres-listview">
+          <li class="parametres-list-item">
+            <button type="button" class="parametres-item-link parametres-logout-btn" id="parametresLogoutBtn">
+              <ion-icon name="log-out-outline"></ion-icon>
+              <span data-i18n="logout">Déconnexion</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <!-- App Bottom Menu -->
+  <div class="appBottomMenu">
+    <a href="Parent.html" class="item">
+      <div class="col">
+        <ion-icon name="home-outline"></ion-icon>
+        <strong data-i18n="menuHome">Accueil</strong>
+      </div>
+    </a>
+    <a href="abonnement.html" class="item">
+      <div class="col">
+        <ion-icon name="school-outline"></ion-icon>
+        <strong data-i18n="menuMyClasses">Mes classes</strong>
+      </div>
+    </a>
+    <a href="gouvernorat.html" class="item" data-i18n-aria-label="menuAddSubscription" aria-label="Ajouter un abonnement">
+      <div class="col">
+        <div class="action-button large">
+          <ion-icon name="add-outline"></ion-icon>
+        </div>
+      </div>
+    </a>
+    <a href="devoir_maison.html" class="item">
+      <div class="col">
+        <ion-icon name="book-outline"></ion-icon>
+        <strong data-i18n="menuMyHomework">Mes devoirs</strong>
+      </div>
+    </a>
+    <a href="assistantIA.html" class="item">
+      <div class="col">
+        <ion-icon name="sparkles-outline"></ion-icon>
+        <strong data-i18n="menuAssistantIA">Assistant IA</strong>
+      </div>
+    </a>
+  </div>
+
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
+</body>
+
+</html>

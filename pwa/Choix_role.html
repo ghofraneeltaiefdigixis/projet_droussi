@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#002FBD" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>Choisir votre rôle | Droussi</title>
+  <meta name="description" content="Choisissez votre rôle - Parent ou Enseignant - sur Droussi" />
+  <meta name="keywords" content="éducation, Tunisie, parents, enseignants, compte, Droussi" />
+  <link rel="icon" type="image/png" href="assets/img/logo_lancher.png"
+    sizes="32x32" />
+  <link rel="apple-touch-icon" sizes="180x180"
+    href="assets/img/logo_lancher.png" />
+  <link rel="stylesheet" href="assets/css/style_app.css" />
+  <link rel="manifest" href="__manifest.json" />
+</head>
+
+<body class="choose-account-page">
+  <div class="page-container">
+
+    <!-- Contenu principal -->
+    <main class="main-content">
+      <!-- Logo centré -->
+      <div class="logo-container">
+        <img src="assets/img/logo_ar_droussi_blue_w170.png" alt="Droussi" class="logo-droussi" />
+      </div>
+      <!-- Description de l'application -->
+       <div class="description">
+      <p class="choose-role-description" dir="rtl" lang="ar">
+        تطبيقة بسيطة لإرسال الواجبات المنزلية حينياً بين المعلم وأولياء تلاميذ المرحلة الابتدائية.
+      </p>
+      <p class="choose-role-description" lang="fr">
+        Application simple pour envoyer les devoirs en temps réel entre enseignant et parents d'élèves du primaire.
+      </p>
+</div>
+      <!-- Texte de bienvenue et boutons (légèrement décalés vers le bas) -->
+      <div class="welcome-section">
+        
+        <!-- Boutons de sélection de compte -->
+        <div class="account-buttons">
+          <button class="account-btn account-btn-primary" data-account="parent">
+            <span class="account-text">Continuer en tant que parent</span>
+          </button>
+
+          <button class="account-btn account-btn-primary" data-account="teacher">
+            <span class="account-text">Continuer en tant qu'enseignant(e)</span>
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal légale (Politique / Conditions) -->
+  <div class="legal-modal" id="legalModal" aria-hidden="true">
+    <div class="legal-modal-backdrop" id="legalModalBackdrop"></div>
+    <div class="legal-modal-content">
+      <div class="legal-modal-header">
+        <h2 class="legal-modal-title" id="legalModalTitle" data-i18n="legalConditions">Conditions d'utilisation</h2>
+        <button type="button" class="legal-modal-close" id="legalModalClose" data-i18n-aria-label="close" aria-label="Fermer">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+      <iframe class="legal-modal-iframe" id="legalModalIframe" title="Document légal"></iframe>
+    </div>
+  </div>
+
+  <!-- Modal Installer l'application (PWA) - affichée en bas -->
+  <div class="install-modal" id="installModal" aria-hidden="true" style="display: none;">
+    <div class="install-modal-backdrop" id="installModalBackdrop"></div>
+    <div class="install-modal-content">
+      <button type="button" class="install-modal-close" id="installModalClose" aria-label="Fermer">
+        <ion-icon name="close-outline"></ion-icon>
+      </button>
+      <div class="install-modal-body">
+        <div class="install-modal-icon">
+          <img src="assets/img/logo_lancher.png" alt="" width="40" height="40" />
+        </div>
+        <div class="install-modal-text">
+          <strong>Installer Droussi</strong>
+          <span>Utilisez l'application sur votre téléphone</span>
+        </div>
+      </div>
+      <button type="button" class="install-modal-btn" id="installModalBtn">
+        Installer
+      </button>
+    </div>
+  </div>
+
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
+</body>
+
+</html>

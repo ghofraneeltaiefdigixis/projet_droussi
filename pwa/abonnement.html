@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#002FBD" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>Mes Abonnements | Droussi</title>
+  <meta name="description" content="Gérez vos abonnements sur Droussi" />
+  <meta name="keywords" content="éducation, Tunisie, abonnements, classes, Droussi" />
+  <link rel="icon" type="image/png" href="assets/img/logo_lancher.png"
+    sizes="32x32" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/logo_lancher.png" />
+  <link rel="stylesheet" href="assets/css/style_app.css" />
+  <link rel="manifest" href="__manifest.json" />
+</head>
+
+<body class="app-style-page abonnement-page">
+  <!-- Header Application Style -->
+  <header class="app-header parent-header">
+    <div class="app-header-content">
+      <button type="button" class="app-icon-btn subscription-back-btn" onclick="window.history.back()" data-i18n-aria-label="back" aria-label="Retour">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </button>
+      <div class="app-logo-container">
+        <img src="assets/img/logo_ar_droussi_blue_w170.png" alt="Droussi" class="app-logo" />
+      </div>
+      <div class="app-header-actions">
+        <div class="header-menu-wrapper">
+          <button type="button" class="app-icon-btn header-menu-btn-ellipsis" id="headerMenuBtn" aria-label="Menu" aria-expanded="false" aria-haspopup="true">
+            <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+          </button>
+          <div class="header-dropdown-menu" id="headerDropdownMenu" role="menu" aria-hidden="true">
+            <button type="button" class="header-menu-item" id="notificationBtn" role="menuitem" onclick="window.location.href='notification.html'">
+              <ion-icon name="notifications-outline"></ion-icon>
+              <span data-i18n="notifications">Notifications</span>
+            </button>
+            <a href="parametres.html" class="header-menu-item" role="menuitem">
+              <ion-icon name="settings-outline"></ion-icon>
+              <span data-i18n="settings">Paramètres</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenu principal -->
+  <main class="app-main-content subscription-main">
+    <h1 class="subscription-page-title page-title-when-subscribed" data-i18n="titleMyClasses">Mes classes</h1>
+    <!-- Section d'abonnement -->
+    <div class="subscription-section" id="subscriptionSection">
+      <div class="subscription-content">
+        <h2 class="subscription-title" data-i18n="subscriptionWelcome">Bienvenue sur Droussi</h2>
+        <p class="subscription-text" data-i18n="subscriptionText">
+          Bienvenue sur Droussi ! Pour commencer à utiliser toutes les fonctionnalités, veuillez vous abonner à un établissement scolaire.
+        </p>
+        <button class="subscription-btn" id="subscribeBtn" onclick="window.location.href='gouvernorat.html'" data-i18n="subscribe">S'abonner</button>
+      </div>
+    </div>
+    <!-- Container pour la liste des abonnements (listview) -->
+    <div class="subscription-list-container page-content-when-subscribed" id="subscriptionListContainer">
+      <!-- Message si aucun abonnement -->
+      <div class="subscription-empty-state" id="subscriptionEmptyState" style="display: none;">
+        <div class="empty-state-icon">
+          <ion-icon name="card-outline"></ion-icon>
+        </div>
+        <h3 class="empty-state-title" data-i18n="noSubscription">Aucun abonnement</h3>
+        <p class="empty-state-text" data-i18n="noSubscriptionText">Vous n'avez pas encore d'abonnement actif.</p>
+        <a href="gouvernorat.html" class="empty-state-btn" data-i18n="subscribeNow">
+          S'abonner
+        </a>
+      </div>
+      <!-- Liste des classes abonnées (remplie dynamiquement) -->
+      <div class="section full" id="subscriptionListSection" style="display: none;">
+        <ul class="listview simple-listview" id="subscriptionListView">
+          <!-- Items générés par JS -->
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <!-- App Bottom Menu (parent et enseignant : liens adaptés par JS) -->
+  <div class="appBottomMenu" id="abonnementBottomMenu">
+    <a href="Parent.html" class="item" id="menuHomeLink">
+      <div class="col">
+        <ion-icon name="home-outline"></ion-icon>
+        <strong data-i18n="menuHome">Accueil</strong>
+      </div>
+    </a>
+    <a href="abonnement.html" class="item active">
+      <div class="col">
+        <ion-icon name="school-outline"></ion-icon>
+        <strong data-i18n="menuMyClasses">Mes classes</strong>
+      </div>
+    </a>
+    <a href="gouvernorat.html" class="item" id="addSubscriptionBtn" data-i18n-aria-label="menuAddSubscription" aria-label="Ajouter un abonnement">
+      <div class="col">
+        <div class="action-button large">
+          <ion-icon name="add-outline"></ion-icon>
+        </div>
+      </div>
+    </a>
+    <a href="devoir_maison.html" class="item menu-item-parent" id="menuDevoirLink">
+      <div class="col">
+        <ion-icon name="book-outline"></ion-icon>
+        <strong data-i18n="menuMyHomework">Mes devoirs</strong>
+      </div>
+    </a>
+    <a href="verification_enseignant.html" class="item menu-item-teacher" id="menuVerificationLink" style="display: none;">
+      <div class="col">
+        <ion-icon name="shield-checkmark-outline"></ion-icon>
+        <strong data-i18n="menuVerification">Vérification</strong>
+      </div>
+    </a>
+    <a href="assistantIA.html" class="item">
+      <div class="col">
+        <ion-icon name="sparkles-outline"></ion-icon>
+        <strong data-i18n="menuAssistantIA">Assistant IA</strong>
+      </div>
+    </a>
+  </div>
+
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/app.js"></script>
+  <!-- Ionicons -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
+</body>
+
+</html>

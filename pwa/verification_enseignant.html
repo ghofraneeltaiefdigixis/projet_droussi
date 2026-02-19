@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#002FBD" />
+  <title>Vérification du compte enseignant | Droussi</title>
+  <meta name="description" content="Scannez le QR code à l'école pour vérifier votre compte enseignant" />
+  <link rel="icon" type="image/png" href="assets/img/logo_lancher.png" sizes="32x32" />
+  <link rel="stylesheet" href="assets/css/style_app.css" />
+  <link rel="manifest" href="__manifest.json" />
+</head>
+
+<body class="app-style-page verification-page">
+  <header class="app-header">
+    <div class="app-header-content">
+      <button type="button" class="app-icon-btn btn-back-header" onclick="window.location.href='Teacher.html'" data-i18n-aria-label="back" aria-label="Retour">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </button>
+      <div class="app-logo-container">
+        <img src="assets/img/logo_ar_droussi_blue_w170.png" alt="Droussi" class="app-logo" />
+      </div>
+      <div class="app-header-actions"></div>
+    </div>
+  </header>
+
+  <main class="verification-main">
+    <div class="verification-already" id="alreadyVerifiedBlock">
+      <p class="verification-already-badge" data-i18n="verificationAlreadyVerified">Compte vérifié</p>
+    </div>
+
+    <div class="verification-form-wrap" id="formWrap">
+      <header class="verification-header">
+        <h1 class="verification-title" data-i18n="verificationTitle">Vérification du compte enseignant</h1>
+        <p class="verification-text" data-i18n="verificationText">Ouvrez la caméra et scannez le QR code fourni par l'école.</p>
+      </header>
+
+      <div class="verification-scanner-wrap" id="scannerWrap">
+        <video id="video" playsinline muted></video>
+        <canvas id="canvas"></canvas>
+        <div class="verification-scanner-overlay"></div>
+      </div>
+
+      <div class="verification-status waiting" id="status"></div>
+
+      <button type="button" class="verification-btn" id="manualBtn" data-i18n="verificationManualBtn">Mon compte a déjà été vérifié</button>
+    </div>
+  </main>
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+
+</html>

@@ -13,9 +13,9 @@
   <title>Droussi - Application Éducative</title>
   <meta name="description" content="Droussi - Application éducative pour les parents et enseignants en Tunisie" />
   <meta name="keywords" content="éducation, Tunisie, parents, enseignants, école, Droussi" />
-  <link rel="icon" type="image/png" href="assets/img/droussi icons/android/android-launchericon-72-72.png"
+  <link rel="icon" type="image/png" href="assets/img/droussi-full_white_253.png"
     sizes="32x32" />
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/droussi icons/android/android-launchericon-192-192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/droussi-full_white_253.png" />
   <link rel="stylesheet" href="assets/css/style_app.css" />
   <link rel="manifest" href="__manifest.json" />
 </head>
@@ -26,33 +26,10 @@
          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
     <div style="display:none; color: white; font-size: 24px; text-align: center;">Droussi</div>
   </div>
+
+  <script src="assets/js/i18n.js"></script>
   <script src="assets/js/app.js"></script>
-  <script>
-<<<<<<< Updated upstream
-    // Enregistrer le service worker
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-        navigator.serviceWorker.register('./service-worker.js')
-          .then(function(registration) {
-            console.log('Service Worker enregistré avec succès:', registration.scope);
-          })
-          .catch(function(error) {
-            console.log('Échec de l\'enregistrement du Service Worker:', error);
-          });
-      });
-    }
-    
-=======
->>>>>>> Stashed changes
-    // Gestion globale des erreurs
-    window.addEventListener('error', function(e) {
-      console.error('Erreur globale:', e.error);
-    });
-    
-    window.addEventListener('unhandledrejection', function(e) {
-      console.error('Promesse rejetée non gérée:', e.reason);
-    });
-  </script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
 </body>
 
 </html>

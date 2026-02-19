@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#002FBD" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>Assistant IA | Droussi</title>
+  <meta name="description" content="Assistant IA éducatif sur Droussi" />
+  <meta name="keywords" content="éducation, Tunisie, IA, assistant, Droussi" />
+  <link rel="icon" type="image/png" href="assets/img/logo_lancher.png"
+    sizes="32x32" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/logo_lancher.png" />
+  <link rel="stylesheet" href="assets/css/style_app.css" />
+  <link rel="manifest" href="__manifest.json" />
+</head>
+
+<body class="app-style-page ai-chat-page">
+  <header class="app-header ai-chat-header">
+    <div class="app-header-content">
+      <div class="app-logo-container ai-chat-header-left">
+        <button type="button" class="ai-chat-back-btn" onclick="window.history.back()" data-i18n-aria-label="back" aria-label="Retour">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+        </button>
+        <div class="ai-chat-header-title">
+          <h1 class="ai-chat-title" data-i18n="titleAssistantIA">Assistant IA</h1>
+        </div>
+      </div>
+      <div class="app-header-actions">
+        <button class="app-icon-btn" id="aiHeaderMenuBtn" aria-label="Menu" aria-expanded="false" aria-haspopup="true">
+          <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+        </button>
+        <div class="header-dropdown-menu" id="aiHeaderDropdownMenu" role="menu" aria-hidden="true">
+          <button type="button" class="header-menu-item" id="aiNotificationBtn" role="menuitem" onclick="window.location.href='notification.html'">
+            <ion-icon name="notifications-outline"></ion-icon>
+            <span data-i18n="notifications">Notifications</span>
+          </button>
+          <a href="parametres.html" class="header-menu-item" role="menuitem">
+            <ion-icon name="settings-outline"></ion-icon>
+            <span data-i18n="settings">Paramètres</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Section d'abonnement (visible si non abonné) -->
+  <div class="subscription-section" id="subscriptionSection">
+    <div class="subscription-content">
+      <h2 class="subscription-title" data-i18n="subscriptionWelcome">Bienvenue sur Droussi</h2>
+      <p class="subscription-text" data-i18n="subscriptionText">Bienvenue sur Droussi ! Pour commencer à utiliser toutes les fonctionnalités, veuillez vous abonner à un établissement scolaire.</p>
+      <button class="subscription-btn" id="subscribeBtn" onclick="window.location.href='gouvernorat.html'" data-i18n="subscribe">S'abonner</button>
+    </div>
+  </div>
+
+  <!-- Zone chat (visible uniquement si abonné) -->
+  <div class="page-content-when-subscribed ai-chat-wrapper" id="aiChatContentWrapper">
+  <main class="ai-chat-messages-container" id="aiChatMessages" role="main">
+    <!-- Message de bienvenue -->
+    <div class="ai-welcome-message">
+      <div class="ai-welcome-icon">
+        <ion-icon name="sparkles-outline"></ion-icon>
+      </div>
+      <h2 class="ai-welcome-title" data-i18n="aiWelcome">Bonjour ! Je suis votre Assistant IA</h2>
+      <p class="ai-welcome-text" data-i18n="aiWelcomeText">Je suis là pour vous aider avec vos questions sur l'éducation, les classes, les devoirs et bien plus encore. Posez-moi une question !</p>
+    </div>
+    <!-- Les messages seront générés dynamiquement -->
+  </main>
+
+  <!-- Zone de saisie -->
+  <div class="ai-chat-input-container">
+    <!-- Zone d'affichage des fichiers uploadés -->
+    <div class="ai-chat-files-preview" id="aiChatFilesPreview" style="display: none;"></div>
+    
+    <form class="ai-chat-form" id="aiChatForm">
+      <div class="ai-chat-input-wrapper">
+        <input 
+          type="file" 
+          id="aiChatFileInput" 
+          class="ai-chat-file-input" 
+          multiple 
+          accept="image/*,.pdf,.doc,.docx,.txt"
+          aria-label="Ajouter un fichier" />
+        <label for="aiChatFileInput" class="ai-chat-file-btn" aria-label="Ajouter un fichier">
+          <ion-icon name="attach-outline"></ion-icon>
+        </label>
+        <textarea 
+          class="ai-chat-input" 
+          id="aiChatInput" 
+          placeholder="Tapez votre message..." data-i18n-placeholder="aiPlaceholder"
+          rows="1"
+          maxlength="2000"></textarea>
+        <button type="submit" class="ai-chat-send-btn" id="aiChatSendBtn" aria-label="Envoyer">
+          <ion-icon name="send-outline"></ion-icon>
+        </button>
+      </div>
+    </form>
+  </div>
+  </div>
+
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/app.js"></script>
+  <!-- Ionicons -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
+</body>
+
+</html>

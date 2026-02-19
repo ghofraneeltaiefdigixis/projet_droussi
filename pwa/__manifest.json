@@ -13,31 +13,31 @@
   "categories": ["education", "social"],
   "icons": [
     {
-      "src": "assets/img/droussi icons/android/android-launchericon-72-72.png",
+      "src": "assets/img/logo_lancher.png",
       "type": "image/png",
       "sizes": "72x72",
       "purpose": "any"
     },
     {
-      "src": "assets/img/droussi icons/android/android-launchericon-96-96.png",
+      "src": "assets/img/logo_lancher.png",
       "type": "image/png",
       "sizes": "96x96",
       "purpose": "any"
     },
     {
-      "src": "assets/img/droussi icons/android/android-launchericon-144-144.png",
+      "src": "assets/img/logo_lancher.png",
       "type": "image/png",
       "sizes": "144x144",
       "purpose": "any"
     },
     {
-      "src": "assets/img/droussi icons/android/android-launchericon-192-192.png",
+      "src": "assets/img/logo_lancher.png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "any maskable"
     },
     {
-      "src": "assets/img/droussi icons/android/android-launchericon-512-512.png",
+      "src": "assets/img/logo_lancher.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any maskable"
