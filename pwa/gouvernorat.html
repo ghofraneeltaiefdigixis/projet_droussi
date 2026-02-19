@@ -2,30 +2,61 @@
 <html lang="fr">
 
 <head>
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+  <meta charset="UTF-8" />
+>>>>>>> Stashed changes
+=======
+  <meta charset="UTF-8" />
+>>>>>>> Stashed changes
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport"
     content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="theme-color" content="#002FBD" />
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+  <meta name="mobile-web-app-capable" content="yes" />
+>>>>>>> Stashed changes
   <title>Sélection de l'école | Droussi</title>
-  <meta name="description" content="Sélection du gouvernorat, délégation et école" />
-  <meta name="keywords" content="bootstrap 5, mobile template, cordova, phonegap, mobile, html" />
+  <meta name="description" content="Sélectionnez votre gouvernorat, délégation et école sur Droussi" />
+  <meta name="keywords" content="éducation, Tunisie, école, gouvernorat, délégation, Droussi" />
   <link rel="icon" type="image/png" href="assets/img/droussi icons/android/android-launchericon-72-72.png"
     sizes="32x32" />
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/droussi icons/android/android-launchericon-72-72.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/droussi icons/android/android-launchericon-192-192.png" />
   <link rel="stylesheet" href="assets/css/style_app.css" />
   <link rel="manifest" href="__manifest.json" />
+<<<<<<< Updated upstream
 
+=======
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>Sélection de l'école | Droussi</title>
+  <meta name="description" content="Sélectionnez votre gouvernorat, délégation et école sur Droussi" />
+  <meta name="keywords" content="éducation, Tunisie, école, gouvernorat, délégation, Droussi" />
+  <link rel="icon" type="image/png" href="assets/img/droussi icons/android/android-launchericon-72-72.png"
+    sizes="32x32" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/droussi icons/android/android-launchericon-192-192.png" />
+  <link rel="stylesheet" href="assets/css/style_app.css" />
+  <link rel="manifest" href="__manifest.json" />
+>>>>>>> Stashed changes
 </head>
 
 <body class="governorat-page">
   <div class="page-container">
     <!-- Header avec bouton retour -->
     <header class="page-header">
+<<<<<<< Updated upstream
       <a href="connexion.html" class="btn-back">
         <ion-icon name="arrow-back-outline"></ion-icon>
       </a>
+=======
+      <button type="button" class="btn-back" onclick="window.history.back()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </button>
+>>>>>>> Stashed changes
     </header>
 
     <!-- Contenu principal -->
@@ -36,6 +67,7 @@
       </div>
       
       <!-- Sous-titre -->
+<<<<<<< Updated upstream
       <p class="page-subtitle">Choisissez votre gouvernorat, puis votre délégation et enfin votre école</p>
 
       <!-- Formulaire -->
@@ -97,12 +129,90 @@
               <!-- Les options seront chargées dynamiquement selon la délégation sélectionnée -->
             </div>
           </div>
+=======
+      <p class="page-subtitle">Choisissez votre gouvernorat</p>
+
+      <!-- Formulaire -->
+      <form class="governorat-form" id="governoratForm">
+        <!-- Champ de recherche -->
+        <div class="form-group">
+          <div class="search-wrapper">
+            <input type="text" id="governoratSearch" class="search-input" placeholder="Rechercher un gouvernorat..." autocomplete="off" />
+            <ion-icon name="search-outline" class="search-icon"></ion-icon>
+          </div>
+        </div>
+
+        <!-- Liste des gouvernorats -->
+        <div class="governorat-list-container">
+          <ul class="governorat-list" id="governoratList">
+=======
+</head>
+
+<body class="app-style-page governorat-page">
+  <!-- Header Application Style -->
+  <header class="app-header">
+    <div class="app-header-content">
+      <button type="button" class="app-icon-btn btn-back-header" onclick="window.history.back()" aria-label="Retour">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </button>
+      <div class="app-logo-container">
+        <img src="assets/img/logo_ar_droussi_blue_w170.png" alt="Droussi" class="app-logo" />
+      </div>
+      <div class="app-header-actions">
+        <!-- Pas de boutons dans le header pour cette page -->
+      </div>
+    </div>
+    <!-- Barre de recherche dans le header -->
+    <div class="app-search-container">
+      <div class="app-search-bar">
+        <input type="text" id="governoratSearch" class="app-search-input" placeholder="Rechercher un gouvernorat..." autocomplete="off" />
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenu principal -->
+  <main class="app-main-content governorat-content">
+    <!-- Formulaire -->
+    <form class="governorat-form" id="governoratForm">
+      <!-- Liste des gouvernorats -->
+      <div class="governorat-list-container">
+        <ul class="governorat-list" id="governoratList">
+>>>>>>> Stashed changes
+            <li class="governorat-item" data-value="tunis">Tunis</li>
+            <li class="governorat-item" data-value="ariana">Ariana</li>
+            <li class="governorat-item" data-value="ben-arous">Ben Arous</li>
+            <li class="governorat-item" data-value="manouba">Manouba</li>
+            <li class="governorat-item" data-value="nabeul">Nabeul</li>
+            <li class="governorat-item" data-value="zaghouan">Zaghouan</li>
+            <li class="governorat-item" data-value="bizerte">Bizerte</li>
+            <li class="governorat-item" data-value="beja">Béja</li>
+            <li class="governorat-item" data-value="jendouba">Jendouba</li>
+            <li class="governorat-item" data-value="kef">Le Kef</li>
+            <li class="governorat-item" data-value="siliana">Siliana</li>
+            <li class="governorat-item" data-value="kairouan">Kairouan</li>
+            <li class="governorat-item" data-value="kasserine">Kasserine</li>
+            <li class="governorat-item" data-value="sidi-bouzid">Sidi Bouzid</li>
+            <li class="governorat-item" data-value="sfax">Sfax</li>
+            <li class="governorat-item" data-value="mahdia">Mahdia</li>
+            <li class="governorat-item" data-value="monastir">Monastir</li>
+            <li class="governorat-item" data-value="sousse">Sousse</li>
+            <li class="governorat-item" data-value="kebili">Kébili</li>
+            <li class="governorat-item" data-value="gabes">Gabès</li>
+            <li class="governorat-item" data-value="medenine">Médenine</li>
+            <li class="governorat-item" data-value="tataouine">Tataouine</li>
+            <li class="governorat-item" data-value="gafsa">Gafsa</li>
+            <li class="governorat-item" data-value="tozeur">Tozeur</li>
+          </ul>
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
         </div>
 
         <button type="submit" class="btn-continue" id="continueBtn" disabled>Continuer</button>
       </form>
     </main>
-  </div>
+
   <script src="assets/js/app.js"></script>
   <!-- Ionicons -->
   <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>

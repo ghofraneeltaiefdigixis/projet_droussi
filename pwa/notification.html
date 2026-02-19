@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#002FBD" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>Notifications | Droussi</title>
+  <meta name="description" content="Vos notifications sur Droussi" />
+  <meta name="keywords" content="éducation, Tunisie, notifications, Droussi" />
+  <link rel="icon" type="image/png" href="assets/img/droussi icons/android/android-launchericon-72-72.png"
+    sizes="32x32" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/droussi icons/android/android-launchericon-192-192.png" />
+  <link rel="stylesheet" href="assets/css/style_app.css" />
+  <link rel="manifest" href="__manifest.json" />
+</head>
+
+<body class="app-style-page notification-page">
+  <!-- Header Application Style -->
+  <header class="app-header parent-header">
+    <div class="app-header-content">
+      <div class="app-logo-container">
+        <button type="button" class="notification-back-btn" onclick="window.history.back()">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+        </button>
+        <h1 class="notification-page-title">Notifications</h1>
+      </div>
+      <div class="app-header-actions">
+        <button class="app-icon-btn" id="notificationHeaderMenuBtn" aria-label="Menu">
+          <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+        </button>
+        <!-- Menu déroulant -->
+        <div class="header-dropdown-menu" id="notificationHeaderDropdownMenu">
+          <button class="header-menu-item" id="notificationLogoutBtn">
+            <ion-icon name="log-out-outline"></ion-icon>
+            <span>Déconnexion</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenu principal -->
+  <main class="app-main-content notification-main-content">
+    <!-- Container pour les notifications -->
+    <div class="notification-list-container" id="notificationListContainer">
+      <!-- Message si aucune notification -->
+      <div class="notification-empty-state" id="notificationEmptyState" style="display: none;">
+        <div class="notification-empty-icon">
+          <ion-icon name="notifications-outline"></ion-icon>
+        </div>
+        <h3 class="notification-empty-title">Aucune notification</h3>
+        <p class="notification-empty-text">Vous n'avez pas encore de notifications.</p>
+      </div>
+      <!-- Les notifications seront générées dynamiquement -->
+    </div>
+  </main>
+
+  <!-- Navigation Footer Application Style -->
+  <nav class="app-bottom-nav">
+    <a href="Parent.html" class="app-nav-item">
+      <ion-icon name="home"></ion-icon>
+      <span>Accueil</span>
+    </a>
+    <a href="abonnement.html" class="app-nav-item">
+      <ion-icon name="card-outline"></ion-icon>
+      <span>Abonnement</span>
+    </a>
+    <a href="assistantIA.html" class="app-nav-item">
+      <ion-icon name="sparkles-outline"></ion-icon>
+      <span>Assistant IA</span>
+    </a>
+    <a href="#" class="app-nav-item">
+      <ion-icon name="menu-outline"></ion-icon>
+      <span>Menu</span>
+    </a>
+  </nav>
+
+  <script src="assets/js/app.js"></script>
+  <!-- Ionicons -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
+</body>
+
+</html>
