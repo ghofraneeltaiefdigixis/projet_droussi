@@ -3,6 +3,7 @@
  * Droussi - Application JavaScript Principale
  * ============================================
  * Application éducative pour les parents et enseignants en Tunisie
+<<<<<<< Updated upstream
  * Version: 3.0
  */
 
@@ -37,7 +38,86 @@ const ROUTES = {
 
 // ============================================
 // UTILITAIRES RÉUTILISABLES
+=======
+ * Version: 3.2
+ */
+var APP_DEBUG = false; // Mettre à true en développement pour les logs
+
 // ============================================
+// ENREGISTREMENT DU SERVICE WORKER (avec cache-bust pour éviter cache persistant)
+>>>>>>> Stashed changes
+// ============================================
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('./service-worker.js?v=3.2')
+      .then(function(registration) {
+        if (APP_DEBUG) console.log('[App] Service Worker enregistré:', registration.scope);
+        registration.addEventListener('updatefound', function() {
+          var newWorker = registration.installing;
+          newWorker.addEventListener('statechange', function() {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              if (APP_DEBUG) console.log('[App] Nouvelle version disponible.');
+              newWorker.postMessage({ action: 'skipWaiting' });
+            }
+          });
+        });
+        navigator.serviceWorker.addEventListener('controllerchange', function() {
+          window.location.reload();
+        });
+      })
+      .catch(function(error) {
+        if (APP_DEBUG) console.error('[App] Échec Service Worker:', error);
+      });
+    
+    // Vérifier périodiquement s'il existe une mise à jour du SW (toutes les 60 s)
+    setInterval(function() {
+      navigator.serviceWorker.getRegistration().then(function(reg) {
+        if (reg) reg.update();
+      });
+    }, 60000);
+  });
+}
+
+// ============================================
+// CONSTANTES GLOBALES
+// ============================================
+const APP_CONFIG = {
+  REDIRECT_DELAY: 3000,
+  MODAL_ANIMATION_DELAY: 300,
+  DROPDOWN_CLOSE_DELAY: 200,
+  PHONE_MIN_LENGTH: 6,
+  PHONE_MAX_LENGTH: 15
+};
+
+const STORAGE_KEYS = {
+  USER_ROLE: 'userRole',
+  TEACHER_CLASSES: 'teacherClasses',
+  TEACHER_SUBSCRIBED: 'teacherSubscribed',
+  PARENT_CLASSES: 'parentClasses',
+  PARENT_SUBSCRIBED: 'parentSubscribed'
+};
+
+const ROUTES = {
+  INDEX: 'index.html',
+  CHOOSE_ROLE: 'Choix_role.html',
+  CONNEXION: 'Connexion.html',
+  PARENT: 'Parent.html',
+  TEACHER: 'Teacher.html',
+  GOUVERNORAT: 'gouvernorat.html',
+  CLASSE: 'classe.html'
+};
+
+// ============================================
+// UTILITAIRES RÉUTILISABLES
+// ============================================
+/** Échappe les caractères HTML pour éviter les injections (XSS) */
+function escapeHtml(str) {
+  if (str == null || typeof str !== 'string') return '';
+  var div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
 const AppUtils = {
   /**
    * Valide une adresse email
@@ -98,7 +178,11 @@ const AppUtils = {
         if (redirectUrl) {
           window.location.href = redirectUrl;
         } else {
+<<<<<<< Updated upstream
           console.log('Formulaire soumis:', { 
+=======
+          if (APP_DEBUG) console.log('Formulaire soumis:', { 
+>>>>>>> Stashed changes
             email: emailInput.value.trim(), 
             password: passwordInput.value.trim() 
           });
@@ -163,7 +247,11 @@ const AppUtils = {
    * @returns {null}
    */
   handleError(error, context) {
+<<<<<<< Updated upstream
     console.error(`Erreur dans ${context}:`, error);
+=======
+    if (APP_DEBUG) console.error('Erreur dans ' + context + ':', error);
+>>>>>>> Stashed changes
     return null;
   },
 
@@ -1401,7 +1489,11 @@ if (document.getElementById('governoratForm')) {
       e.preventDefault();
       
       if (selectedGovernorat && selectedDelegation && selectedEcole) {
+<<<<<<< Updated upstream
         console.log('Sélection complète:', {
+=======
+        if (APP_DEBUG) console.log('Sélection complète:', {
+>>>>>>> Stashed changes
           gouvernorat: governoratInput.value,
           délégation: delegationInput.value,
           école: ecoleInput.value,
@@ -1422,7 +1514,11 @@ if (document.getElementById('governoratForm')) {
 if (document.getElementById('phoneNumber')) {
   // Code pour la gestion du téléphone - conservé mais simplifié
   // (Le code complet est très long, on peut le garder tel quel ou le refactoriser)
+<<<<<<< Updated upstream
   console.log('Page téléphone détectée');
+=======
+  if (APP_DEBUG) console.log('Page téléphone détectée');
+>>>>>>> Stashed changes
 }
 
 // Page Classe - Sélection de classe
@@ -1532,7 +1628,11 @@ if (document.getElementById('classesContainer')) {
       classesDetails.innerHTML = '';
       selections.forEach(item => {
         const classDiv = AppUtils.createElement('div', {
+<<<<<<< Updated upstream
           style: 'padding: 12px; background: #f8f9fa; border-radius: 8px; margin-bottom: 8px;'
+=======
+          style: 'padding: 12px; border-radius: 8px; margin-bottom: 8px;'
+>>>>>>> Stashed changes
         });
         classDiv.innerHTML = `<strong>${item.classe}ème Année ${item.lettre}</strong>`;
         classesDetails.appendChild(classDiv);
@@ -1585,7 +1685,28 @@ if (document.getElementById('classesContainer')) {
     
     if (selections.length > 0) {
       // Récupérer le rôle de l'utilisateur
+<<<<<<< Updated upstream
       const userRole = AppUtils.getUserRole();
+=======
+      let userRole = AppUtils.getUserRole();
+      
+      // Fallback : si le rôle n'est pas défini, essayer de le détecter depuis l'URL ou utiliser 'parent' par défaut
+      if (!userRole) {
+        // Vérifier si on vient de la page Parent ou Teacher
+        const referrer = document.referrer;
+        if (referrer.includes('Parent.html') || referrer.includes('parent')) {
+          userRole = 'parent';
+          AppUtils.saveUserRole('parent');
+        } else if (referrer.includes('Teacher.html') || referrer.includes('teacher')) {
+          userRole = 'teacher';
+          AppUtils.saveUserRole('teacher');
+        } else {
+          // Par défaut, utiliser 'parent' si non défini
+          userRole = 'parent';
+          AppUtils.saveUserRole('parent');
+        }
+      }
+>>>>>>> Stashed changes
       
       // Déterminer les clés de stockage selon le rôle
       const classesKey = userRole === 'parent' ? STORAGE_KEYS.PARENT_CLASSES : STORAGE_KEYS.TEACHER_CLASSES;
@@ -1618,6 +1739,11 @@ if (document.getElementById('classesContainer')) {
       localStorage.setItem(classesKey, JSON.stringify(allClasses));
       localStorage.setItem(subscribedKey, 'true');
       
+<<<<<<< Updated upstream
+=======
+      if (APP_DEBUG) console.log('Abonnement réussi pour', userRole, ':', allClasses);
+      
+>>>>>>> Stashed changes
       // Fermer le modal
       subscriptionModal.close();
       
@@ -1639,6 +1765,7 @@ if (document.getElementById('classesContainer')) {
   }
 }
 
+<<<<<<< Updated upstream
 // Page Parent - Modal de bienvenue et affichage des classes
 if (document.getElementById('welcomeModal') && document.body.classList.contains('app-style-page') && !document.getElementById('classesSection')) {
   const welcomeModal = new Modal({
@@ -1670,15 +1797,29 @@ if (document.getElementById('welcomeModal') && document.body.classList.contains(
       setTimeout(() => welcomeModal.open(), APP_CONFIG.MODAL_ANIMATION_DELAY);
     }
   }
+=======
+// Page Parent - Affichage des classes comme posts Facebook
+if (document.getElementById('parentPostsContainer') && document.body.classList.contains('app-style-page') && !document.getElementById('classesSection')) {
+  const parentPostsContainer = document.getElementById('parentPostsContainer');
+  const subscriptionSection = document.getElementById('subscriptionSection');
+  const parentFab = document.getElementById('parentFab');
+>>>>>>> Stashed changes
   
   // Fonction pour afficher les classes sous forme de posts style Facebook
   function renderParentClasses(classes) {
     if (!parentPostsContainer || !classes || classes.length === 0) {
+<<<<<<< Updated upstream
       console.log('Aucune classe à afficher');
       return;
     }
     
     console.log('Affichage des classes en posts:', classes);
+=======
+      if (APP_DEBUG) console.log('Aucune classe à afficher');
+      return;
+    }
+    if (APP_DEBUG) console.log('Affichage des classes en posts:', classes);
+>>>>>>> Stashed changes
     parentPostsContainer.innerHTML = '';
     
     // Grouper les classes par école
@@ -1696,6 +1837,13 @@ if (document.getElementById('welcomeModal') && document.body.classList.contains(
       const ecoleClasses = classesByEcole[ecoleName];
       
       ecoleClasses.forEach((classe) => {
+<<<<<<< Updated upstream
+=======
+        // Container pour chaque post
+        const postContainer = document.createElement('div');
+        postContainer.className = 'parent-post-container';
+        
+>>>>>>> Stashed changes
         const post = document.createElement('div');
         post.className = 'parent-post';
         
@@ -1727,6 +1875,7 @@ if (document.getElementById('welcomeModal') && document.body.classList.contains(
               <ion-icon name="thumbs-up-outline"></ion-icon>
               <span>J'aime</span>
             </button>
+<<<<<<< Updated upstream
             <button class="parent-post-action-btn">
               <ion-icon name="chatbubble-outline"></ion-icon>
               <span>Commenter</span>
@@ -1739,10 +1888,28 @@ if (document.getElementById('welcomeModal') && document.body.classList.contains(
         `;
         
         parentPostsContainer.appendChild(post);
+=======
+          </div>
+        `;
+        
+        postContainer.appendChild(post);
+        parentPostsContainer.appendChild(postContainer);
+>>>>>>> Stashed changes
       });
     });
   }
   
+  // Gestion du bouton FAB pour ajouter un abonnement (uniquement sur Parent.html)
+  if (parentPostsContainer) {
+    const parentFabBtn = document.querySelector('.app-fab');
+    if (parentFabBtn) {
+      parentFabBtn.addEventListener('click', () => {
+        // Rediriger vers gouvernorat.html pour ajouter un nouvel abonnement
+        window.location.href = ROUTES.GOUVERNORAT;
+      });
+    }
+  }
+
   // Fonction utilitaire pour générer une date aléatoire
   function getRandomDate() {
     const now = new Date();
@@ -1750,6 +1917,7 @@ if (document.getElementById('welcomeModal') && document.body.classList.contains(
     const date = new Date(now);
     date.setDate(date.getDate() - daysAgo);
     
+<<<<<<< Updated upstream
     if (daysAgo === 0) {
       return "Aujourd'hui";
     } else if (daysAgo === 1) {
@@ -1758,6 +1926,51 @@ if (document.getElementById('welcomeModal') && document.body.classList.contains(
       const options = { day: 'numeric', month: 'long' };
       return date.toLocaleDateString('fr-FR', options);
     }
+=======
+    const options = { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' };
+    return date.toLocaleDateString('fr-FR', options);
+  }
+  
+  // Vérifier si le parent est déjà abonné
+  const isSubscribed = localStorage.getItem(STORAGE_KEYS.PARENT_SUBSCRIBED) === 'true';
+  const parentClasses = JSON.parse(localStorage.getItem(STORAGE_KEYS.PARENT_CLASSES) || '[]');
+  
+  if (isSubscribed && parentClasses.length > 0) {
+    // Afficher les classes sous forme de posts et masquer la section d'abonnement
+    if (APP_DEBUG) console.log('Parent abonné, affichage des classes:', parentClasses);
+    if (parentPostsContainer) {
+      parentPostsContainer.style.display = 'block';
+      renderParentClasses(parentClasses);
+    }
+    if (subscriptionSection) {
+      subscriptionSection.style.display = 'none';
+    }
+    // Afficher le FAB
+    if (parentFab) {
+      parentFab.style.display = 'flex';
+    }
+  } else {
+    if (APP_DEBUG) console.log('Parent non abonné, affichage de la section d\'abonnement');
+    // Afficher la section d'abonnement et masquer les posts
+    if (subscriptionSection) {
+      subscriptionSection.style.display = 'block';
+    }
+    if (parentPostsContainer) {
+      parentPostsContainer.style.display = 'none';
+    }
+    // Masquer le FAB
+    if (parentFab) {
+      parentFab.style.display = 'none';
+    }
+  }
+  
+  // Gestion du bouton FAB pour ajouter un abonnement (uniquement sur Parent.html)
+  if (parentFab) {
+    parentFab.addEventListener('click', () => {
+      // Rediriger vers gouvernorat.html pour ajouter un nouvel abonnement
+      window.location.href = ROUTES.GOUVERNORAT;
+    });
+>>>>>>> Stashed changes
   }
   
   // Gérer le bouton S'abonner
@@ -1768,6 +1981,7 @@ if (document.getElementById('welcomeModal') && document.body.classList.contains(
     });
   }
   
+<<<<<<< Updated upstream
   // Fermer le modal en glissant vers le bas (optionnel)
   let startY = 0;
   let currentY = 0;
@@ -1808,6 +2022,48 @@ if (document.getElementById('welcomeModal') && document.getElementById('classesS
     closeBtnSelector: null
   });
   
+=======
+  // Fermer le modal en glissant (uniquement si la page a un welcomeModal, ex. Teacher)
+  var welcomeModalEl = document.getElementById('welcomeModal');
+  if (welcomeModalEl) {
+    var welcomeModalInstance = new Modal({
+      modalId: 'welcomeModal',
+      backdropSelector: '.welcome-modal-backdrop',
+      closeBtnSelector: null
+    });
+    var dialog = welcomeModalInstance.modal && welcomeModalInstance.modal.querySelector('.welcome-modal-dialog');
+    if (dialog) {
+      var startY = 0, currentY = 0, isDragging = false;
+      dialog.addEventListener('touchstart', function(e) {
+        startY = e.touches[0].clientY;
+        isDragging = true;
+      });
+      dialog.addEventListener('touchmove', function(e) {
+        if (!isDragging) return;
+        currentY = e.touches[0].clientY;
+        var diff = currentY - startY;
+        if (diff > 0) dialog.style.transform = 'translateY(' + diff + 'px)';
+      });
+      dialog.addEventListener('touchend', function() {
+        if (isDragging && currentY - startY > 100) welcomeModalInstance.close();
+        dialog.style.transform = '';
+        isDragging = false;
+      });
+    }
+  }
+}
+
+// Page Teacher - Gestion des classes (affichage si déjà abonné)
+if (document.getElementById('classesSection') && document.getElementById('classesList')) {
+  const welcomeModalEl = document.getElementById('welcomeModal');
+  const welcomeModal = welcomeModalEl ? new Modal({
+    modalId: 'welcomeModal',
+    backdropSelector: '.welcome-modal-backdrop',
+    closeBtnSelector: null
+  }) : null;
+  
+  const subscriptionSection = document.getElementById('subscriptionSection');
+>>>>>>> Stashed changes
   const classesSection = document.getElementById('classesSection');
   const classesList = document.getElementById('classesList');
   
@@ -1816,8 +2072,16 @@ if (document.getElementById('welcomeModal') && document.getElementById('classesS
   const teacherClasses = JSON.parse(localStorage.getItem(STORAGE_KEYS.TEACHER_CLASSES) || '[]');
   
   if (isSubscribed && teacherClasses.length > 0) {
+<<<<<<< Updated upstream
     // Afficher les classes et masquer la modal
     console.log('Enseignant abonné, affichage des classes:', teacherClasses);
+=======
+    // Déjà abonné : masquer l'invitation d'abonnement, afficher les classes
+    if (APP_DEBUG) console.log('Enseignant abonné, affichage des classes:', teacherClasses);
+    if (subscriptionSection) {
+      subscriptionSection.style.display = 'none';
+    }
+>>>>>>> Stashed changes
     if (classesSection) {
       classesSection.style.display = 'flex';
     }
@@ -1825,6 +2089,7 @@ if (document.getElementById('welcomeModal') && document.getElementById('classesS
       renderTeacherClasses(teacherClasses);
     }
   } else {
+<<<<<<< Updated upstream
     console.log('Enseignant non abonné, affichage de la modal');
     // Afficher la modal de bienvenue
     if (document.readyState === 'loading') {
@@ -1833,6 +2098,28 @@ if (document.getElementById('welcomeModal') && document.getElementById('classesS
       });
     } else {
       setTimeout(() => welcomeModal.open(), APP_CONFIG.MODAL_ANIMATION_DELAY);
+=======
+    if (APP_DEBUG) console.log('Enseignant non abonné, affichage de la section d\'abonnement');
+    // Non abonné : afficher l'invitation, masquer la liste des classes
+    if (subscriptionSection) {
+      subscriptionSection.style.display = 'block';
+    }
+    if (classesSection) {
+      classesSection.style.display = 'none';
+    }
+    if (classesList) {
+      classesList.style.display = 'none';
+    }
+    // Ouvrir la modal de bienvenue uniquement si elle existe
+    if (welcomeModal) {
+      if (document.readyState === 'loading') {
+        window.addEventListener('DOMContentLoaded', () => {
+          setTimeout(() => welcomeModal.open(), APP_CONFIG.MODAL_ANIMATION_DELAY);
+        });
+      } else {
+        setTimeout(() => welcomeModal.open(), APP_CONFIG.MODAL_ANIMATION_DELAY);
+      }
+>>>>>>> Stashed changes
     }
   }
   
@@ -1845,6 +2132,7 @@ if (document.getElementById('welcomeModal') && document.getElementById('classesS
     });
   }
   
+<<<<<<< Updated upstream
   // Fermer le modal en glissant vers le bas
   let startY = 0;
   let currentY = 0;
@@ -1852,6 +2140,15 @@ if (document.getElementById('welcomeModal') && document.getElementById('classesS
   const dialog = welcomeModal.modal?.querySelector('.welcome-modal-dialog');
   
   if (dialog) {
+=======
+  // Fermer le modal en glissant vers le bas (uniquement si le modal existe)
+  let startY = 0;
+  let currentY = 0;
+  let isDragging = false;
+  const dialog = welcomeModal?.modal?.querySelector('.welcome-modal-dialog');
+  
+  if (welcomeModal && dialog) {
+>>>>>>> Stashed changes
     dialog.addEventListener('touchstart', (e) => {
       startY = e.touches[0].clientY;
       isDragging = true;
@@ -1879,11 +2176,18 @@ if (document.getElementById('welcomeModal') && document.getElementById('classesS
   // Fonction pour afficher les classes de l'enseignant
   function renderTeacherClasses(classes) {
     if (!classesList || !classes || classes.length === 0) {
+<<<<<<< Updated upstream
       console.log('Aucune classe à afficher');
       return;
     }
     
     console.log('Affichage des classes:', classes);
+=======
+      if (APP_DEBUG) console.log('Aucune classe à afficher');
+      return;
+    }
+    if (APP_DEBUG) console.log('Affichage des classes:', classes);
+>>>>>>> Stashed changes
     classesList.innerHTML = '';
     
     // Grouper les classes par école
@@ -1900,6 +2204,7 @@ if (document.getElementById('welcomeModal') && document.getElementById('classesS
     Object.keys(classesByEcole).forEach((ecoleName, ecoleIndex) => {
       const ecoleClasses = classesByEcole[ecoleName];
       
+<<<<<<< Updated upstream
       // En-tête de l'école
       const ecoleHeader = document.createElement('div');
       ecoleHeader.className = 'teacher-ecole-header';
@@ -1912,6 +2217,18 @@ if (document.getElementById('welcomeModal') && document.getElementById('classesS
           </div>
         </div>
       `;
+=======
+      // En-tête de l'école (nom échappé pour éviter XSS)
+      var ecoleHeader = document.createElement('div');
+      ecoleHeader.className = 'teacher-ecole-header';
+      ecoleHeader.innerHTML =
+        '<div class="ecole-header-content">' +
+        '<ion-icon name="school-outline" class="ecole-header-icon"></ion-icon>' +
+        '<div class="ecole-header-text">' +
+        '<h4 class="ecole-header-title">' + escapeHtml(ecoleName) + '</h4>' +
+        '<p class="ecole-header-subtitle">' + (ecoleClasses.length === 1 ? '1 classe' : ecoleClasses.length + ' classes') + '</p>' +
+        '</div></div>';
+>>>>>>> Stashed changes
       classesList.appendChild(ecoleHeader);
       
       // Classes de cette école
@@ -1941,8 +2258,12 @@ if (document.getElementById('welcomeModal') && document.getElementById('classesS
             </div>
             <div class="chat-preview">
               <div class="chat-message-preview">
+<<<<<<< Updated upstream
                 <ion-icon name="send-outline" class="chat-send-icon"></ion-icon>
                 <span class="chat-message-text">${getLastMessageText(globalIndex)}</span>
+=======
+                <span class="chat-message-text-list">${getLastMessageText(globalIndex)}</span>
+>>>>>>> Stashed changes
               </div>
               <span class="chat-status-sent">
                 <ion-icon name="checkmark-done"></ion-icon>
@@ -2325,6 +2646,7 @@ if (document.querySelector('.chat-page')) {
   const chatInput = document.getElementById('chatInput');
   const chatSendBtn = document.getElementById('chatSendBtn');
   const chatMessages = document.getElementById('chatMessages');
+<<<<<<< Updated upstream
 
   // Fonction pour ajouter un message à l'interface
   function addMessage(text) {
@@ -2348,6 +2670,78 @@ if (document.querySelector('.chat-page')) {
         </div>
       </div>
     `;
+=======
+  const chatAttachBtn = document.getElementById('chatAttachBtn');
+  const chatFileInput = document.getElementById('chatFileInput');
+  const chatCameraBtn = document.getElementById('chatCameraBtn');
+  const chatCameraInput = document.getElementById('chatCameraInput');
+
+  // Clic sur l'icône caméra : ouvre la caméra (photo/vidéo selon appareil)
+  if (chatCameraBtn && chatCameraInput) {
+    chatCameraBtn.addEventListener('click', function() {
+      chatCameraInput.click();
+    });
+    chatCameraInput.addEventListener('change', function(e) {
+      var files = e.target.files;
+      if (files && files.length > 0) {
+        handleChatFiles(Array.from(files));
+      }
+      chatCameraInput.value = '';
+    });
+  }
+
+  // Clic sur le bouton pièce jointe : ouvre le sélecteur de fichiers
+  if (chatAttachBtn && chatFileInput) {
+    chatAttachBtn.addEventListener('click', function() {
+      chatFileInput.click();
+    });
+    chatFileInput.addEventListener('change', function(e) {
+      var files = e.target.files;
+      if (files && files.length > 0) {
+        handleChatFiles(Array.from(files));
+      }
+      chatFileInput.value = '';
+    });
+  }
+
+  function handleChatFiles(files) {
+    if (!files.length || !chatMessages) return;
+    var names = files.map(function(f) { return escapeHtml(f.name); }).join(', ');
+    var label = files.length === 1 ? 'Fichier joint' : files.length + ' fichiers joints';
+    var messageItem = document.createElement('div');
+    messageItem.className = 'chat-message-item sent';
+    var now = new Date();
+    var timeString = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+    messageItem.innerHTML = '<div class="chat-message-bubble sent">' +
+      '<p class="chat-message-text">' + escapeHtml(label) + ' : ' + names + '</p>' +
+      '<div class="chat-message-footer">' +
+      '<span class="chat-message-time">' + escapeHtml(timeString) + '</span>' +
+      '<ion-icon name="checkmark-done" class="chat-message-status"></ion-icon></div></div>';
+    chatMessages.appendChild(messageItem);
+    setTimeout(function() {
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }, 10);
+  }
+
+  // Fonction pour ajouter un message à l'interface (texte échappé pour éviter XSS)
+  function addMessage(text) {
+    if (!text.trim()) return;
+
+    var messageItem = document.createElement('div');
+    messageItem.className = 'chat-message-item sent';
+
+    var now = new Date();
+    var timeString = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+
+    messageItem.innerHTML =
+      '<div class="chat-message-bubble sent">' +
+      '<p class="chat-message-text"></p>' +
+      '<div class="chat-message-footer">' +
+      '<span class="chat-message-time">' + escapeHtml(timeString) + '</span>' +
+      '<ion-icon name="checkmark-done" class="chat-message-status"></ion-icon>' +
+      '</div></div>';
+    messageItem.querySelector('.chat-message-text').textContent = text;
+>>>>>>> Stashed changes
 
     chatMessages.appendChild(messageItem);
     // Scroll vers le bas avec un léger délai pour s'assurer que le DOM est mis à jour
@@ -2419,6 +2813,7 @@ if (document.getElementById('headerMenuBtn') && document.getElementById('headerD
   const menuBtn = document.getElementById('headerMenuBtn');
   const dropdownMenu = document.getElementById('headerDropdownMenu');
   const logoutBtn = document.getElementById('logoutBtn');
+<<<<<<< Updated upstream
   
   // Ouvrir/fermer le menu au clic sur le bouton
   if (menuBtn && dropdownMenu) {
@@ -2431,13 +2826,51 @@ if (document.getElementById('headerMenuBtn') && document.getElementById('headerD
     document.addEventListener('click', (e) => {
       if (!menuBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
         dropdownMenu.classList.remove('show');
+=======
+
+  function setMenuOpen(open) {
+    dropdownMenu.classList.toggle('show', open);
+    dropdownMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
+    if (menuBtn) menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  // Ouvrir/fermer le menu au clic sur le bouton
+  if (menuBtn && dropdownMenu) {
+    menuBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      var isOpen = dropdownMenu.classList.contains('show');
+      setMenuOpen(!isOpen);
+    });
+
+    // Fermer le menu en cliquant en dehors
+    document.addEventListener('click', function(e) {
+      if (!menuBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+        setMenuOpen(false);
+>>>>>>> Stashed changes
       }
     });
   }
   
+<<<<<<< Updated upstream
   // Gestion de la déconnexion
   if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
+=======
+  // Fermer le menu au clic sur un élément du menu
+  if (dropdownMenu) {
+    dropdownMenu.addEventListener('click', function(e) {
+      if (e.target.closest('.header-menu-item')) {
+        setMenuOpen(false);
+      }
+    });
+  }
+
+  // Gestion de la déconnexion
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', function() {
+      setMenuOpen(false);
+>>>>>>> Stashed changes
       // Confirmer la déconnexion
       if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
         // Effacer toutes les données de session
@@ -2585,6 +3018,1189 @@ if (document.getElementById('subscriptionListContainer')) {
   if (addSubscriptionBtn) {
     addSubscriptionBtn.addEventListener('click', () => {
       window.location.href = ROUTES.GOUVERNORAT;
+    });
+  }
+<<<<<<< Updated upstream
+=======
+}
+
+// ============================================
+// Page Assistant IA - Chat ChatGPT
+// ============================================
+if (document.getElementById('aiChatMessages')) {
+  const aiChatMessages = document.getElementById('aiChatMessages');
+  const aiChatForm = document.getElementById('aiChatForm');
+  const aiChatInput = document.getElementById('aiChatInput');
+  const aiChatSendBtn = document.getElementById('aiChatSendBtn');
+  const aiWelcomeMessage = document.querySelector('.ai-welcome-message');
+  const aiChatFileInput = document.getElementById('aiChatFileInput');
+  const aiChatFilesPreview = document.getElementById('aiChatFilesPreview');
+  
+  // Tableau pour stocker les fichiers sélectionnés
+  let selectedFiles = [];
+  
+  // Réponses prédéfinies de l'IA (simulation)
+  const aiResponses = [
+    "Je comprends votre question. Voici une réponse détaillée...",
+    "C'est une excellente question ! Laissez-moi vous expliquer...",
+    "Je peux vous aider avec cela. Voici ce que je recommande...",
+    "Merci pour votre question. Voici quelques informations utiles...",
+    "Je suis là pour vous aider. Voici ce que vous devez savoir..."
+  ];
+  
+  // Fonction pour générer une réponse IA simulée
+  function generateAIResponse(userMessage) {
+    // Simulation d'une réponse basée sur des mots-clés
+    const lowerMessage = userMessage.toLowerCase();
+    
+    if (lowerMessage.includes('devoir') || lowerMessage.includes('devoirs')) {
+      return "Pour les devoirs, je recommande de créer un planning régulier et de réviser quotidiennement. N'hésitez pas à demander de l'aide à votre enseignant si nécessaire.";
+    }
+    
+    if (lowerMessage.includes('classe') || lowerMessage.includes('classes')) {
+      return "Les classes sont organisées par niveau et section. Vous pouvez consulter vos classes abonnées dans la section 'Mes classes' de votre profil.";
+    }
+    
+    if (lowerMessage.includes('abonnement') || lowerMessage.includes('abonner')) {
+      return "Pour vous abonner à une classe, allez dans la section 'Abonnement' et suivez les étapes : choisissez votre gouvernorat, délégation, école et classe.";
+    }
+    
+    if (lowerMessage.includes('bonjour') || lowerMessage.includes('salut') || lowerMessage.includes('hello')) {
+      return "Bonjour ! Je suis ravi de vous aider. Comment puis-je vous assister aujourd'hui ?";
+    }
+    
+    // Réponse par défaut
+    return aiResponses[Math.floor(Math.random() * aiResponses.length)];
+  }
+  
+  // Fonction pour ajouter un message utilisateur
+  function addUserMessage(text) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'ai-message user';
+    
+    const avatar = document.createElement('div');
+    avatar.className = 'ai-message-avatar';
+    avatar.textContent = 'Vous';
+    
+    const content = document.createElement('div');
+    content.className = 'ai-message-content';
+    
+    const bubble = document.createElement('div');
+    bubble.className = 'ai-message-bubble';
+    
+    const messageText = document.createElement('p');
+    messageText.className = 'ai-message-text';
+    messageText.textContent = text;
+    
+    const time = document.createElement('div');
+    time.className = 'ai-message-time';
+    time.textContent = new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+    
+    bubble.appendChild(messageText);
+    bubble.appendChild(time);
+    content.appendChild(bubble);
+    messageDiv.appendChild(avatar);
+    messageDiv.appendChild(content);
+    
+    aiChatMessages.appendChild(messageDiv);
+    
+    // Masquer le message de bienvenue après le premier message
+    if (aiWelcomeMessage) {
+      aiWelcomeMessage.style.display = 'none';
+    }
+    
+    scrollToBottom();
+  }
+  
+  // Fonction pour ajouter un message de l'IA
+  function addAIMessage(text) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'ai-message assistant';
+    
+    const avatar = document.createElement('div');
+    avatar.className = 'ai-message-avatar';
+    const icon = document.createElement('ion-icon');
+    icon.setAttribute('name', 'sparkles-outline');
+    avatar.appendChild(icon);
+    
+    const content = document.createElement('div');
+    content.className = 'ai-message-content';
+    
+    const bubble = document.createElement('div');
+    bubble.className = 'ai-message-bubble';
+    
+    const messageText = document.createElement('p');
+    messageText.className = 'ai-message-text';
+    messageText.textContent = text;
+    
+    const time = document.createElement('div');
+    time.className = 'ai-message-time';
+    time.textContent = new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+    
+    bubble.appendChild(messageText);
+    bubble.appendChild(time);
+    content.appendChild(bubble);
+    messageDiv.appendChild(avatar);
+    messageDiv.appendChild(content);
+    
+    aiChatMessages.appendChild(messageDiv);
+    
+    scrollToBottom();
+  }
+  
+  // Fonction pour afficher l'indicateur de frappe
+  function showTypingIndicator() {
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'ai-message assistant';
+    typingDiv.id = 'typingIndicator';
+    
+    const avatar = document.createElement('div');
+    avatar.className = 'ai-message-avatar';
+    const icon = document.createElement('ion-icon');
+    icon.setAttribute('name', 'sparkles-outline');
+    avatar.appendChild(icon);
+    
+    const content = document.createElement('div');
+    content.className = 'ai-message-content';
+    
+    const bubble = document.createElement('div');
+    bubble.className = 'ai-message-bubble';
+    
+    const typingIndicator = document.createElement('div');
+    typingIndicator.className = 'ai-typing-indicator';
+    for (let i = 0; i < 3; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'ai-typing-dot';
+      typingIndicator.appendChild(dot);
+    }
+    
+    bubble.appendChild(typingIndicator);
+    content.appendChild(bubble);
+    typingDiv.appendChild(avatar);
+    typingDiv.appendChild(content);
+    
+    aiChatMessages.appendChild(typingDiv);
+    scrollToBottom();
+  }
+  
+  // Fonction pour supprimer l'indicateur de frappe
+  function removeTypingIndicator() {
+    const typingIndicator = document.getElementById('typingIndicator');
+    if (typingIndicator) {
+      typingIndicator.remove();
+    }
+  }
+  
+  // Fonction pour faire défiler vers le bas
+  function scrollToBottom() {
+    setTimeout(() => {
+      aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+    }, 100);
+  }
+  
+  // Fonction pour ajuster la hauteur du textarea
+  function adjustTextareaHeight() {
+    if (aiChatInput) {
+      aiChatInput.style.height = 'auto';
+      aiChatInput.style.height = Math.min(aiChatInput.scrollHeight, 120) + 'px';
+    }
+  }
+  
+  // Fonction pour formater la taille du fichier
+  function formatFileSize(bytes) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+  }
+  
+  // Fonction pour afficher les fichiers sélectionnés
+  function displaySelectedFiles() {
+    if (!aiChatFilesPreview) return;
+    
+    if (selectedFiles.length === 0) {
+      aiChatFilesPreview.style.display = 'none';
+      return;
+    }
+    
+    aiChatFilesPreview.style.display = 'flex';
+    aiChatFilesPreview.innerHTML = '';
+    
+    selectedFiles.forEach((file, index) => {
+      const fileItem = document.createElement('div');
+      fileItem.className = 'ai-chat-file-item';
+      
+      if (file.type.startsWith('image/')) {
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(file);
+        img.alt = file.name;
+        fileItem.appendChild(img);
+      } else {
+        const icon = document.createElement('ion-icon');
+        icon.setAttribute('name', 'document-outline');
+        icon.style.fontSize = '20px';
+        icon.style.color = '#002FBD';
+        fileItem.appendChild(icon);
+      }
+      
+      const fileInfo = document.createElement('div');
+      fileInfo.className = 'ai-chat-file-item-info';
+      
+      const fileName = document.createElement('div');
+      fileName.className = 'ai-chat-file-item-name';
+      fileName.textContent = file.name;
+      
+      const fileSize = document.createElement('div');
+      fileSize.className = 'ai-chat-file-item-size';
+      fileSize.textContent = formatFileSize(file.size);
+      
+      fileInfo.appendChild(fileName);
+      fileInfo.appendChild(fileSize);
+      fileItem.appendChild(fileInfo);
+      
+      const removeBtn = document.createElement('button');
+      removeBtn.className = 'ai-chat-file-item-remove';
+      removeBtn.type = 'button';
+      removeBtn.setAttribute('aria-label', 'Supprimer le fichier');
+      const removeIcon = document.createElement('ion-icon');
+      removeIcon.setAttribute('name', 'close-outline');
+      removeBtn.appendChild(removeIcon);
+      
+      removeBtn.addEventListener('click', () => {
+        selectedFiles.splice(index, 1);
+        displaySelectedFiles();
+        if (aiChatFileInput) {
+          aiChatFileInput.value = '';
+        }
+      });
+      
+      fileItem.appendChild(removeBtn);
+      aiChatFilesPreview.appendChild(fileItem);
+    });
+  }
+  
+  // Gestion de la sélection de fichiers
+  if (aiChatFileInput) {
+    aiChatFileInput.addEventListener('change', (e) => {
+      const files = Array.from(e.target.files);
+      
+      // Ajouter les nouveaux fichiers à la liste
+      files.forEach(file => {
+        // Vérifier la taille (max 10MB)
+        if (file.size > 10 * 1024 * 1024) {
+          alert(`Le fichier "${file.name}" est trop volumineux. Taille maximale : 10MB`);
+          return;
+        }
+        
+        // Vérifier si le fichier n'est pas déjà dans la liste
+        if (!selectedFiles.find(f => f.name === file.name && f.size === file.size)) {
+          selectedFiles.push(file);
+        }
+      });
+      
+      displaySelectedFiles();
+      
+      // Réinitialiser l'input pour permettre de sélectionner le même fichier à nouveau
+      e.target.value = '';
+    });
+  }
+  
+  // Gestion de la soumission du formulaire
+  if (aiChatForm) {
+    aiChatForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const message = aiChatInput.value.trim();
+      
+      // Vérifier qu'il y a au moins un message ou un fichier
+      if (!message && selectedFiles.length === 0) return;
+      
+      // Construire le message avec les fichiers
+      let fullMessage = message;
+      if (selectedFiles.length > 0) {
+        const fileNames = selectedFiles.map(f => f.name).join(', ');
+        fullMessage = message 
+          ? `${message}\n\n📎 Fichiers joints: ${fileNames}`
+          : `📎 Fichiers joints: ${fileNames}`;
+      }
+      
+      // Ajouter le message de l'utilisateur
+      addUserMessage(fullMessage);
+      
+      // Vider le champ de saisie et les fichiers
+      aiChatInput.value = '';
+      selectedFiles = [];
+      displaySelectedFiles();
+      adjustTextareaHeight();
+      
+      // Désactiver le bouton d'envoi
+      if (aiChatSendBtn) {
+        aiChatSendBtn.disabled = true;
+      }
+      
+      // Afficher l'indicateur de frappe
+      showTypingIndicator();
+      
+      // Simuler une réponse de l'IA après un délai
+      setTimeout(() => {
+        removeTypingIndicator();
+        const aiResponse = generateAIResponse(message || 'fichier');
+        addAIMessage(aiResponse);
+        
+        // Réactiver le bouton d'envoi
+        if (aiChatSendBtn) {
+          aiChatSendBtn.disabled = false;
+        }
+      }, 1500 + Math.random() * 1000); // Délai aléatoire entre 1.5s et 2.5s
+    });
+  }
+  
+  // Ajuster la hauteur du textarea lors de la saisie
+  if (aiChatInput) {
+    aiChatInput.addEventListener('input', adjustTextareaHeight);
+    
+    // Gérer l'ajustement de la hauteur au chargement
+    adjustTextareaHeight();
+  }
+  
+  // Gestion du menu header pour l'assistant IA
+  const aiHeaderMenuBtn = document.getElementById('aiHeaderMenuBtn');
+  const aiHeaderDropdownMenu = document.getElementById('aiHeaderDropdownMenu');
+  const aiLogoutBtn = document.getElementById('aiLogoutBtn');
+  
+  if (aiHeaderMenuBtn && aiHeaderDropdownMenu) {
+    aiHeaderMenuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = aiHeaderDropdownMenu.classList.contains('show');
+      
+      // Fermer tous les autres menus
+      document.querySelectorAll('.header-dropdown-menu').forEach(menu => {
+        menu.classList.remove('show');
+      });
+      
+      if (!isOpen) {
+        aiHeaderDropdownMenu.classList.add('show');
+      }
+    });
+  }
+  
+  // Fermer le menu en cliquant ailleurs
+  document.addEventListener('click', (e) => {
+    if (aiHeaderDropdownMenu && !aiHeaderDropdownMenu.contains(e.target) && 
+        aiHeaderMenuBtn && !aiHeaderMenuBtn.contains(e.target)) {
+      aiHeaderDropdownMenu.classList.remove('show');
+    }
+  });
+  
+  // Gestion de la déconnexion
+  if (aiLogoutBtn) {
+    aiLogoutBtn.addEventListener('click', () => {
+      // Nettoyer le localStorage
+      Object.keys(localStorage).forEach(key => {
+        localStorage.removeItem(key);
+      });
+      
+      // Rediriger vers la page de choix de rôle
+      window.location.href = ROUTES.CHOOSE_ROLE;
+    });
+  }
+}
+
+// ============================================
+// Page Notifications - Interface Facebook
+// ============================================
+if (document.getElementById('notificationListContainer')) {
+  const notificationListContainer = document.getElementById('notificationListContainer');
+  const notificationEmptyState = document.getElementById('notificationEmptyState');
+  
+  // Données de notifications (simulation)
+  const notifications = [
+    {
+      id: 1,
+      type: 'message',
+      title: 'Nouveau message',
+      text: 'Vous avez reçu un nouveau message de la classe 6ème Année A',
+      time: 'Il y a 5 minutes',
+      unread: true,
+      icon: 'chatbubble-outline',
+      avatar: null
+    },
+    {
+      id: 2,
+      type: 'assignment',
+      title: 'Nouveau devoir',
+      text: 'Un nouveau devoir a été publié pour la classe 4ème Année ب',
+      time: 'Il y a 1 heure',
+      unread: true,
+      icon: 'document-text-outline',
+      avatar: null
+    },
+    {
+      id: 3,
+      type: 'event',
+      title: 'Événement à venir',
+      text: 'Réunion parents-professeurs prévue le 15 mars à 15h',
+      time: 'Hier',
+      unread: false,
+      icon: 'calendar-outline',
+      avatar: null
+    },
+    {
+      id: 4,
+      type: 'announcement',
+      title: 'Annonce importante',
+      text: 'Sortie scolaire prévue le 20 mars - Autorisation requise',
+      time: 'Il y a 2 jours',
+      unread: false,
+      icon: 'megaphone-outline',
+      avatar: null
+    },
+    {
+      id: 5,
+      type: 'grade',
+      title: 'Nouvelle note',
+      text: 'Une nouvelle note a été ajoutée pour le contrôle de mathématiques',
+      time: 'Il y a 3 jours',
+      unread: false,
+      icon: 'school-outline',
+      avatar: null
+    }
+  ];
+  
+  // Fonction pour formater le temps relatif
+  function formatRelativeTime(timeString) {
+    return timeString;
+  }
+  
+  // Fonction pour obtenir l'icône selon le type
+  function getNotificationIcon(type) {
+    const icons = {
+      'message': 'chatbubble-outline',
+      'assignment': 'document-text-outline',
+      'event': 'calendar-outline',
+      'announcement': 'megaphone-outline',
+      'grade': 'school-outline',
+      'default': 'notifications-outline'
+    };
+    return icons[type] || icons.default;
+  }
+  
+  // Fonction pour obtenir la couleur de l'icône
+  function getNotificationIconColor(type) {
+    const colors = {
+      'message': '#1877f2',
+      'assignment': '#42b883',
+      'event': '#f39c12',
+      'announcement': '#e74c3c',
+      'grade': '#9b59b6',
+      'default': '#65676b'
+    };
+    return colors[type] || colors.default;
+  }
+  
+  // Fonction pour rendre les notifications
+  function renderNotifications(notificationsList) {
+    if (!notificationListContainer) return;
+    
+    notificationListContainer.innerHTML = '';
+    
+    if (!notificationsList || notificationsList.length === 0) {
+      if (notificationEmptyState) {
+        notificationEmptyState.style.display = 'flex';
+      }
+      return;
+    }
+    
+    if (notificationEmptyState) {
+      notificationEmptyState.style.display = 'none';
+    }
+    
+    notificationsList.forEach((notification, index) => {
+      const notificationCard = document.createElement('div');
+      notificationCard.className = `notification-card ${notification.unread ? 'unread' : ''}`;
+      notificationCard.style.animationDelay = `${index * 0.05}s`;
+      
+      const iconName = getNotificationIcon(notification.type);
+      const iconColor = getNotificationIconColor(notification.type);
+      
+      notificationCard.innerHTML = `
+        <div class="notification-content">
+          <div class="notification-icon-wrapper" style="background-color: ${iconColor}20;">
+            <ion-icon name="${iconName}" style="color: ${iconColor};"></ion-icon>
+          </div>
+          <div class="notification-info">
+            <p class="notification-text">
+              <strong>${notification.title}</strong><br>
+              ${notification.text}
+            </p>
+            <div class="notification-time">
+              <ion-icon name="time-outline"></ion-icon>
+              <span>${formatRelativeTime(notification.time)}</span>
+            </div>
+            ${notification.unread ? '<div class="notification-actions"><button class="notification-action-btn primary" type="button"><ion-icon name="checkmark-outline"></ion-icon><span>Marquer comme lu</span></button></div>' : ''}
+          </div>
+          ${notification.unread ? '<div class="notification-badge"></div>' : ''}
+        </div>
+      `;
+      
+      // Gérer le clic sur la carte
+      const content = notificationCard.querySelector('.notification-content');
+      content.addEventListener('click', () => {
+        // Marquer comme lu
+        if (notification.unread) {
+          notification.unread = false;
+          renderNotifications(notificationsList);
+        }
+      });
+      
+      // Gérer le bouton "Marquer comme lu"
+      const markReadBtn = notificationCard.querySelector('.notification-action-btn');
+      if (markReadBtn) {
+        markReadBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          notification.unread = false;
+          renderNotifications(notificationsList);
+        });
+      }
+      
+      notificationListContainer.appendChild(notificationCard);
+    });
+  }
+  
+  // Afficher les notifications au chargement
+  renderNotifications(notifications);
+  
+  // Gestion du menu header pour les notifications
+  const notificationHeaderMenuBtn = document.getElementById('notificationHeaderMenuBtn');
+  const notificationHeaderDropdownMenu = document.getElementById('notificationHeaderDropdownMenu');
+  const notificationLogoutBtn = document.getElementById('notificationLogoutBtn');
+  
+  if (notificationHeaderMenuBtn && notificationHeaderDropdownMenu) {
+    notificationHeaderMenuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = notificationHeaderDropdownMenu.classList.contains('show');
+      
+      // Fermer tous les autres menus
+      document.querySelectorAll('.header-dropdown-menu').forEach(menu => {
+        menu.classList.remove('show');
+      });
+      
+      if (!isOpen) {
+        notificationHeaderDropdownMenu.classList.add('show');
+      }
+    });
+  }
+  
+  // Fermer le menu en cliquant ailleurs
+  document.addEventListener('click', (e) => {
+    if (notificationHeaderDropdownMenu && !notificationHeaderDropdownMenu.contains(e.target) && 
+        notificationHeaderMenuBtn && !notificationHeaderMenuBtn.contains(e.target)) {
+      notificationHeaderDropdownMenu.classList.remove('show');
+    }
+  });
+  
+  // Gestion de la déconnexion
+  if (notificationLogoutBtn) {
+    notificationLogoutBtn.addEventListener('click', () => {
+      // Nettoyer le localStorage
+      Object.keys(localStorage).forEach(key => {
+        localStorage.removeItem(key);
+      });
+      
+      // Rediriger vers la page de choix de rôle
+      window.location.href = ROUTES.CHOOSE_ROLE;
+    });
+  }
+>>>>>>> Stashed changes
+}
+
+// ============================================
+// Page Assistant IA - Chat ChatGPT
+// ============================================
+if (document.getElementById('aiChatMessages')) {
+  const aiChatMessages = document.getElementById('aiChatMessages');
+  const aiChatForm = document.getElementById('aiChatForm');
+  const aiChatInput = document.getElementById('aiChatInput');
+  const aiChatSendBtn = document.getElementById('aiChatSendBtn');
+  const aiWelcomeMessage = document.querySelector('.ai-welcome-message');
+  const aiChatFileInput = document.getElementById('aiChatFileInput');
+  const aiChatFilesPreview = document.getElementById('aiChatFilesPreview');
+  
+  // Tableau pour stocker les fichiers sélectionnés
+  let selectedFiles = [];
+  
+  // Réponses prédéfinies de l'IA (simulation)
+  const aiResponses = [
+    "Je comprends votre question. Voici une réponse détaillée...",
+    "C'est une excellente question ! Laissez-moi vous expliquer...",
+    "Je peux vous aider avec cela. Voici ce que je recommande...",
+    "Merci pour votre question. Voici quelques informations utiles...",
+    "Je suis là pour vous aider. Voici ce que vous devez savoir..."
+  ];
+  
+  // Fonction pour générer une réponse IA simulée
+  function generateAIResponse(userMessage) {
+    // Simulation d'une réponse basée sur des mots-clés
+    const lowerMessage = userMessage.toLowerCase();
+    
+    if (lowerMessage.includes('devoir') || lowerMessage.includes('devoirs')) {
+      return "Pour les devoirs, je recommande de créer un planning régulier et de réviser quotidiennement. N'hésitez pas à demander de l'aide à votre enseignant si nécessaire.";
+    }
+    
+    if (lowerMessage.includes('classe') || lowerMessage.includes('classes')) {
+      return "Les classes sont organisées par niveau et section. Vous pouvez consulter vos classes abonnées dans la section 'Mes classes' de votre profil.";
+    }
+    
+    if (lowerMessage.includes('abonnement') || lowerMessage.includes('abonner')) {
+      return "Pour vous abonner à une classe, allez dans la section 'Abonnement' et suivez les étapes : choisissez votre gouvernorat, délégation, école et classe.";
+    }
+    
+    if (lowerMessage.includes('bonjour') || lowerMessage.includes('salut') || lowerMessage.includes('hello')) {
+      return "Bonjour ! Je suis ravi de vous aider. Comment puis-je vous assister aujourd'hui ?";
+    }
+    
+    // Réponse par défaut
+    return aiResponses[Math.floor(Math.random() * aiResponses.length)];
+  }
+  
+  // Fonction pour ajouter un message utilisateur
+  function addUserMessage(text) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'ai-message user';
+    
+    const avatar = document.createElement('div');
+    avatar.className = 'ai-message-avatar';
+    avatar.textContent = 'Vous';
+    
+    const content = document.createElement('div');
+    content.className = 'ai-message-content';
+    
+    const bubble = document.createElement('div');
+    bubble.className = 'ai-message-bubble';
+    
+    const messageText = document.createElement('p');
+    messageText.className = 'ai-message-text';
+    messageText.textContent = text;
+    
+    const time = document.createElement('div');
+    time.className = 'ai-message-time';
+    time.textContent = new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+    
+    bubble.appendChild(messageText);
+    bubble.appendChild(time);
+    content.appendChild(bubble);
+    messageDiv.appendChild(avatar);
+    messageDiv.appendChild(content);
+    
+    aiChatMessages.appendChild(messageDiv);
+    
+    // Masquer le message de bienvenue après le premier message
+    if (aiWelcomeMessage) {
+      aiWelcomeMessage.style.display = 'none';
+    }
+    
+    scrollToBottom();
+  }
+  
+  // Fonction pour ajouter un message de l'IA
+  function addAIMessage(text) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'ai-message assistant';
+    
+    const avatar = document.createElement('div');
+    avatar.className = 'ai-message-avatar';
+    const icon = document.createElement('ion-icon');
+    icon.setAttribute('name', 'sparkles-outline');
+    avatar.appendChild(icon);
+    
+    const content = document.createElement('div');
+    content.className = 'ai-message-content';
+    
+    const bubble = document.createElement('div');
+    bubble.className = 'ai-message-bubble';
+    
+    const messageText = document.createElement('p');
+    messageText.className = 'ai-message-text';
+    messageText.textContent = text;
+    
+    const time = document.createElement('div');
+    time.className = 'ai-message-time';
+    time.textContent = new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+    
+    bubble.appendChild(messageText);
+    bubble.appendChild(time);
+    content.appendChild(bubble);
+    messageDiv.appendChild(avatar);
+    messageDiv.appendChild(content);
+    
+    aiChatMessages.appendChild(messageDiv);
+    
+    scrollToBottom();
+  }
+  
+  // Fonction pour afficher l'indicateur de frappe
+  function showTypingIndicator() {
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'ai-message assistant';
+    typingDiv.id = 'typingIndicator';
+    
+    const avatar = document.createElement('div');
+    avatar.className = 'ai-message-avatar';
+    const icon = document.createElement('ion-icon');
+    icon.setAttribute('name', 'sparkles-outline');
+    avatar.appendChild(icon);
+    
+    const content = document.createElement('div');
+    content.className = 'ai-message-content';
+    
+    const bubble = document.createElement('div');
+    bubble.className = 'ai-message-bubble';
+    
+    const typingIndicator = document.createElement('div');
+    typingIndicator.className = 'ai-typing-indicator';
+    for (let i = 0; i < 3; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'ai-typing-dot';
+      typingIndicator.appendChild(dot);
+    }
+    
+    bubble.appendChild(typingIndicator);
+    content.appendChild(bubble);
+    typingDiv.appendChild(avatar);
+    typingDiv.appendChild(content);
+    
+    aiChatMessages.appendChild(typingDiv);
+    scrollToBottom();
+  }
+  
+  // Fonction pour supprimer l'indicateur de frappe
+  function removeTypingIndicator() {
+    const typingIndicator = document.getElementById('typingIndicator');
+    if (typingIndicator) {
+      typingIndicator.remove();
+    }
+  }
+  
+  // Fonction pour faire défiler vers le bas
+  function scrollToBottom() {
+    setTimeout(() => {
+      aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+    }, 100);
+  }
+  
+  // Fonction pour ajuster la hauteur du textarea
+  function adjustTextareaHeight() {
+    if (aiChatInput) {
+      aiChatInput.style.height = 'auto';
+      aiChatInput.style.height = Math.min(aiChatInput.scrollHeight, 120) + 'px';
+    }
+  }
+  
+  // Fonction pour formater la taille du fichier
+  function formatFileSize(bytes) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+  }
+  
+  // Fonction pour afficher les fichiers sélectionnés
+  function displaySelectedFiles() {
+    if (!aiChatFilesPreview) return;
+    
+    if (selectedFiles.length === 0) {
+      aiChatFilesPreview.style.display = 'none';
+      return;
+    }
+    
+    aiChatFilesPreview.style.display = 'flex';
+    aiChatFilesPreview.innerHTML = '';
+    
+    selectedFiles.forEach((file, index) => {
+      const fileItem = document.createElement('div');
+      fileItem.className = 'ai-chat-file-item';
+      
+      if (file.type.startsWith('image/')) {
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(file);
+        img.alt = file.name;
+        fileItem.appendChild(img);
+      } else {
+        const icon = document.createElement('ion-icon');
+        icon.setAttribute('name', 'document-outline');
+        icon.style.fontSize = '20px';
+        icon.style.color = '#002FBD';
+        fileItem.appendChild(icon);
+      }
+      
+      const fileInfo = document.createElement('div');
+      fileInfo.className = 'ai-chat-file-item-info';
+      
+      const fileName = document.createElement('div');
+      fileName.className = 'ai-chat-file-item-name';
+      fileName.textContent = file.name;
+      
+      const fileSize = document.createElement('div');
+      fileSize.className = 'ai-chat-file-item-size';
+      fileSize.textContent = formatFileSize(file.size);
+      
+      fileInfo.appendChild(fileName);
+      fileInfo.appendChild(fileSize);
+      fileItem.appendChild(fileInfo);
+      
+      const removeBtn = document.createElement('button');
+      removeBtn.className = 'ai-chat-file-item-remove';
+      removeBtn.type = 'button';
+      removeBtn.setAttribute('aria-label', 'Supprimer le fichier');
+      const removeIcon = document.createElement('ion-icon');
+      removeIcon.setAttribute('name', 'close-outline');
+      removeBtn.appendChild(removeIcon);
+      
+      removeBtn.addEventListener('click', () => {
+        selectedFiles.splice(index, 1);
+        displaySelectedFiles();
+        if (aiChatFileInput) {
+          aiChatFileInput.value = '';
+        }
+      });
+      
+      fileItem.appendChild(removeBtn);
+      aiChatFilesPreview.appendChild(fileItem);
+    });
+  }
+  
+  // Gestion de la sélection de fichiers
+  if (aiChatFileInput) {
+    aiChatFileInput.addEventListener('change', (e) => {
+      const files = Array.from(e.target.files);
+      
+      // Ajouter les nouveaux fichiers à la liste
+      files.forEach(file => {
+        // Vérifier la taille (max 10MB)
+        if (file.size > 10 * 1024 * 1024) {
+          alert(`Le fichier "${file.name}" est trop volumineux. Taille maximale : 10MB`);
+          return;
+        }
+        
+        // Vérifier si le fichier n'est pas déjà dans la liste
+        if (!selectedFiles.find(f => f.name === file.name && f.size === file.size)) {
+          selectedFiles.push(file);
+        }
+      });
+      
+      displaySelectedFiles();
+      
+      // Réinitialiser l'input pour permettre de sélectionner le même fichier à nouveau
+      e.target.value = '';
+    });
+  }
+  
+  // Gestion de la soumission du formulaire
+  if (aiChatForm) {
+    aiChatForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const message = aiChatInput.value.trim();
+      
+      // Vérifier qu'il y a au moins un message ou un fichier
+      if (!message && selectedFiles.length === 0) return;
+      
+      // Construire le message avec les fichiers
+      let fullMessage = message;
+      if (selectedFiles.length > 0) {
+        const fileNames = selectedFiles.map(f => f.name).join(', ');
+        fullMessage = message 
+          ? `${message}\n\n📎 Fichiers joints: ${fileNames}`
+          : `📎 Fichiers joints: ${fileNames}`;
+      }
+      
+      // Ajouter le message de l'utilisateur
+      addUserMessage(fullMessage);
+      
+      // Vider le champ de saisie et les fichiers
+      aiChatInput.value = '';
+      selectedFiles = [];
+      displaySelectedFiles();
+      adjustTextareaHeight();
+      
+      // Désactiver le bouton d'envoi
+      if (aiChatSendBtn) {
+        aiChatSendBtn.disabled = true;
+      }
+      
+      // Afficher l'indicateur de frappe
+      showTypingIndicator();
+      
+      // Simuler une réponse de l'IA après un délai
+      setTimeout(() => {
+        removeTypingIndicator();
+        const aiResponse = generateAIResponse(message || 'fichier');
+        addAIMessage(aiResponse);
+        
+        // Réactiver le bouton d'envoi
+        if (aiChatSendBtn) {
+          aiChatSendBtn.disabled = false;
+        }
+      }, 1500 + Math.random() * 1000); // Délai aléatoire entre 1.5s et 2.5s
+    });
+  }
+  
+  // Ajuster la hauteur du textarea lors de la saisie
+  if (aiChatInput) {
+    aiChatInput.addEventListener('input', adjustTextareaHeight);
+    
+    // Gérer l'ajustement de la hauteur au chargement
+    adjustTextareaHeight();
+  }
+  
+  // Gestion du menu header pour l'assistant IA
+  const aiHeaderMenuBtn = document.getElementById('aiHeaderMenuBtn');
+  const aiHeaderDropdownMenu = document.getElementById('aiHeaderDropdownMenu');
+  const aiLogoutBtn = document.getElementById('aiLogoutBtn');
+  
+  if (aiHeaderMenuBtn && aiHeaderDropdownMenu) {
+    aiHeaderMenuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = aiHeaderDropdownMenu.classList.contains('show');
+      
+      // Fermer tous les autres menus
+      document.querySelectorAll('.header-dropdown-menu').forEach(menu => {
+        menu.classList.remove('show');
+      });
+      
+      if (!isOpen) {
+        aiHeaderDropdownMenu.classList.add('show');
+      }
+    });
+  }
+  
+  // Fermer le menu en cliquant ailleurs
+  document.addEventListener('click', (e) => {
+    if (aiHeaderDropdownMenu && !aiHeaderDropdownMenu.contains(e.target) && 
+        aiHeaderMenuBtn && !aiHeaderMenuBtn.contains(e.target)) {
+      aiHeaderDropdownMenu.classList.remove('show');
+    }
+  });
+  
+  // Gestion de la déconnexion
+  if (aiLogoutBtn) {
+    aiLogoutBtn.addEventListener('click', () => {
+      // Nettoyer le localStorage
+      Object.keys(localStorage).forEach(key => {
+        localStorage.removeItem(key);
+      });
+      
+      // Rediriger vers la page de choix de rôle
+      window.location.href = ROUTES.CHOOSE_ROLE;
+    });
+  }
+}
+
+// ============================================
+// Page Notifications - Interface Facebook
+// ============================================
+if (document.getElementById('notificationListContainer')) {
+  const notificationListContainer = document.getElementById('notificationListContainer');
+  const notificationEmptyState = document.getElementById('notificationEmptyState');
+  
+  // Données de notifications (simulation)
+  const notifications = [
+    {
+      id: 1,
+      type: 'message',
+      title: 'Nouveau message',
+      text: 'Vous avez reçu un nouveau message de la classe 6ème Année A',
+      time: 'Il y a 5 minutes',
+      unread: true,
+      icon: 'chatbubble-outline',
+      avatar: null
+    },
+    {
+      id: 2,
+      type: 'assignment',
+      title: 'Nouveau devoir',
+      text: 'Un nouveau devoir a été publié pour la classe 4ème Année ب',
+      time: 'Il y a 1 heure',
+      unread: true,
+      icon: 'document-text-outline',
+      avatar: null
+    },
+    {
+      id: 3,
+      type: 'event',
+      title: 'Événement à venir',
+      text: 'Réunion parents-professeurs prévue le 15 mars à 15h',
+      time: 'Hier',
+      unread: false,
+      icon: 'calendar-outline',
+      avatar: null
+    },
+    {
+      id: 4,
+      type: 'announcement',
+      title: 'Annonce importante',
+      text: 'Sortie scolaire prévue le 20 mars - Autorisation requise',
+      time: 'Il y a 2 jours',
+      unread: false,
+      icon: 'megaphone-outline',
+      avatar: null
+    },
+    {
+      id: 5,
+      type: 'grade',
+      title: 'Nouvelle note',
+      text: 'Une nouvelle note a été ajoutée pour le contrôle de mathématiques',
+      time: 'Il y a 3 jours',
+      unread: false,
+      icon: 'school-outline',
+      avatar: null
+    }
+  ];
+  
+  // Fonction pour formater le temps relatif
+  function formatRelativeTime(timeString) {
+    return timeString;
+  }
+  
+  // Fonction pour obtenir l'icône selon le type
+  function getNotificationIcon(type) {
+    const icons = {
+      'message': 'chatbubble-outline',
+      'assignment': 'document-text-outline',
+      'event': 'calendar-outline',
+      'announcement': 'megaphone-outline',
+      'grade': 'school-outline',
+      'default': 'notifications-outline'
+    };
+    return icons[type] || icons.default;
+  }
+  
+  // Fonction pour obtenir la couleur de l'icône
+  function getNotificationIconColor(type) {
+    const colors = {
+      'message': '#1877f2',
+      'assignment': '#42b883',
+      'event': '#f39c12',
+      'announcement': '#e74c3c',
+      'grade': '#9b59b6',
+      'default': '#65676b'
+    };
+    return colors[type] || colors.default;
+  }
+  
+  // Fonction pour rendre les notifications
+  function renderNotifications(notificationsList) {
+    if (!notificationListContainer) return;
+    
+    notificationListContainer.innerHTML = '';
+    
+    if (!notificationsList || notificationsList.length === 0) {
+      if (notificationEmptyState) {
+        notificationEmptyState.style.display = 'flex';
+      }
+      return;
+    }
+    
+    if (notificationEmptyState) {
+      notificationEmptyState.style.display = 'none';
+    }
+    
+    notificationsList.forEach((notification, index) => {
+      const notificationCard = document.createElement('div');
+      notificationCard.className = `notification-card ${notification.unread ? 'unread' : ''}`;
+      notificationCard.style.animationDelay = `${index * 0.05}s`;
+      
+      const iconName = getNotificationIcon(notification.type);
+      const iconColor = getNotificationIconColor(notification.type);
+      
+      notificationCard.innerHTML = `
+        <div class="notification-content">
+          <div class="notification-icon-wrapper" style="background-color: ${iconColor}20;">
+            <ion-icon name="${iconName}" style="color: ${iconColor};"></ion-icon>
+          </div>
+          <div class="notification-info">
+            <p class="notification-text">
+              <strong>${notification.title}</strong><br>
+              ${notification.text}
+            </p>
+            <div class="notification-time">
+              <ion-icon name="time-outline"></ion-icon>
+              <span>${formatRelativeTime(notification.time)}</span>
+            </div>
+            ${notification.unread ? '<div class="notification-actions"><button class="notification-action-btn primary" type="button"><ion-icon name="checkmark-outline"></ion-icon><span>Marquer comme lu</span></button></div>' : ''}
+          </div>
+          ${notification.unread ? '<div class="notification-badge"></div>' : ''}
+        </div>
+      `;
+      
+      // Gérer le clic sur la carte
+      const content = notificationCard.querySelector('.notification-content');
+      content.addEventListener('click', () => {
+        // Marquer comme lu
+        if (notification.unread) {
+          notification.unread = false;
+          renderNotifications(notificationsList);
+        }
+      });
+      
+      // Gérer le bouton "Marquer comme lu"
+      const markReadBtn = notificationCard.querySelector('.notification-action-btn');
+      if (markReadBtn) {
+        markReadBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          notification.unread = false;
+          renderNotifications(notificationsList);
+        });
+      }
+      
+      notificationListContainer.appendChild(notificationCard);
+    });
+  }
+  
+  // Afficher les notifications au chargement
+  renderNotifications(notifications);
+  
+  // Gestion du menu header pour les notifications
+  const notificationHeaderMenuBtn = document.getElementById('notificationHeaderMenuBtn');
+  const notificationHeaderDropdownMenu = document.getElementById('notificationHeaderDropdownMenu');
+  const notificationLogoutBtn = document.getElementById('notificationLogoutBtn');
+  
+  if (notificationHeaderMenuBtn && notificationHeaderDropdownMenu) {
+    notificationHeaderMenuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = notificationHeaderDropdownMenu.classList.contains('show');
+      
+      // Fermer tous les autres menus
+      document.querySelectorAll('.header-dropdown-menu').forEach(menu => {
+        menu.classList.remove('show');
+      });
+      
+      if (!isOpen) {
+        notificationHeaderDropdownMenu.classList.add('show');
+      }
+    });
+  }
+  
+  // Fermer le menu en cliquant ailleurs
+  document.addEventListener('click', (e) => {
+    if (notificationHeaderDropdownMenu && !notificationHeaderDropdownMenu.contains(e.target) && 
+        notificationHeaderMenuBtn && !notificationHeaderMenuBtn.contains(e.target)) {
+      notificationHeaderDropdownMenu.classList.remove('show');
+    }
+  });
+  
+  // Gestion de la déconnexion
+  if (notificationLogoutBtn) {
+    notificationLogoutBtn.addEventListener('click', () => {
+      // Nettoyer le localStorage
+      Object.keys(localStorage).forEach(key => {
+        localStorage.removeItem(key);
+      });
+      
+      // Rediriger vers la page de choix de rôle
+      window.location.href = ROUTES.CHOOSE_ROLE;
     });
   }
 }
